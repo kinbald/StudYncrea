@@ -20,8 +20,13 @@
 		echo"<p>-".$blog['title'].", '".$blog['description']." ', ".$blog['date_post'].", ".$blog['name_class'].", ".$blog['name_subject']."<p>";
 	}
 
-	echo "<br><br>Par classe:<br>";
+	echo "<br><br>Classes CIR2:<br>";
 	$BlogALL = $Blog->display_blog_class("CIR2");	
+	foreach ($BlogALL as $blog) {
+		echo"<p>-".$blog['title'].", '".$blog['description']." ', ".$blog['date_post'].", ".$blog['name_class'].", ".$blog['name_subject']."<p>";
+	}
+	echo "<br><br>Classes M1 et inférieures:<br>";
+	$BlogALL = $Blog->display_blog_classbyid(3);//Id classe M1 = 3
 	foreach ($BlogALL as $blog) {
 		echo"<p>-".$blog['title'].", '".$blog['description']." ', ".$blog['date_post'].", ".$blog['name_class'].", ".$blog['name_subject']."<p>";
 	}

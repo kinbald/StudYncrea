@@ -25,7 +25,24 @@ class Blog
 		$sql = "SELECT * FROM POSTS 
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
-				WHERE PROMS.name_class = :class AND POSTS.type_post = 0";
+				WHERE type_post = 0 AND name_class = :class";
+		$req = $db->prepare($sql);
+		$req->execute($a);
+		return $req->fetchAll();
+	}
+		/*Entrée : type: numérique : id de la classe 
+		  Descriptif : (Variante qui affiche la classe demandé et celles inférieures, par rapport à l'id.
+		  SSI on a classé les classes par ordre croissant au niveau de l'id.*/
+	public function display_blog_classbyid($id_class)
+	{
+		global $db;
+		$a = [
+		'id'     => $id_class,
+		];
+		$sql = "SELECT * FROM POSTS 
+				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
+				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
+				WHERE type_post = 0 AND PROMS.id_class <= :id ORDER BY PROMS.id_class DESC";
 		$req = $db->prepare($sql);
 		$req->execute($a);
 		return $req->fetchAll();
@@ -70,7 +87,7 @@ class Blog
 		$sql = "SELECT * FROM POSTS 
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
-				WHERE SUBJECTS.name_subject = :subject AND POSTS.type_post = 0";
+				WHERE type_post = 0 AND name_subject = :subject";
 		$req = $db->prepare($sql);
 		$req->execute($a);
 		return $req->fetchAll();
