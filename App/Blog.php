@@ -4,12 +4,27 @@
 */
 class Blog
 {
+	/*Affiche en premier le plus récent*/
+	public function display_blog_live()
+	{
+		global $db;
+		$sql = "SELECT * FROM POSTS 
+				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
+				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
+				INNER JOIN USERS on USERS.id_user = POSTS.id_user
+				WHERE type_post = 0 
+				ORDER BY date_post DESC";
+		$req = $db->prepare($sql);
+		$req->execute();
+		return $req->fetchAll();
+	}
 	public function display_blog_all()
 	{
 		global $db;
 		$sql = "SELECT * FROM POSTS 
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
+				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0";
 		$req = $db->prepare($sql);
 		$req->execute();
@@ -25,6 +40,7 @@ class Blog
 		$sql = "SELECT * FROM POSTS 
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
+				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 AND name_class = :class";
 		$req = $db->prepare($sql);
 		$req->execute($a);
@@ -42,6 +58,7 @@ class Blog
 		$sql = "SELECT * FROM POSTS 
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
+				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 AND PROMS.id_class <= :id ORDER BY PROMS.id_class DESC";
 		$req = $db->prepare($sql);
 		$req->execute($a);
@@ -57,6 +74,7 @@ class Blog
 		$sql = "SELECT * FROM POSTS 
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
+				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 AND title = :title";
 		$req = $db->prepare($sql);
 		$req->execute($a);
@@ -72,6 +90,7 @@ class Blog
 		$sql = "SELECT * FROM POSTS
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject 
+				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 AND date_post = :date_post";
 		$req = $db->prepare($sql);
 		$req->execute($a);
@@ -87,6 +106,7 @@ class Blog
 		$sql = "SELECT * FROM POSTS 
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
+				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 AND name_subject = :subject";
 		$req = $db->prepare($sql);
 		$req->execute($a);

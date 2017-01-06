@@ -1,0 +1,18 @@
+@media only screen and (max-width: 993px) {
+	nav .input-field{
+		display: none;
+	}
+	nav .brand-logo.right{
+		left: 50%;
+		-webkit-transform: translateX(-100%);
+		transform: translateX(-26%);
+	}
+}
+
+.grey-text {
+	font-family: thin;
+}
+
+body {
+    background-color: #eeeeee;
+}
