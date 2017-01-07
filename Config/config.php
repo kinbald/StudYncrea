@@ -7,7 +7,7 @@
     /**
      * @const Mysql Host
      */
-    define('DB_HOST', 'localhost');
+    define('DB_HOST', 'db_mysql');
     /**
      * @const Mysql user
      */
@@ -15,7 +15,7 @@
     /**
      * @const Mysql password
      */
-    define('DB_PASSWORD', '');
+    define('DB_PASSWORD', 'root');
     /**
      * @const Mysql port
      */
@@ -23,4 +23,4 @@
     /**
      * @const DB Name
      */
-    define('DB_NAME', 'blog');
+    define('DB_NAME', 'studyncrea');

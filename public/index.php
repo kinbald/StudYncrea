@@ -1,3 +1,4 @@
 <?php
-
-require '../App/Autoload.php';
+    
+    require '../App/App.php';
+    App::load();

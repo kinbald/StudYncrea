@@ -19,7 +19,7 @@
         
         /**
          * Fonction qui retourne une instance de base de données
-         * @return Database Instance retournée
+         * @return \Core\Database\Database Instance retournée
          */
         public static function getDb()
         {

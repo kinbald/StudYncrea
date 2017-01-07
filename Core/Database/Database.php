@@ -1,6 +1,6 @@
 <?php
     namespace Core\Database;
-    
+
     use PDOException;
     use PDO;
 
@@ -8,7 +8,7 @@
      * @author Guillaume Desrumaux
      * @date 24/11/16
      */
-    class Database
+    abstract class Database
     {
         /**
          * @var string Hôte de la BDD
@@ -34,7 +34,7 @@
          * @var object Instance de PDO
          */
         protected $pdo;
-        
+
         /**
          * Database constructor.
          * @param string $db_name
@@ -64,8 +64,8 @@
             {
                 try
                 {
-                    $requete = $this->getConnection()->prepare($statement);
-                    $requete->execute($params);
+                    $req = $this->getConnection()->prepare($statement);
+                    $req->execute($params);
                 }
                 catch(PDOException $e)
                 {
@@ -93,4 +93,10 @@
             }
             return $datas;
         }
+
+        public function lastId()
+        {
+            return $this->getConnection()->lastInsertId();
+        }
+
     }
