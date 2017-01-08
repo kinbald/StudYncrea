@@ -1,4 +1,6 @@
 <?php
+
+namespace App;
     
     /**
      * Classe permettant de générer des champs de formulaire rapidement
