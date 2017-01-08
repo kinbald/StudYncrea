@@ -65,7 +65,7 @@
                 try
                 {
                     $req = $this->getConnection()->prepare($statement);
-                    $req->execute($params);
+                    $res = $req->execute($params);
                 }
                 catch(PDOException $e)
                 {
@@ -81,6 +81,8 @@
             /* Méthode de récupération de manière associative "tab[0]"*/
             switch($fetch)
             {
+                case 0:
+                    return $res;
                 case 1:
                     $datas = $req->fetch(PDO::FETCH_ASSOC);
                     break;

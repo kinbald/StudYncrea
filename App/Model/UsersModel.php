@@ -123,16 +123,36 @@
             }
         }
 
-        public function registerUser($email, $password)
+        public function generateToken($length)
+        {
+            $alphabet = "0123456789azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN";
+            return substr(str_shuffle(str_repeat($alphabet, $length)), 0, $length);
+        }
+
+        public function registerUser($email, $password, $name, $surname, $role, $class)
         {
             if($this->checkUserExist($email) === FALSE)
             {
                 $id = $this->lastInsertId($this->getIdName());
-                $id = $id === FALSE ? 1 : $id;
+                $id = $id === FALSE ? 1 : $id+1;
                 $sql = "
                     INSERT INTO " . static::$table . " (id_user, email, password_user, name_user, surname_user, role, token, id_class)
-                    VALUES (:id, :email, :password_user, :name_user, :surname_user, :)
+                    VALUES (:id, :email, :password_user, :name_user, :surname_user, :role, :token, :class)
                 ";
+                $password = password_hash($password, PASSWORD_DEFAULT);
+                $token = $this->generateToken(255);
+                $param =
+                    [
+                        ':id' => $id,
+                        ':email' => $email,
+                        ':password_user' => $password,
+                        ':name_user' => $name,
+                        ':surname_user' => $surname,
+                        ':role' => $role,
+                        ':token' => $token,
+                        ':class' => $class,
+                    ];
+                $add = $this->executeReq($sql, $param, 0);
             }
             return 0;
         }

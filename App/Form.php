@@ -166,7 +166,7 @@ $text<i class=\"material-icons left\">$icon</i>");
             {
                 echo "<div class=\"input-field col s12\">
                             <select name=\"$name\" required>
-                                    <option value=\"\" disabled selected>$label</option>";
+                                    <option value=\"0\" disabled selected>$label</option>";
                 foreach ($options as $option => $value)
                 {
                     echo "<option value=\"$option\">$value</option>";

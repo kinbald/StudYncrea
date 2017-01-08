@@ -106,12 +106,15 @@ class Input
 
     }
 
-    public function check_pseudo_password($field,$length_pseudo_password,$type){
+    public function check_pseudo_password($fieldName,$length_pseudo_password,$type)
+    {
+        $field = $this->getField($fieldName, $type);
+        $field = $this->pseudo_password($field);
         if($this->check_text($field,$type)) {
             if (strlen($field) >= $length_pseudo_password) {
                 return true;
             } else {
-                $this->errors[$type] = "Taille trop courte (min = 5 charactères).";
+                $this->errors[$type] = "Taille du mot de passe trop courte (min = 5 charactères).";
                 return false;
             }
         }else{
