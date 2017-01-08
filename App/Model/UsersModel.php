@@ -24,19 +24,57 @@
          *
          * @param string $email Le login
          * @param string $password Le mot de passe
-         * @return boolean Vrai si l'utilisateur existe, faux sinon
+         * @return int 1 si l'utilisateur existe, 0 sinon
          */
         public function connect($email, $password)
         {
-            $sql = "
-                SELECT id_user, role
-                FROM " . self::$table ."
-                WHERE email=? 
-                AND password_user=?
+            $sql = /** @lang MySQL */
+                "
+                SELECT password_user
+                FROM " . self::$table ." 
+                WHERE email=?
             ";
-            //TODO Add validator
-            $utilisateur = $this->executeReq($sql, array($email, $password), 2);
-            return (count($utilisateur) == 1);
+            $user_password = $this->executeReq($sql, array($email), 1);
+            /** S'il y n'a pas d'entrée dans le resultat de la requête alors l'utilisateur n'existe pas */
+            if($user_password != false)
+            {
+                /** Vérification du mot de passe */
+                if(password_verify($password, $user_password['password_user']))
+                {
+                    return 1;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            else
+            {
+                return -1;
+            }
+        }
+
+        /**
+         * Fonction qui permet de connaître le statut d'un utilisateur
+         *
+         * @param string $email Email de l'utilisateur
+         * @param string $password Mot de passe de l'utilisateur
+         * @return int Statut de l'utilisateur
+         */
+        public function getRole($email)
+        {
+            $sql = /** @lang MySQL */
+                '
+                SELECT role
+                FROM ' . self::$table .' 
+                WHERE email=?
+            ';
+            $role = $this->executeReq($sql, array($email), 1);
+            if(count($role) != 0)
+            {
+                return $role['role'];
+            }
+            echo '<br>Problème dans la base de données <br>';
         }
     
         /**
@@ -49,7 +87,8 @@
          */
         public function getUtilisateur($email, $password)
         {
-            $sql = "
+            $sql = /** @lang MySQL */
+                "
                 SELECT id_user, is_admin, is_teacher
                 FROM users
                 WHERE email=? AND password=?
@@ -83,7 +122,6 @@
                 return false;
             }
         }
-
 
         public function registerUser($email, $password)
         {
