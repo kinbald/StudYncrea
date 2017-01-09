@@ -53,20 +53,25 @@ include "../App/Autoload.php";
 				<div class="card-stacked">
 					<div class="card-content">
 						<h5>Filtres :</h5>
-						<input type="checkbox" class="teal-text" id="filled-in-box1">
-						<label for="filled-in-box1">Math</label>&emsp;&emsp;
-						<input type="checkbox" class="teal-text" id="filled-in-box2">
-						<label for="filled-in-box2">Physique</label>&emsp;&emsp;
-						<div class="input-field col s12">
-							<select multiple>
-								<option value="" disabled selected>Classes</option>
-								<option value="1">N1</option>
-								<option value="2">N2</option>
-								<option value="3">N3</option>
-								<option value="4">M1</option>
-								<option value="5">M2</option>
-							</select>
-						</div>
+						<form>
+							<button class="right btn waves-effect waves-light" type="reset" name="action">
+								<i class="material-icons">replay</i>
+							</button>
+							<input type="checkbox" id="filled-in-box1">
+							<label for="filled-in-box1">Math</label>&emsp;&emsp;
+							<input type="checkbox" id="filled-in-box2">
+							<label for="filled-in-box2">Physique</label>&emsp;&emsp;
+							<div class="input-field col s12">
+								<select multiple>
+									<option value="" disabled selected>Classes</option>
+									<option value="1">N1</option>
+									<option value="2">N2</option>
+									<option value="3">N3</option>
+									<option value="4">M1</option>
+									<option value="5">M2</option>
+								</select>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
@@ -77,15 +82,10 @@ include "../App/Autoload.php";
 			<?php
 	//Simulation d'affichage des blogs : 
 			$Blog = new Blog;
-			$i=1;
 			$BlogALL = $Blog->display_blog_live();
 			foreach ($BlogALL as $blog) {
-				if ($i === 1 )
-				{
-					echo "<div class=\"row\">";
-				}
 				?>
-				<div class="col s12 m6">
+				<div class="col s12 m6 l6">
 					<div class='card'>
 						<div class="card-content">
 							<img src="<?= $blog['url_avatar'] ?>" width="64" height="64">
@@ -102,13 +102,6 @@ include "../App/Autoload.php";
 					</div>
 				</div>
 				<?php
-				$i++;
-				if ($i > 2 )
-				{
-					echo "</div>";
-					$i = 0;
-
-				}
 			}?>
 		</div>
 	</div>
@@ -162,8 +155,8 @@ include "../App/Autoload.php";
 	//$Blog->update_date_correction(19,"1997-06-03 00:00:00");
 	//$Blog->update_subject(19,1); ?>
 	<!--  -->
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="js/materialize.js"></script>
-<script src="js/init.js"></script>
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="js/materialize.js"></script>
+	<script src="js/init.js"></script>
 </body>
 </html>
