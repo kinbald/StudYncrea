@@ -1,4 +1,4 @@
 <?php
     
-    require '../App/App.php';
-    App::load();
+ require '../App/App.php';
+ App::load();

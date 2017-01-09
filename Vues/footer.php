@@ -20,6 +20,17 @@ if (isset($select)) {
     </script>
     <?php
 }
+if (isset($init))
+{
+    ?>
+    <script type="text/javascript">
+        $(".button-collapse").sideNav();
+        $(document).ready(function() {
+            $('select').material_select();
+        });
+    </script>
+    <?php
+}
 ?>
 </body>
 </html>
