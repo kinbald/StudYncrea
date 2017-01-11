@@ -51,13 +51,13 @@ $init = 1;
                         <img src="<?= $blog['url_avatar'] ?>" width="64" height="64">
                         <a class="black-text"><?= $blog['name_user'] ?></a>
                         <a class="right black-text"><?= $blog['name_subject'] ?></a><br>
-                        <a class="card-title truncate black-text" href="#!"><?= $blog['title'] ?></a>
+                        <a class="flow-text truncate black-text" style="" href="blog.php?post=<?= $blog['id_post']; ?>"><?= $blog['title'] ?></a>
                         <br>
                         <a class="left grey-text"><?= $blog['name_class'] ?></a>
                         <a class="right grey-text"> <?= $blog['date_post'] ?></a>
                     </div>
                     <div class="card-action grey-text text-darken-4">
-                        <a class="blue-text" href="#!">Lire</a>
+                        <a class="blue-text" href="blog.php?post=<?= $blog['id_post']; ?>">Lire</a>
                     </div>
                 </div>
             </div>

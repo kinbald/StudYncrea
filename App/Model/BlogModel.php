@@ -27,6 +27,19 @@ class BlogModel extends Model
 //		$req->execute();
 		return $result;
 	}
+	
+	public function display_blog_id($id_blog)
+	{
+		$sql = "SELECT * FROM POSTS 
+				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
+				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
+				INNER JOIN USERS on USERS.id_user = POSTS.id_user
+				WHERE POSTS.id_post = ?";
+		$result = $this->executeReq($sql, [$id_blog], 1);
+//		$req = $db->prepare($sql);
+//		$req->execute();
+		return $result;
+	}
 	public function display_blog_all()
 	{
 		$sql = "SELECT * FROM POSTS 
