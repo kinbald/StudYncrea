@@ -12,22 +12,21 @@ $init = 1;
         <div class="card horizontal">
             <div class="card-stacked">
                 <div class="card-content">
-                    <h5>Filtres :</h5>
+                 <img style="display: none;" id="loader" class="right responsive-img materialboxed" width="40" src="../pictures/Flip_Flop.gif"><br>
+                    <h5>Filtres :</h5><br>
                     <form>
-                        <button class="right btn waves-effect waves-light" type="reset" name="action">
-                            <i class="material-icons">replay</i>
-                        </button>
-                        <input type="checkbox" id="filled-in-box1">
-                        <label for="filled-in-box1">Math</label>&emsp;&emsp;
-                        <input type="checkbox" id="filled-in-box2">
+                        <a class="right btn waves-effect waves-light" href="affichage_blog.php" ><i class="material-icons">replay</i></a>
+                        <input type="checkbox" id="filled-in-box1" name="check1">
+                        <label for="filled-in-box1">Maths</label>&emsp;&emsp;
+                        <input type="checkbox" id="filled-in-box2" name="check2">
                         <label for="filled-in-box2">Physique</label>&emsp;&emsp;
                         <div class="input-field col s12">
-                            <select multiple>
-                                <option value="" disabled selected>Classes</option>
-                                <option value="1">N1</option>
-                                <option value="2">N2</option>
-                                <option value="3">N3</option>
-                                <option value="4">M1</option>
+                            <select multiple id="ajax_select" onchange="ajax(1)">
+                                <option disabled>Classes</option>
+                                <option value="0">N1</option>
+                                <option value="1">N2</option>
+                                <option value="2">N3</option>
+                                <option value="3">M1</option>
                                 <option value="5">M2</option>
                             </select>
                         </div>
@@ -38,7 +37,7 @@ $init = 1;
     </div>
     <!--  -->
     <!-- MAIN -->
-    <div class="row">
+    <div class="row" id="hide">
         <?php
         //Simulation d'affichage des blogs :
         $Blog = new \App\Model\BlogModel(App::getDb());
@@ -57,61 +56,18 @@ $init = 1;
                         <a class="right grey-text"> <?= $blog['date_post'] ?></a>
                     </div>
                     <div class="card-action grey-text text-darken-4">
-                        <a class="blue-text" href="blog.php?post=<?= $blog['id_post']; ?>">Lire</a>
+                        <a class="blue-text" href="blog.php?post=<?= $blog['id_post']; ?>">Voir</a>
                     </div>
                 </div>
             </div>
             <?php
         } ?>
     </div>
+    <!-- INNER AJAX-->
+    <div class="row" id="ajax_inner"></div>
+    <!--  -->
 </div>
-<!-- TESTS -->
+<script src="js/oXHR.js"></script>
+<script src="js/actualise.js"></script>
 <?php
-// 			echo "<div class='divider'></div>";
-// 			echo "<br><br>Classes CIR2:<br>";
-// 			$BlogALL = $Blog->display_blog_class("CIR2");
-// 			foreach ($BlogALL as $blog) {
-// 				echo"<p>-".$blog['title'].", '".$blog['description']." ', ".$blog['date_post'].", ".$blog['name_class'].", ".$blog['name_subject']."<p>";
-// 			}
-// 			echo "<div class='divider'></div>";
-// 			echo "<br><br>Classes M1 et inférieures:<br>";
-// $BlogALL = $Blog->display_blog_classbyid(3);//Id classe M1 = 3
-// foreach ($BlogALL as $blog) {
-// 	echo"<p>-".$blog['title'].", '".$blog['description']." ', ".$blog['date_post'].", ".$blog['name_class'].", ".$blog['name_subject']."<p>";
-// }
-// echo "<div class='divider'></div>";
-// echo "<br><br>Par Date du blog:<br>";
-// $BlogALL = $Blog->display_blog_date_post("1997-06-03 14:30:00");
-// foreach ($BlogALL as $blog) {
-// 	echo"<p>-".$blog['title'].", '".$blog['description']." ', ".$blog['date_post'].", ".$blog['name_class'].", ".$blog['name_subject']."<p>";
-// }
-// echo "<div class='divider'></div>";
-// echo "<br><br>Par titre:<br>";
-// $BlogALL = $Blog->display_blog_title("Comment trouver ceci ?");//Peutetre que les espaces dans le titre pose problème
-// //Si c'est le cas, il faut les remplacer par des underscores
-// foreach ($BlogALL as $blog) {
-// 	echo"<p>-".$blog['title'].", '".$blog['description']." ', ".$blog['date_post'].", ".$blog['name_class'].", ".$blog['name_subject']."<p>";
-// }
-// echo "<div class='divider'></div>";
-// echo "<br><br>Par matière:<br>";
-// $BlogALL = $Blog->display_blog_subject("Math");
-// foreach ($BlogALL as $blog) {
-// 	echo"<p>-".$blog['title'].", '".$blog['description']." ', ".$blog['date_post'].", ".$blog['name_class'].", ".$blog['name_subject']."<p>";
-// }
-
-//Test INSERT:
-/*
-$description = "Et prima post Osdroenam quam, ut dictum est, ab hac descriptione discrevimus,
-                Commagena, nunc Euphratensis, clementer adsurgit, Hierapoli,
-                vetere Nino et Samosata civitatibus amplis inlustris.";
-
-$Blog->write_blog("Test INSERT",$description,"2016-11-29 10:30:00",2,1,1,1,1);
-*/
-
-//Test UPDATE:
-//$Blog->update_url_file(19,"http/test");
-//$Blog->update_title(19,"Test UPDATE");
-//$Blog->update_description(19,"Descritpion Update");
-//$Blog->update_date_correction(19,"1997-06-03 00:00:00");
-//$Blog->update_subject(19,1);
-    include '../Vues/footer.php';
+include '../Vues/footer.php';

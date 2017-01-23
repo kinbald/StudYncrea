@@ -38,7 +38,7 @@ else
                                 <div class="divider"></div>
                                 <br>
                                 <img class="responsive-img materialboxed" width="200" src="<?= $post['url_file'] ?>">
-                                <button class="waves-effect waves-light btn right"><a class="white-text" href="<?= $post['url_file'] ?>">Ouvrir l'image</a></button>
+                                <button class="waves-effect waves-light btn right"><a class="white-text" target="_blank" href="<?= $post['url_file'] ?>">Ouvrir l'image</a></button>
                                 <br><br>
                                 <?php
                             }
