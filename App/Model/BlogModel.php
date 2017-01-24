@@ -12,7 +12,20 @@
 		public static $table = 'POSTS';
 		private $_idName = 'id_post';
 
-
+		public function display_proms_all()
+		{
+			$sql = "SELECT * FROM PROMS
+			ORDER BY id_class ASC";
+			$result = $this->executeReq($sql);
+			return $result;
+		}
+		public function display_subjects_all()
+		{
+			$sql = "SELECT * FROM SUBJECTS
+			ORDER BY id_subject ASC";
+			$result = $this->executeReq($sql);
+			return $result;
+		}
 		/*Affiche en premier le plus récent*/
 		public function display_blog_live()
 		{
@@ -53,8 +66,11 @@
 		}
 		/*Entrée : type: string 
 		  Descriptif : (Variante qui affiche les classes demandé , par rapport aux ids.
-		  SSI on a classé les classes par ordre croissant au niveau de l'id.*/
-		  public function display_blog_classbyid($id_class)
+		  SSI on a classé les classes par ordre croissant au niveau de l'id.
+
+		Problème requete quand il y a plusieurs classes
+		  */
+		  public function display_blog_classbyid($id_class,$id_subject)
 		  {
 		  	if ($id_class == '') 
 		  	{
@@ -72,14 +88,28 @@
 		  		foreach($a as $id => $value)
 		  		{
 		  			if ($id == 0){
-		  				$sql = $sql . "PROMS.id_class = $value ";
+		  				$sql = $sql . "PROMS.id_class = '$value' ";
 		  			}
 		  			else{
-		  				$sql = $sql . "OR PROMS.id_class = $value ";
+		  				$sql = $sql . "OR PROMS.id_class = '$value' ";
 		  			}
 		  		}
+		  		if ($id_subject != '')
+		  		{
+		  			$b = explode(",", $id_subject);
+		  			foreach($b as $id => $value2)
+		  			{
+		  				if ($id == 0){
+		  					$sql = $sql . "AND SUBJECTS.id_subject = '$value2' ";
+		  				}
+		  				else{
+		  					$sql = $sql . "OR SUBJECTS.id_subject = '$value2' ";
+		  				}
+		  			}
+		  		}	  
 		  		$sql = $sql . "ORDER BY date_post DESC";
-		  		$result = $this->executeReq($sql, $a);
+		  		//die($sql);
+		  		$result = $this->executeReq($sql);
 		  	}
 		  	return $result;
 		  }
@@ -114,28 +144,49 @@
 		  	$result = $this->executeReq($sql, $a);
 		  	return $result;
 		  }
-		  /*Entrée: type: string: nom de la matière*/
-		  public function display_blog_subject($subject_name)
+		  /*Entrée: type: string: id des matières*/
+		  public function display_blog_subjectbyid($id_subject, $id_class)
 		  {
-		  	$a = explode(",", $subject_name);
+		  	if ($id_subject == '') 
+		  	{
+		  		$result = $this->display_blog_live();
+		  	}
+		  	else
+		  	{
+
 		  		$sql = "SELECT * FROM POSTS 
 		  		INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 		  		INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
 		  		INNER JOIN USERS on USERS.id_user = POSTS.id_user
 		  		WHERE 1=1
 		  		AND type_post = 0 AND ";
-		  		foreach($a as $id => $value)
+		  		$a = explode(",", $id_subject);
+		  		foreach($a as $id => $value1)
 		  		{
 		  			if ($id == 0){
-		  				$sql = $sql . "name_subject = '$value' ";
+		  				$sql = $sql . "SUBJECTS.id_subject = '$value1' ";
 		  			}
 		  			else{
-		  				$sql = $sql . "OR name_subject = '$value' ";
+		  				$sql = $sql . "OR SUBJECTS.id_subject = '$value1' ";
 		  			}
-		  		}
+		  		}	
+		  		if ($id_class != '')
+		  		{
+		  			$b = explode(",", $id_class);
+		  			foreach($b as $id => $value2)
+		  			{
+		  				if ($id == 0){
+		  					$sql = $sql . "AND PROMS.id_class = '$value2' ";
+		  				}
+		  				else{
+		  					$sql = $sql . "OR PROMS.id_class = '$value2' ";
+		  				}
+		  			}
+		  		}	  
 		  		$sql = $sql . "ORDER BY date_post DESC";
 		  		//die($sql);
-		  		$result = $this->executeReq($sql, $a);
+		  		$result = $this->executeReq($sql);
+		  	}
 		  	return $result;
 		  }
 		  /*Update pour la modification de chaques éléments du blog*/

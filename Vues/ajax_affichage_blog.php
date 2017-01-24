@@ -4,22 +4,15 @@ App::load();
 $Blog = new \App\Model\BlogModel(App::getDb());
 
 //Selon la variable reçu en POST on execute une fonction différente
-if ($_POST['id_CLASSES'] == 12)
+if ($_POST['CAS'] == 1)//Select des matières
 {
-    $BlogALL = $Blog->display_blog_subject('maths,physique');
+    $BlogALL = $Blog->display_blog_subjectbyid($_POST['id_MATIERES'],$_POST['id_CLASSES']);
 }
-if ($_POST['id_CLASSES'] == 10)
+if ($_POST['CAS'] == 2)//Select des promos
 {
-    $BlogALL = $Blog->display_blog_subject('maths');
+    $BlogALL = $Blog->display_blog_classbyid($_POST['id_CLASSES'],$_POST['id_MATIERES']);
 }
-if ($_POST['id_CLASSES'] == 11)
-{
-    $BlogALL = $Blog->display_blog_subject('physique');
-}
-if ($_POST['id_CLASSES'] >= 0 && $_POST['id_CLASSES'] < 6)
-{
-    $BlogALL = $Blog->display_blog_classbyid($_POST['id_CLASSES']);
-}
+
 foreach ($BlogALL as $blog) {
     ?>
     <div class="col s12 m6 l6">

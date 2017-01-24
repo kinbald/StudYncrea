@@ -1,49 +1,5 @@
 /*
     @author : Herrenschmidt Félix
-    @description : Permet de gérer les checkbox des matières, pour l'instant on gère que math et physique
-    */
-    document.addEventListener("DOMContentLoaded", function (event) {
-        var _selector1 = document.querySelector('input[name=check1]');
-        _selector1.addEventListener('change', function (event) {
-            if (_selector2.checked && _selector1.checked){
-                ajax(12);//12 pour maths et physique
-            }
-            else{
-                if (_selector1.checked) {
-                    ajax(10);//10 pour math
-                }
-                else{ //11 pour physique
-                    if (_selector2.checked){
-                        ajax(11);
-                    }
-                    else{
-                        ajax(1);
-                    }
-                }  
-            }   
-        });
-        var _selector2 = document.querySelector('input[name=check2]');
-        _selector2.addEventListener('change', function (event) {
-            if (_selector2.checked && _selector1.checked){
-                ajax(12);//12 pour maths et physique
-            }
-            else{
-                if (_selector2.checked) {
-                    ajax(11);//10 pour math
-                }
-                else{ //11 pour physique
-                    if (_selector1.checked){
-                        ajax(10);
-                    }
-                    else{
-                        ajax(1);
-                    }
-                }
-            }
-        });
-    });
-/*
-    @author : Herrenschmidt Félix
     @description : Permet de placer dans un tableau tout les éléments sélectionnés dans le select
     */
     function getSelectValues(select) {
@@ -66,15 +22,12 @@
     @description : Fonction AJAX qui permet d'afficher les questions selon les filtres séléctionnés
     */
     function ajax(verif){
-    if (verif === 10 || verif === 11 || verif === 12)//Pour les checkbox de matières
-    {
-        var values = verif;
-    }
-    else
-    {
-        var selectDepart = document.getElementById("ajax_select");
-        var values = getSelectValues(selectDepart);//values est un tableau en JS 
-    }
+
+        var select_matieres = document.getElementById("ajax_select_matiere");
+        var values_matieres = getSelectValues(select_matieres);//values_matieres est un tableau en JS 
+
+        var select_promos = document.getElementById("ajax_select_promo");
+        var values_promos = getSelectValues(select_promos); 
 
     var xhr = getXMLHttpRequest();
 	
@@ -91,9 +44,11 @@
 
     xhr.open("POST", "../Vues/ajax_affichage_blog.php", true); 
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); 
-    var valeur_option = encodeURIComponent(values);//On protège la variable que l'on transporte, meme en POST
+    //On protège les variables que l'on transportes, meme en POST
+    var tab_promos = encodeURIComponent(values_promos);
+    var tab_matieres = encodeURIComponent(values_matieres);
     document.getElementById("hide").style.display = "none";//Je fais disparaitre les questions de départ
-    xhr.send("id_CLASSES=" + valeur_option); //J'envoie mon tableau d'éléments en POST
+    xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&CAS=" + verif); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
 }
 
 
