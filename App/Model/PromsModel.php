@@ -24,11 +24,22 @@ class PromsModel extends Model
      */
     public function all()
     {
-        $proms = $this->executeReq("SELECT * FROM " . static::$table);
+        $proms = $this->executeReq("SELECT * FROM " . static::$table . " ORDER BY name_class");
         $options = [];
         foreach ($proms as $class) {
-            $options[$class['id_class']] = $class['name_class'];
+            $options[$class[$this->_idName]] = $class['name_class'];
         }
         return $options;
+    }
+
+    public function findClassName($id_class)
+    {
+        $sql = "SELECT name_class FROM " . static::$table . " WHERE " . $this->_idName . " = : " . $this->_idName;;
+        $param = [
+            $this->_idName => $id_class,
+        ];
+        $result = $this->executeReq($sql, $param, 1);
+        $result = $result['name_class'];
+        return $result;
     }
 }

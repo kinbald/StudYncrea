@@ -16,26 +16,22 @@ class BlogModel extends Model
 	/*Affiche en premier le plus récent*/
 	public function display_blog_live()
 	{
-		$sql = "SELECT * FROM POSTS 
+		$sql = "SELECT * FROM " . static::$table ."  
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 
 				ORDER BY date_post DESC";
 		$result = $this->executeReq($sql);
-//		$req = $db->prepare($sql);
-//		$req->execute();
 		return $result;
 	}
 	public function display_blog_all()
 	{
-		$sql = "SELECT * FROM POSTS 
+		$sql = "SELECT * FROM " . static::$table ." 
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0";
-//		$req = $db->prepare($sql);
-//		$req->execute();
         $result = $this->executeReq($sql);
 		return $result;
 	}
@@ -45,13 +41,11 @@ class BlogModel extends Model
 		$a = [
 		'class'     => $class,
 		];
-		$sql = "SELECT * FROM POSTS 
+		$sql = "SELECT * FROM " . static::$table ."  
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 AND name_class = :class";
-//		$req = $db->prepare($sql);
-//		$req->execute($a);
         $result = $this->executeReq($sql, $a);
 		return $result;
 	}
@@ -64,7 +58,7 @@ class BlogModel extends Model
 		$a = [
 		'id'     => $id_class,
 		];
-		$sql = "SELECT * FROM POSTS 
+		$sql = "SELECT * FROM " . static::$table ."  
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
@@ -79,7 +73,7 @@ class BlogModel extends Model
 		$a = [
 		'title'     => $title,
 		];
-		$sql = "SELECT * FROM POSTS 
+		$sql = "SELECT * FROM " . static::$table ."  
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
@@ -94,7 +88,7 @@ class BlogModel extends Model
 		$a = [
 		'date_post'     => $date_post,
 		];
-		$sql = "SELECT * FROM POSTS
+		$sql = "SELECT * FROM " . static::$table ." 
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject 
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
@@ -109,7 +103,7 @@ class BlogModel extends Model
 		$a = [
 		'subject'     => $subject_name,
 		];
-		$sql = "SELECT * FROM POSTS 
+		$sql = "SELECT * FROM " . static::$table ."  
 				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
@@ -142,19 +136,9 @@ class BlogModel extends Model
                 $nothing
             ];
         
-        $sql = "INSERT INTO POSTS (id_post, title,description,date_post,type_post,id_subject,id_class,id_user,id_chapter,id_user_teacher,url_file) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-//        $req =$db->prepare($sql);
-//        $req->bindParam(1,$title);
-//        $req->bindParam(2,$description);
-//        $req->bindParam(3,$date_post);
-//        $req->bindValue(4,$type_post);
-//        $req->bindValue(5,$id_subject);
-//        $req->bindValue(6,$id_class);
-//        $req->bindValue(7,$id_user);
-//        $req->bindValue(8,$id_chapter);
-//        $req->bindValue(9,$id_prof);
-//        $req->bindParam(10,$nothing);
-//        $success = $req->execute();
+        $sql = "INSERT INTO POSTS (id_post, title,description,date_post,type_post,id_subject,id_class,id_user,id_chapter,id_user_teacher,url_file) 
+                VALUES (?,?,?,?,?,?,?,?,?,?,?)
+                ";
         $success = $this->executeReq($sql, $a, 0);
 		if ($success === FALSE) {
 		die("<p>ERREUR : L'ajout a retourné une erreur.</p>");
@@ -170,7 +154,7 @@ class BlogModel extends Model
 		'url'     => $new_url_file,
 		'id_blog' => $id_blog,
 		];
-		$sql = "UPDATE POSTS SET url_file = :url WHERE id_post = :id_blog";
+		$sql = "UPDATE " . static::$table ."  SET url_file = :url WHERE id_post = :id_blog";
         $result = $this->executeReq($sql, $a, 0);
         return $result;
 	}
@@ -180,7 +164,7 @@ class BlogModel extends Model
 		'title_blog' => $new_title,
 		'id_blog'    => $id_blog,
 		];
-		$sql = "UPDATE POSTS SET title = :title_blog WHERE id_post = :id_blog";
+		$sql = "UPDATE " . static::$table ."  SET title = :title_blog WHERE id_post = :id_blog";
         $result = $this->executeReq($sql, $a, 0);
         return $result;
 	}
@@ -191,7 +175,7 @@ class BlogModel extends Model
 		'description_blog' => $new_description,
 		'id_blog'    => $id_blog,
 		];
-		$sql = "UPDATE POSTS SET description = :description_blog WHERE id_post = :id_blog";
+		$sql = "UPDATE " . static::$table ."  SET description = :description_blog WHERE id_post = :id_blog";
         $result = $this->executeReq($sql, $a, 0);
         return $result;
 	}
@@ -202,7 +186,7 @@ class BlogModel extends Model
 		'date_blog' => $date_correction,
 		'id_blog'    => $id_blog,
 		];
-		$sql = "UPDATE POSTS SET date_correction = :date_blog WHERE id_post = :id_blog";
+		$sql = "UPDATE " . static::$table ."  SET date_correction = :date_blog WHERE id_post = :id_blog";
         $result = $this->executeReq($sql, $a, 0);
         return $result;
 	}
@@ -213,7 +197,7 @@ class BlogModel extends Model
 		'id_subject' => $id_subject,
 		'id_blog'    => $id_blog,
 		];
-		$sql = "UPDATE POSTS SET id_subject = :id_subject WHERE id_post = :id_blog";
+		$sql = "UPDATE " . static::$table ."  SET id_subject = :id_subject WHERE id_post = :id_blog";
         $result = $this->executeReq($sql, $a, 0);
         return $result;
 	}
@@ -223,7 +207,7 @@ class BlogModel extends Model
 		'chapter' => $id_chapter,
 		'id_blog'    => $id_blog,
 		];
-		$sql = "UPDATE POSTS SET id_chapter = :chapter WHERE id_post = :id_blog";
+		$sql = "UPDATE " . static::$table ."  SET id_chapter = :chapter WHERE id_post = :id_blog";
         $result = $this->executeReq($sql, $a, 0);
         return $result;
 	}
@@ -233,10 +217,30 @@ class BlogModel extends Model
 		'id_prof' => $id_user_prof,
 		'id_blog'    => $id_blog,
 		];
-		$sql = "UPDATE POSTS SET id_user_USERS = :id_prof WHERE id_post = :id_blog";
+		$sql = "UPDATE " . static::$table ."  SET id_user_USERS = :id_prof WHERE id_post = :id_blog";
         $result = $this->executeReq($sql, $a, 0);
         return $result;
 	}
+
+    public function add_post($id_user, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $id_post, $url_picture, $type_post)
+    {
+        $date = date('d.m.y h:i');
+        $sql = "INSERT INTO " . static::$table . "(id_user, id_class, id_chapter, id_subject, id_user_teacher, title, description, id_post, url_file, type_post, date_post) VALUES (:id_user, :id_class, :id_chapter, :id_subject, :id_teacher, :title, :description, :id_post, :url_picture, :type_post, :date_post)";
+        $param = [
+            ':id_user' => $id_user,
+            ':id_class' => $id_class,
+            ':date_post' => $date,
+            ':id_chapter' => $id_chapter,
+            ':url_picture' => $url_picture,
+            ':id_subject' => $id_subject,
+            ':id_teacher' => $id_teacher,
+            ':title' => $title,
+            ':description' => $data,
+            ':id_post' => $id_post,
+            ':type_post' => $type_post
+        ];
+        $this->executeReq($sql,$param, 0);
+    }
 
     /**
      * @return string
