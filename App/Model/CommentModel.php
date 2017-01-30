@@ -89,7 +89,7 @@ VALUES(:content, :date_comment, :id_user, :id_type, :id_post, :id_comment)
     }
 
 
-    public function display_comment($id_post)
+    public function display_comment($id_post, $type)
     {
         $param1 = [
             'id_post' => $id_post
@@ -100,12 +100,10 @@ VALUES(:content, :date_comment, :id_user, :id_type, :id_post, :id_comment)
             ?>
 
             <div class="row">
-            <div class="col s12">
-                        <p style="background-color: blue"> <?php echo $data1['content']; ?>
+            <div class="col s12 card-panel">
+                        <p> <?php echo $data1['content']; ?>
             <?php if ($data1['url_photo_comment'] != null) {
-                ?> <img src="<?php echo $data1['url_photo_comment']; ?>"><br/></p>
-                </div>
-                </div>
+                ?> <img <img class="materialboxed"  width="200" src="<?php echo $data1['url_photo_comment']; ?>"></p>
                 <?php
             }
             $param2 = [
@@ -118,23 +116,26 @@ VALUES(:content, :date_comment, :id_user, :id_type, :id_post, :id_comment)
             if ($count) {
                 foreach ($req2 as $data2) {
                     ?>
-                    <p style="background-color: green"> <?php echo $data2['content']; ?>
+                    </div>
+                    <div class="col s11 offset-s1 card-panel">
+                    <p><?php echo $data2['content']; ?>
                     <?php if ($data2['url_photo_comment'] != null) {
-                        ?> <img src="<?php echo $data2['url_photo_comment']; ?>">
-                        <br/></p>
+                        ?> <img class="materialboxed" width="200" src="<?php echo $data2['url_photo_comment']; ?>"></p>
                         <?php
                     }
                 }
-                $this->display_form_comment($data1);
+                $this->display_form_comment($data1, $type);
+                echo "</div></div>";
             }
             if(!$count)
             {
-                $this->display_form_comment($data1);
+                $this->display_form_comment($data1, $type);
+                echo "</div></div>";
             }
         }
     }
 
-    private function display_form_comment($data1)
+    public function display_form_comment($data1, $type)
     {
         if(!empty($data1['id_comment']))
         {
@@ -144,15 +145,30 @@ VALUES(:content, :date_comment, :id_user, :id_type, :id_post, :id_comment)
         {
             $value = null;
         }
+
         echo "
         <p>
         <form id=\"comments\" action=\"\" method=\"post\" enctype=\"multipart/form-data\">
-            <input type=\"text\" id=\"comment\" name=\"comment\"/>
-            <input type=\"file\" name=\"url_picture\" />
-            <input type=\"hidden\" name=\"id_type\" value=\"1\"/>
-            <input type=\"hidden\" name=\"id_post\" value=\"1\"/>
+            <div class=\"input-field\">
+                <input type=\"text\" id=\"comment\" name=\"comment\" class=\"validate\"/>
+                <label for=\"comment\">Votre commentaire</label>
+            </div>
+            <div class=\"file-field  input-field\">
+                <div class=\"btn\">
+                    <span>Une photo</span>
+                    <input type=\"file\" name=\"url_picture\">
+                </div>
+                <div class=\"file-path-wrapper\">
+                    <input class=\"file-path validate\" type=\"text\">
+                </div>
+            </div>            
+            <input type=\"hidden\" name=\"id_type\" value=\"$type\"/>
+            <input type=\"hidden\" name=\"id_post\" value=\"". $data1['id_post'] ."\"/>
             <input type=\"hidden\" name=\"id_comment_father\" value=\"$value\"/>
-    <input type=\"submit\" value=\"Envoyer\" >
+            
+            <div class=\"input-field\">
+            <input class=\"btn waves-effect waves-light\" type=\"submit\" value=\"Envoyer\" >
+            </div>
 </form>
 </p>        
         ";

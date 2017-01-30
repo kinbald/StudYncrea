@@ -28,6 +28,9 @@ if (isset($init))
         $(document).ready(function() {
             $('select').material_select();
         });
+        $(document).ready(function(){
+            $('.materialboxed').materialbox();
+        });
     </script>
     <?php
 }
