@@ -38,7 +38,7 @@ class BlogModel extends Model
 	/*Entrée : type: chaine de caractère : Nom de la promo*/
 	public function display_blog_class($class)
 	{
-		$a = [
+		$param = [
 		'class'     => $class,
 		];
 		$sql = "SELECT * FROM " . static::$table ."  
@@ -46,7 +46,7 @@ class BlogModel extends Model
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 AND name_class = :class";
-        $result = $this->executeReq($sql, $a);
+        $result = $this->executeReq($sql, $param);
 		return $result;
 	}
 		/*Entrée : type: numérique : id de la classe 
@@ -54,8 +54,7 @@ class BlogModel extends Model
 		  SSI on a classé les classes par ordre croissant au niveau de l'id.*/
 	public function display_blog_classbyid($id_class)
 	{
-
-		$a = [
+		$param = [
 		'id'     => $id_class,
 		];
 		$sql = "SELECT * FROM " . static::$table ."  
@@ -63,14 +62,13 @@ class BlogModel extends Model
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 AND PROMS.id_class <= :id ORDER BY PROMS.id_class DESC";
-        $result = $this->executeReq($sql, $a);
+        $result = $this->executeReq($sql, $param);
 		return $result;
 	}
 	/*Entrée: type: chaine de caractère: Titre du blog*/
 	public function display_blog_title($title)
 	{
-
-		$a = [
+		$param = [
 		'title'     => $title,
 		];
 		$sql = "SELECT * FROM " . static::$table ."  
@@ -78,14 +76,13 @@ class BlogModel extends Model
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 AND title = :title";
-        $result = $this->executeReq($sql, $a);
+        $result = $this->executeReq($sql, $param);
         return $result;
 	}
 	/*Entrée: type: chaine de caractère sous forme de type date : Date du post*/
 	public function display_blog_date_post($date_post)
 	{
-
-		$a = [
+		$param = [
 		'date_post'     => $date_post,
 		];
 		$sql = "SELECT * FROM " . static::$table ." 
@@ -93,14 +90,13 @@ class BlogModel extends Model
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject 
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 AND date_post = :date_post";
-        $result = $this->executeReq($sql, $a);
+        $result = $this->executeReq($sql, $param);
         return $result;
 	}
 	/*Entrée: type: chaine de caractère: nom de la matière*/
 	public function display_blog_subject($subject_name)
 	{
-
-		$a = [
+		$param = [
 		'subject'     => $subject_name,
 		];
 		$sql = "SELECT * FROM " . static::$table ."  
@@ -108,122 +104,27 @@ class BlogModel extends Model
 				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
 				INNER JOIN USERS on USERS.id_user = POSTS.id_user
 				WHERE type_post = 0 AND name_subject = :subject";
-        $result = $this->executeReq($sql, $a);
+        $result = $this->executeReq($sql, $param);
         return $result;
 	}
-	/*Il faut bien penser à respecter tout les type des variables*/
-	public function write_blog($title,$description,$date_post,$id_subject,$id_class,$id_user,$id_chapter,$id_prof)
-	{
 
-        $type_post = 0;
-        $nothing = '';
-
-        $id = $this->lastInsertId($this->getIdName());
-        $id = $id === FALSE ? 1 : $id+1;
-
-        $a =
-            [
-                $id,
-                $title,
-                $description,
-                $date_post,
-                $type_post,
-                $id_subject,
-                $id_class,
-                $id_user,
-                $id_chapter,
-                $id_prof,
-                $nothing
-            ];
-        
-        $sql = "INSERT INTO POSTS (id_post, title,description,date_post,type_post,id_subject,id_class,id_user,id_chapter,id_user_teacher,url_file) 
-                VALUES (?,?,?,?,?,?,?,?,?,?,?)
-                ";
-        $success = $this->executeReq($sql, $a, 0);
-		if ($success === FALSE) {
-		die("<p>ERREUR : L'ajout a retourné une erreur.</p>");
-		} else {
-		echo("<p>INSERT OK</p>");
-		}
-	}
-	/*Update pour la modification de chaques éléments du blog*/
-	public function update_url_file($id_blog,$new_url_file)
-	{	
-
-		$a = [
-		'url'     => $new_url_file,
-		'id_blog' => $id_blog,
-		];
-		$sql = "UPDATE " . static::$table ."  SET url_file = :url WHERE id_post = :id_blog";
-        $result = $this->executeReq($sql, $a, 0);
-        return $result;
-	}
-	public function update_title($id_blog,$new_title)
+    /**
+     * Fonction qui permet d'ajouter un post ou une annale dans la base de données
+     * @param $id_user int
+     * @param $id_class int
+     * @param $id_chapter int
+     * @param $id_subject int
+     * @param $id_teacher int
+     * @param $title string
+     * @param $data string
+     * @param $url_picture string
+     * @param $type_post int
+     */
+    public function add_post($id_user, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $url_picture, $type_post)
     {
-		$a = [
-		'title_blog' => $new_title,
-		'id_blog'    => $id_blog,
-		];
-		$sql = "UPDATE " . static::$table ."  SET title = :title_blog WHERE id_post = :id_blog";
-        $result = $this->executeReq($sql, $a, 0);
-        return $result;
-	}
-	public function update_description($id_blog,$new_description)
-	{
+        $id_post = $this->lastInsertId($this->getIdName());
+        $id_post = $id_post === FALSE ? 1 : $id_post+1;
 
-		$a = [
-		'description_blog' => $new_description,
-		'id_blog'    => $id_blog,
-		];
-		$sql = "UPDATE " . static::$table ."  SET description = :description_blog WHERE id_post = :id_blog";
-        $result = $this->executeReq($sql, $a, 0);
-        return $result;
-	}
-	public function update_date_correction($id_blog,$date_correction)
-	{
-
-		$a = [
-		'date_blog' => $date_correction,
-		'id_blog'    => $id_blog,
-		];
-		$sql = "UPDATE " . static::$table ."  SET date_correction = :date_blog WHERE id_post = :id_blog";
-        $result = $this->executeReq($sql, $a, 0);
-        return $result;
-	}
-	public function update_subject($id_blog,$id_subject)
-	{
-
-		$a = [
-		'id_subject' => $id_subject,
-		'id_blog'    => $id_blog,
-		];
-		$sql = "UPDATE " . static::$table ."  SET id_subject = :id_subject WHERE id_post = :id_blog";
-        $result = $this->executeReq($sql, $a, 0);
-        return $result;
-	}
-	public function  update_chapter($id_blog,$id_chapter)
-    {
-		$a = [
-		'chapter' => $id_chapter,
-		'id_blog'    => $id_blog,
-		];
-		$sql = "UPDATE " . static::$table ."  SET id_chapter = :chapter WHERE id_post = :id_blog";
-        $result = $this->executeReq($sql, $a, 0);
-        return $result;
-	}
-	public function update_prof($id_blog,$id_user_prof)
-	{
-		$a = [
-		'id_prof' => $id_user_prof,
-		'id_blog'    => $id_blog,
-		];
-		$sql = "UPDATE " . static::$table ."  SET id_user_USERS = :id_prof WHERE id_post = :id_blog";
-        $result = $this->executeReq($sql, $a, 0);
-        return $result;
-	}
-
-    public function add_post($id_user, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $id_post, $url_picture, $type_post)
-    {
         $date = date('d.m.y h:i');
         $sql = "INSERT INTO " . static::$table . "(id_user, id_class, id_chapter, id_subject, id_user_teacher, title, description, id_post, url_file, type_post, date_post) VALUES (:id_user, :id_class, :id_chapter, :id_subject, :id_teacher, :title, :description, :id_post, :url_picture, :type_post, :date_post)";
         $param = [
@@ -240,6 +141,62 @@ class BlogModel extends Model
             ':type_post' => $type_post
         ];
         $this->executeReq($sql,$param, 0);
+    }
+
+    /**
+     * Fonction qui permet de mettre à jour un post ou une annale dans la base de données
+     * @param $id_post int
+     * @param $title string
+     * @param $description string
+     * @param $url_file string
+     * @param $type_post int
+     * @param $id_subject int
+     * @param $id_class int
+     * @param $id_chapter int
+     * @param $id_user_teacher int
+     * @return \PDOStatement
+     */
+    public function update($id_post, $title, $description, $url_file, $type_post, $id_subject, $id_class, $id_chapter, $id_user_teacher)
+    {
+        $date_post = date('Y-m-d G:i:s');
+        $param = [
+            ':id_post' => $id_post,
+            ':title' => $title,
+            ':description' => $description,
+            ':date_post' => $date_post,
+            ':url_file' => $url_file,
+            ':type_post' => $type_post,
+            ':id_subject' => $id_subject,
+            ':id_class' => $id_class,
+            ':id_chapter' => $id_chapter,
+            ':id_user_teacher' => $id_user_teacher,
+        ];
+        $sql = "UPDATE " . static::$table . " SET title = :title, description = :description, date_post = :date_post, url_file = :url_file,
+        type_post = :type_post, id_subject = :id_subject, id_class =:id_class, id_chapter = :id_chapter,
+        id_user_teacher = :id_user_teacher
+        WHERE id_post = :id_post";
+        $result = $this->executeReq($sql, $param, 0);
+        return $result;
+    }
+
+    /**
+     * Fonction qui permet de mettre à jour la correction d'une annale
+     * @param $id_post int
+     * @param $url_correction string
+     * @return \PDOStatement
+     */
+    public function  updateCorrection($id_post, $url_correction)
+    {
+        $date_correction = date('Y-m-d G:i:s');
+        $param = [
+            ':id_post' => $id_post,
+            ':date_correction' => $date_correction,
+            ':url_correction' => $url_correction,
+        ];
+        $sql = "UPDATE " . static::$table . " SET date_correction = :date_correction, url_correction = :url_correction 
+        WHERE id_post = :id_post";
+        $result = $this->executeReq($sql, $param, 0);
+        return $result;
     }
 
     /**

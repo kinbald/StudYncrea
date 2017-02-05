@@ -32,11 +32,16 @@ class PromsModel extends Model
         return $options;
     }
 
+    /**
+     * Fonction qui renvoie le nom correspondant à l'id
+     * @param $id_class int
+     * @return string
+     */
     public function findClassName($id_class)
     {
-        $sql = "SELECT name_class FROM " . static::$table . " WHERE " . $this->_idName . " = : " . $this->_idName;;
+        $sql = "SELECT name_class FROM " . static::$table . " WHERE " . $this->_idName . " = :" . $this->_idName;;
         $param = [
-            $this->_idName => $id_class,
+            ":".$this->_idName => $id_class,
         ];
         $result = $this->executeReq($sql, $param, 1);
         $result = $result['name_class'];

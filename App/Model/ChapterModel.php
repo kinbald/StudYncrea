@@ -19,6 +19,10 @@ class ChapterModel extends Model
     public static $table = 'CHAPTER';
     private $_idName = 'id_chapter';
 
+    /**
+     * Fonction qui retourne un tableau des chapitres
+     * @return array
+     */
     public function getAll()
     {
         $sql = "SELECT * FROM " . static::$table . " ORDER BY name_chapter";
@@ -30,11 +34,16 @@ class ChapterModel extends Model
         return $options;
     }
 
+    /**
+     * Fonction qui retourne le nom du chapitre correspondant à l'id
+     * @param $id_chapter int
+     * @return string
+     */
     public function findChapterName($id_chapter)
     {
-        $sql = "SELECT name_chapter FROM " . static::$table . " WHERE " . $this->_idName . " = : " . $this->_idName;
+        $sql = "SELECT name_chapter FROM " . static::$table . " WHERE " . $this->_idName . " = :" . $this->_idName;
         $param = [
-            $this->_idName => $id_chapter,
+            ":".$this->_idName => $id_chapter,
         ];
         $result = $this->executeReq($sql, $param, 1);
         $result = $result['name_chapter'];

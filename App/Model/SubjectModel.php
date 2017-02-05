@@ -19,6 +19,10 @@ class SubjectModel extends Model
     public static $table = 'SUBJECTS';
     private $_idName = 'id_subject';
 
+    /**
+     * Fonction qui retourne un tableau des matières
+     * @return array
+     */
     public function getAll()
     {
         $sql = "SELECT * FROM " . static::$table . " ORDER BY name_subject";
@@ -30,11 +34,16 @@ class SubjectModel extends Model
         return $options;
     }
 
+    /**
+     * Fonction qui renvoie le nom correspondant à l'id
+     * @param $id_subject int
+     * @return string
+     */
     public function findSubjectName($id_subject)
     {
-        $sql = "SELECT name_subject FROM " . static::$table . " WHERE " . $this->_idName . " = : " . $this->_idName;;
+        $sql = "SELECT name_subject FROM " . static::$table . " WHERE " . $this->_idName . " = :" . $this->_idName;;
         $param = [
-            $this->_idName => $id_subject,
+            ":".$this->_idName => $id_subject,
         ];
         $result = $this->executeReq($sql, $param, 1);
         $result = $result['name_subject'];

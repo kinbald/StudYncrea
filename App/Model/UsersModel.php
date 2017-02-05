@@ -146,6 +146,10 @@ class UsersModel extends Model
         return 0;
     }
 
+    /**
+     * Fonction qui renvoie un tableau des professeurs
+     * @return array
+     */
     public function getTeacher()
     {
         $sql = "SELECT * FROM " . static::$table . " INNER JOIN teach ON " . static::$table . "." . $this->getIdName() . " = teach." . $this->getIdName() . " ORDER BY name_user";
@@ -157,11 +161,16 @@ class UsersModel extends Model
         return $options;
     }
 
+    /**
+     * Fonction qui renvoie le nom correspondant à l'id
+     * @param $id_user int
+     * @return string
+     */
     public function findUserName($id_user)
     {
-        $sql = "SELECT name_user FROM " . static::$table . " WHERE " . $this->_idName . " = : " . $this->_idName;;
+        $sql = "SELECT name_user FROM " . static::$table . " WHERE " . $this->_idName . " = :" . $this->_idName;;
         $param = [
-            $this->getIdName() => $id_user,
+            ":".$this->getIdName() => $id_user,
         ];
         $result = $this->executeReq($sql, $param, 1);
         $result = $result['name_user'];

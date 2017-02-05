@@ -90,7 +90,7 @@ class Input
             if($_FILES[$field]['size']<=$max_size){
                 $extension_upload = strtolower(  substr(  strrchr($_FILES[$field]['name'], '.')  ,1)  );
                 if ( in_array($extension_upload,$extension) ){
-                    return true;
+                    return $extension_upload;
                 }else{
                     $this->errors[$type] = "Extension incorrect.";
                     return false;
