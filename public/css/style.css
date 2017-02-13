@@ -16,3 +16,7 @@
 body {
     background-color: #eeeeee;
 }
+
+.fixed-action-btn{
+	bottom: 45px; right: 24px;
+}

@@ -20,35 +20,45 @@
 </head>
 
 <body>
+    <!-- NAVBAR -->
+    <div class="nav">
+        <nav class="teal" role="navigation">
+            <div class="nav-wrapper container">
+                <a id="logo-container" href="index.php" class="brand-logo right">Stud'Yncrea</a>
+                <ul class="left hide-on-med-and-down">
+                    <li><a href="index.php">Accueil</a></li>
+                    <li><a href="affichage_blog.php">Questions</a></li>
+                    <li><a href="affichage_topic.php">Sujets</a></li>
+                </ul>
+                <ul class="left input-field">
+                    <input id="autocomplete-input" type="search" placeholder="Cherchez un sujet" required>
+                    <label for="autocomplete-input"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </ul>
 
-<!-- NAVBAR -->
-<div class="nav">
-    <nav class="teal" role="navigation">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="index.php" class="brand-logo right">Stud'Yncrea</a>
-            <ul class="left hide-on-med-and-down">
-                <li><a href="index.php">Accueil</a></li>
-                <li><a href="affichage_blog.php">Questions</a></li>
-                <li><a href="#!">Sujets</a></li>
-            </ul>
-            <ul class="left input-field">
-                <input id="search" type="search" placeholder="Cherchez un sujet" required>
-                <label for="search"><i class="material-icons">search</i></label>
-                <i class="material-icons">close</i>
-            </ul>
-
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-        </div>
-    </nav>
-    <ul class="side-nav" id="nav-mobile">
-        <li>
-            <a href="#">
-                <input id="search" type="search" placeholder="Cherchez un sujet">
-            </a>
-        </li>
-        <li><a href="index.php">Accueil</a></li>
-        <li><a href="affichage_blog.php">Questions</a></li>
-        <li><a href="#!">Sujets</a></li>
-    </ul>
+                <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+        <ul class="side-nav" id="nav-mobile">
+            <li>
+                <a href="#">
+                    <input id="search" type="search" placeholder="Cherchez un sujet">
+                </a>
+            </li>
+            <li><a href="index.php">Accueil</a></li>
+            <li><a href="affichage_blog.php">Questions</a></li>
+            <li><a href="affichage_topic.php">Sujets</a></li>
+        </ul>
+    </div>
+    <!--  -->
+    <!-- Bouton Flottant -->
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large teal">
+        <i class="material-icons">mode_edit</i>
+    </a>
+    <ul>
+      <li><a class="btn-floating red" href="affichage_blog.php#annals"><i class="material-icons">library_add</i></a></li>
+      <li><a class="btn-floating yellow darken-1" href="affichage_blog.php#questions"><i class="material-icons">forum</i></a></li>
+  </ul>
+  <!--  -->
 </div>
-<!--  -->

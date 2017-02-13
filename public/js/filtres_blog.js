@@ -29,10 +29,10 @@
         var select_promos = document.getElementById("ajax_select_promo");
         var values_promos = getSelectValues(select_promos); 
 
-    var xhr = getXMLHttpRequest();
-	
-    xhr.onreadystatechange = function(){ 
-        if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) { 
+        var xhr = getXMLHttpRequest();
+        
+        xhr.onreadystatechange = function(){ 
+            if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) { 
             //"xhr.responseText" Permet de récupérer en text la page ou on à fait le post
             insertData(xhr.responseText);
             //Pour afficher le loader

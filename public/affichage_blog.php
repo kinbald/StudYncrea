@@ -50,7 +50,6 @@ $init = 1;
 <!-- MAIN -->
 <div class="row" id="hide">
     <?php
-        //Simulation d'affichage des blogs :
     $Blog = new \App\Model\BlogModel(App::getDb());
     $BlogALL = $Blog->display_blog_live();
     foreach ($BlogALL as $blog) {
@@ -61,13 +60,13 @@ $init = 1;
                     <img src="<?= $blog['url_avatar'] ?>" width="64" height="64">
                     <a class="black-text"><?= $blog['name_user'] ?></a>
                     <a class="right black-text"><?= $blog['name_subject'] ?></a><br>
-                    <a class="flow-text truncate black-text" style="" href="blog.php?post=<?= $blog['id_post']; ?>"><?= $blog['title'] ?></a>
+                    <a class="flow-text truncate black-text" style="" href="post.php?post=<?= $blog['id_post']; ?>"><?= $blog['title'] ?></a>
                     <br>
                     <a class="left grey-text"><?= $blog['name_class'] ?></a>
                     <a class="right grey-text"> <?= $blog['date_post'] ?></a>
                 </div>
                 <div class="card-action grey-text text-darken-4">
-                    <a class="blue-text" href="blog.php?post=<?= $blog['id_post']; ?>">Voir</a>
+                    <a class="blue-text" href="post.php?post=<?= $blog['id_post']; ?>">Répondre</a>
                 </div>
             </div>
         </div>
@@ -79,6 +78,6 @@ $init = 1;
 <!--  -->
 </div>
 <script src="js/oXHR.js"></script>
-<script src="js/actualise.js"></script>
+<script src="js/filtres_blog.js"></script>
 <?php
 include '../Vues/footer.php';
