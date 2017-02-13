@@ -57,7 +57,7 @@ $init = 1;
         <div class="col s12 m6 l6">
             <div class='card'>
                 <div class="card-content">
-                    <img src="<?= $blog['url_avatar'] ?>" width="64" height="64">
+                    <img src="<?= $blog['url_avatar'] ?>" width="50" height="50">
                     <a class="black-text"><?= $blog['name_user'] ?></a>
                     <a class="right black-text"><?= $blog['name_subject'] ?></a><br>
                     <a class="flow-text truncate black-text" style="" href="post.php?post=<?= $blog['id_post']; ?>"><?= $blog['title'] ?></a>

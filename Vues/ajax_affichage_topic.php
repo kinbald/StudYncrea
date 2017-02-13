@@ -27,16 +27,13 @@ if ($TopicALL != -1){
         <div class="col s12 m6 l6">
             <div class='card'>
                 <div class="card-content">
-                    <img src="<?= $topic['url_avatar'] ?>" width="64" height="64">
+                    <img src="<?= $topic['url_avatar'] ?>" width="45" height="45">
                     <a class="black-text"><?= $topic['name_user'] ?></a>
                     <a class="right black-text"><?= $topic['name_subject'] ?></a><br>
                     <a class="flow-text truncate black-text" style="" href="post.php?post=<?= $topic['id_post']; ?>"><?= $topic['title'] ?></a>
                     <br>
                     <a class="left grey-text"><?= $topic['name_class'] ?></a>
                     <a class="right grey-text"> <?= $topic['date_post'] ?></a>
-                </div>
-                <div class="card-action grey-text text-darken-4">
-                    <a class="blue-text" href="post.php?post=<?= $topic['id_post']; ?>">Voir</a>
                 </div>
             </div>
         </div>
