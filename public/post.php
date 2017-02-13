@@ -22,7 +22,7 @@ else
                 <div class="col s12 m12 l12">
                     <div class='card'>
                         <div class="card-content">
-                            <img src="<?= $post['url_avatar'] ?>" width="64" height="64">
+                            <img src="<?= $post['url_avatar'] ?>" width="59" height="59">
                             <a class="black-text"><?= $post['name_user'] ?></a>
                             <a class="right black-text"><?= $post['name_subject'] ?></a><br>
                             <div class="divider"></div>
@@ -30,34 +30,52 @@ else
                             <br>
                             <br>
                             <p><?= $post['description'] ?></p>
-                            <br>              
-                            <?php
-                            if (!empty($post['url_file']))
-                            {
-                                ?>
-                                <div class="divider"></div>
-                                <br>
-                                <img class="responsive-img materialboxed" width="200" src="<?= $post['url_file'] ?>">
-                                <button class="waves-effect waves-light btn right"><a class="white-text" target="_blank" href="<?= $post['url_file'] ?>">Ouvrir l'image</a></button>
-                                <br><br>
+                            <br> 
+                            <div class="row">             
                                 <?php
-                            }
+                                if (!empty($post['url_file']))
+                                {
+                                    ?>
+                                    <div class="divider"></div>
+                                    <img class="left responsive-img materialboxed" width="150" src="<?= $post['url_file'] ?>">
+                                    
+                                    <?php
+                                }
+                                if (!empty($post['url_file_secondary']))
+                                {
+                                    ?>
+                                    <img class="responsive-img materialboxed" width="150" src="<?= $post['url_file_secondary'] ?>">                             
+                                    <?php        
+                                }
+                                if (!empty($post['url_file']))
+                                {
+                                    ?>
+                                    <!-- <button class="waves-effect waves-light btn left"><a class="white-text" target="_blank" href="<?= $post['url_file'] ?>">Ouvrir</a></button> -->
+                                    <?php
+                                }
+                                if (!empty($post['url_file_secondary']))
+                                {
+                                    ?>
+                                    <!-- <button class="waves-effect waves-light btn right"><a class="white-text" target="_blank" href="<?= $post['url_file_secondary'] ?>">Ouvrir</a></button> -->
+                                    <?php
+                                }
                             ?>
-                            <a class="left grey-text"><?= $post['name_class'] ?></a>
-                            <a class="right grey-text"> <?= $post['date_post'] ?></a>
                         </div>
+                        <a class="left grey-text"><?= $post['name_class'] ?></a>
+                        <a class="right grey-text"> <?= $post['date_post'] ?></a>
                     </div>
                 </div>
             </div>
-            <?php
-        }
-        else
-        {
-            header('Location: affichage_blog.php');
-        }
-        ?>
-    </div>
-    <?php
+        </div>
+        <?php
+    }
+    else
+    {
+        header('Location: affichage_blog.php');
+    }
+    ?>
+</div>
+<?php
 }
 
 

@@ -15,31 +15,37 @@ $init = 1;
                 <div class="card-content">
                    <img style="display: none;" id="loader" class="right materialboxed" width="30" src="../pictures/Flip_Flop.gif">
                    <h5>Filtres :</h5>
-                   <form>
-                       <!-- Select des matières (affichage dynamique) -->
-                       <select multiple id="ajax_select_matiere" onchange="ajax(1)">
-                        <option disabled>Matières</option>
-                        <?php
-                        $Sub = $Blog->display_subjects_all();
-                        foreach ($Sub as $Subjects) {
-                            ?>
-                            <option value="<?= $Subjects['id_subject']; ?>"><?= $Subjects['name_subject']; ?></option>
-                            <?php
-                        }?>
-                    </select>
-                    <!--  -->
-                    <!-- Select des classes (affichage dynamique) -->
-                    <select multiple id="ajax_select_promo" onchange="ajax(2)">
-                        <option disabled>Classes</option>
-                        <?php
-                        $Proms = $Blog->display_proms_all();
-                        foreach ($Proms as $Promos) {
-                            ?>
-                            <option value="<?= $Promos['id_class']; ?>"><?= $Promos['name_class']; ?></option>
-                            <?php
-                        }?>
-                    </select>
-                    <!--  -->
+                   <form class="col s12">
+                       <div class="row">
+                           <div class="col s6 m6 l6">
+                               <!-- Select des matières (affichage dynamique) -->
+                               <select multiple id="ajax_select_matiere" onchange="ajax(1)">
+                                <option disabled>Matières</option>
+                                <?php
+                                $Sub = $Blog->display_subjects_all();
+                                foreach ($Sub as $Subjects) {
+                                    ?>
+                                    <option value="<?= $Subjects['id_subject']; ?>"><?= $Subjects['name_subject']; ?></option>
+                                    <?php
+                                }?>
+                            </select>
+                            <!--  -->
+                        </div>
+                        <div class="col s6 m6 l6">
+                            <!-- Select des classes (affichage dynamique) -->
+                            <select multiple id="ajax_select_promo" onchange="ajax(2)">
+                                <option disabled>Classes</option>
+                                <?php
+                                $Proms = $Blog->display_proms_all();
+                                foreach ($Proms as $Promos) {
+                                    ?>
+                                    <option value="<?= $Promos['id_class']; ?>"><?= $Promos['name_class']; ?></option>
+                                    <?php
+                                }?>
+                            </select>
+                            <!--  -->
+                        </div>
+                    </div>
                     <a class="right btn waves-effect waves-light" href="affichage_blog.php" ><i class="material-icons">replay</i></a>
                 </form>
             </div>
