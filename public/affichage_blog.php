@@ -13,13 +13,13 @@ $init = 1;
         <div class="card horizontal">
             <div class="card-stacked">
                 <div class="card-content">
-                   <img style="display: none;" id="loader" class="right materialboxed" width="30" src="../pictures/Flip_Flop.gif">
-                   <h5>Filtres :</h5>
-                   <form class="col s12">
-                       <div class="row">
-                           <div class="col s6 m6 l6">
-                               <!-- Select des matières (affichage dynamique) -->
-                               <select multiple id="ajax_select_matiere" onchange="ajax(1)">
+                 <img style="display: none;" id="loader" class="right materialboxed" width="30" src="../pictures/Flip_Flop.gif">
+                 <h5>Filtres :</h5>
+                 <form class="col s12">
+                     <div class="row">
+                         <div class="col s6 m6 l6">
+                             <!-- Select des matières (affichage dynamique) -->
+                             <select multiple id="ajax_select_matiere" onchange="ajax(1)">
                                 <option disabled>Matières</option>
                                 <?php
                                 $Sub = $Blog->display_subjects_all();
@@ -56,7 +56,6 @@ $init = 1;
 <!-- MAIN -->
 <div class="row" id="hide">
     <?php
-    $Blog = new \App\Model\BlogModel(App::getDb());
     $BlogALL = $Blog->display_blog_live();
     foreach ($BlogALL as $blog) {
         ?>
@@ -69,7 +68,7 @@ $init = 1;
                     <a class="flow-text truncate black-text" style="" href="post.php?post=<?= $blog['id_post']; ?>"><?= $blog['title'] ?></a>
                     <br>
                     <a class="left grey-text"><?= $blog['name_class'] ?></a>
-                    <a class="right grey-text"> <?= $blog['date_post'] ?></a>
+                    <a class="right grey-text"><?= $Blog::display_date($blog['date_post']); ?></a>                
                 </div>
                 <div class="card-action grey-text text-darken-4">
                     <a class="blue-text" href="post.php?post=<?= $blog['id_post']; ?>">Répondre</a>

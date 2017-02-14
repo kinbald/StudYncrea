@@ -33,7 +33,7 @@ if ($TopicALL != -1){
                     <a class="flow-text truncate black-text" style="" href="post.php?post=<?= $topic['id_post']; ?>"><?= $topic['title'] ?></a>
                     <br>
                     <a class="left grey-text"><?= $topic['name_class'] ?></a>
-                    <a class="right grey-text"> <?= $topic['date_post'] ?></a>
+                    <a class="right grey-text"><?= $Topic::display_date($topic['date_post']); ?></a>
                 </div>
             </div>
         </div>

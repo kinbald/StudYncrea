@@ -64,7 +64,7 @@ else
                                     ?>
                                     <div class="card-action">
                                         <div class="col s6 m3 l2">
-                                            <a class="waves-effect waves-teal btn-flat black-text" target="_blank" href="<?= $post['url_file'] ?>"><i class="material-icons left">
+                                            <a class="waves-effect waves-teal btn-flat black-text tooltipped" data-position="top" data-delay="50" data-tooltip="Ouvrir" target="_blank" href="<?= $post['url_file'] ?>"><i class="material-icons left">
                                                 keyboard_arrow_left</i></a>
                                             </div>
                                             <?php
@@ -73,7 +73,7 @@ else
                                             {
                                                 ?>
                                                 <div class="col s6 m3 l2">
-                                                    <a class="waves-effect waves-teal btn-flat black-text" target="_blank" href="<?= $post['url_file_secondary'] ?>"><i class="material-icons right">keyboard_arrow_right</i></a>
+                                                    <a class="waves-effect waves-teal btn-flat black-text tooltipped" data-position="top" data-delay="50" data-tooltip="Ouvrir" target="_blank" href="<?= $post['url_file_secondary'] ?>"><i class="material-icons right">keyboard_arrow_right</i></a>
                                                 </div>
                                                 <?php
                                             }
@@ -84,7 +84,7 @@ else
                                     ?>
                                 </div>
                                 <a class="left grey-text"><?= $post['name_class'] ?></a>
-                                <a class="right grey-text"> <?= $post['date_post'] ?></a>
+                                <a class="right grey-text"><?= $blog::display_date($post['date_post']); ?></a>
                             </div>
                         </div>
                     </div>

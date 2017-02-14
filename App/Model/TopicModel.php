@@ -11,7 +11,50 @@
 	{
 		public static $table = 'POSTS';
 		private $_idName = 'id_post';
+		/*
+		Affichage du  temps écoulé en fonction de la date du post. ($date_post en format sql classique 2017-02-08 06:07:09)
+		*/
+		public static function display_date($date_post)
+		{
+            $data1 = $date_post;//On récupère la date 
+            list($date,$time) = explode(" ",$data1);//On la sépare en 2
 
+            //On place dans les bonnes variables chaque attributs
+            list($annee, $mois, $jour) = explode("-", $date);
+            list($heure, $minute, $seconde) = explode(":", $time);
+
+            date_default_timezone_set('CET'); //Changement du fusiau horaire
+            $timestamp = mktime($heure, $minute, $seconde, $mois, $jour, $annee);
+            $time = time() - $timestamp;
+
+            $seconde = floor($time);
+            $minute = floor($seconde/60);
+            $heure = floor($minute/60);
+            $jour = floor($heure/24);
+            $mois = floor($jour/31);
+            $annee = floor($jour/365.25);
+
+            //Affiche une phrase différente selon la date du post (gére l'orthographe)
+            if ($seconde < 59){
+            	if ($seconde == 1) echo "Il y a ".$seconde." seconde";
+            	else echo "Il y a ".$seconde." secondes";
+            }elseif ($minute < 59){
+            	if ($minute == 1) echo "Il y a ".$minute." minute";
+            	else echo "Il y a ".$minute." minutes";
+            }elseif ($heure < 23) {
+            	if ($heure == 1) echo "Il y a ".$heure." heure";
+            	else echo "Il y a ".$heure." heures";
+            }elseif ($jour < 30) {
+            	if ($jour == 1) echo "Il y a ".$jour." jour";
+            	else echo "Il y a ".$jour." jours";
+            }elseif ($mois < 12) {
+            	if ($mois == 1) echo "Il y a ".$mois." mois";
+            	else echo "Il y a ".$mois." mois";
+            }else{
+            	if ($annee == 1) echo "Il y a ".$annee." an";
+            	else echo "Il y a ".$annee." ans";
+            }
+        }
 		public function display_proms_all()
 		{
 			$sql = "SELECT * FROM PROMS

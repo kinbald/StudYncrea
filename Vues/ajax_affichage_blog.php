@@ -24,7 +24,7 @@ foreach ($BlogALL as $blog) {
                 <a class="flow-text truncate black-text" style="" href="post.php?post=<?= $blog['id_post']; ?>"><?= $blog['title'] ?></a>
                 <br>
                 <a class="left grey-text"><?= $blog['name_class'] ?></a>
-                <a class="right grey-text"><?= $blog['date_post'] ?></a>
+                <a class="right grey-text"><?= $Blog::display_date($blog['date_post']); ?></a>
             </div>
             <div class="card-action grey-text text-darken-4">
                 <a class="blue-text" href="post.php?post=<?= $blog['id_post']; ?>">Répondre</a>
