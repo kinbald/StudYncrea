@@ -53,4 +53,34 @@ class App
             return true;
         }
     }
+
+    /**
+     * Factory pour classe Auth
+     * @return \App\Auth
+     */
+    public static function getAuth()
+    {
+        return new App\Auth(App\Session::getInstance(), new \App\Model\UsersModel(self::getDb()));
+    }
+
+    /**
+     * Factory pour model
+     * @param $table string
+     * @return \Core\Model\Model
+     */
+    public static function getModel($table)
+    {
+        $class_name = "\\App\\Model\\" . ucfirst($table) . 'Model';
+        return new $class_name(self::getDb());
+    }
+
+    /**
+     * Redirection directe
+     * @param $page
+     */
+    public static function redirect($page)
+    {
+        header("Location: $page");
+        exit();
+    }
 }
