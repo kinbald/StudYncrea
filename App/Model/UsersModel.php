@@ -121,7 +121,8 @@ class UsersModel extends Model
 
     public function registerUser($email, $password, $name, $surname, $role, $class)
     {
-        if ($this->checkUserExist($email) === FALSE) {
+        if ($this->checkUserExist($email) === FALSE)
+        {
             $id = $this->lastInsertId($this->getIdName());
             $id = $id === FALSE ? 1 : $id + 1;
             $sql = "
@@ -142,8 +143,9 @@ class UsersModel extends Model
                     ':class' => $class,
                 ];
             $add = $this->executeReq($sql, $param, 0);
+            return $token;
         }
-        return 0;
+        return -1;
     }
 
     /**
