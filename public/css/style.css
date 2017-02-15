@@ -9,10 +9,21 @@
 	}
 }
 
+.fixed-action-btn{
+	bottom: 70px; right: 70px;
+}
+
+@media screen and (max-width:480px) {
+	.fixed-action-btn{
+		bottom: 45px; right: 25px;
+	}
+}
+
 .grey-text {
 	font-family: thin;
 }
 
 body {
-    background-color: #eeeeee;
+	background-color: #eeeeee;
 }
+
