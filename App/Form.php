@@ -151,6 +151,36 @@ $text<i class=\"material-icons left\">$icon</i>");
      * @param array $options Différentes options du select
      * @param bool $required Choix nécessaire ou non à l'envoi du formulaire
      */
+    public function selectInput($name, $label, $options, $required = false)
+    {
+        if ($required === true) {
+            echo "<div class=\"input-field col s12\">
+                            <select name=\"$name\" required>
+                                    <option value=\"0\" disabled selected>$label</option>";
+            foreach ($options as $option => $value) {
+                echo "<option value=\"$option\">$value</option>";
+            }
+            echo "</select><label>$label</label></div>";
+        } else {
+            echo "<div class=\"input-field col s12\">
+                            <select name=\"$name\">
+                                    <option value=\"\" disabled selected>$label</option>";
+            foreach ($options as $option => $value) {
+                echo "<option value=\"$option\">$value</option>";
+            }
+            echo "</select><label>$label</label></div>";
+        }
+    }
+
+    /**
+     * Fonction permettant de créer un select en envoyant un tableau associatif pour les différents choix
+     * @param string $name Nom / Id du select
+     * @param string $label Label du select
+     * @param array $options Différentes options du select
+     * @param string $initValue
+     * @param string $initName
+     * @param bool $required Choix nécessaire ou non à l'envoi du formulaire
+     */
     public function selectInputInit($name, $label, $options, $initValue = null, $initName = null, $required = false)
     {
 
