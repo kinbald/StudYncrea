@@ -3,6 +3,7 @@ include "../App/App.php";
 App::load();
 App::getAuth()->restrict();
 $Topic = new \App\Model\TopicModel(App::getDb());
+$float = 1;
 include '../Vues/header.php';
 
 $init = 1;
