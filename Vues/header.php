@@ -56,7 +56,7 @@ if (isset($float)) {
     <!--  -->
     <!-- Bouton Flottant -->
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large teal">
+        <a class="btn-floating btn-large red">
             <i class="material-icons">mode_edit</i>
         </a>
         <ul>

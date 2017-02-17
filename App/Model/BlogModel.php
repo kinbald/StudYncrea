@@ -249,57 +249,45 @@ class BlogModel extends Model
         return $result;
     }
 
-    public function display_blog_filtres($id_class, $id_subject, $cas)
+    public function display_blog_filtres($id_class,$id_subject)
     {
-        $nul = 0;
-        if ($cas == 'subject') {
-            if ($id_subject == '') {
-                $result = $this->display_blog_live();
-                $nul = 1;
-            }
-        }
-        if ($cas == 'class') {
-            if ($id_class == '') {
-                $result = $this->display_blog_live();
-                $nul = 1;
-            }
-        }
-        if ($nul != 1) {
-            $sql = "SELECT * FROM POSTS 
-        		INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
-        		INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
-        		INNER JOIN USERS on USERS.id_user = POSTS.id_user
-        		WHERE type_post = 0 ";
+        $sql = "SELECT * FROM POSTS 
+          INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
+          INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
+          INNER JOIN USERS on USERS.id_user = POSTS.id_user
+          WHERE type_post = 0 ";
 
-            if ($id_class != '') {
-                $a = explode(",", $id_class);
-                foreach ($a as $id => $value) {
-                    if ($id == 0) {
-                        $sql = $sql . "AND ( POSTS.id_class = '$value' ";
-                    } else {
-                        $sql = $sql . "OR POSTS.id_class = '$value' ";
-                    }
+        if ($id_class != '')
+        {
+            $a = explode(",", $id_class);
+            foreach($a as $id => $value)
+            {
+                if ($id == 0){
+                    $sql = $sql . "AND ( POSTS.id_class = '$value' ";
                 }
-                $sql = $sql . " ) ";
-            }
-
-            if ($id_subject != '') {
-                $b = explode(",", $id_subject);
-                foreach ($b as $id => $value2) {
-                    if ($id == 0) {
-                        $sql = $sql . "AND ( POSTS.id_subject = '$value2' ";
-                    } else {
-                        $sql = $sql . "OR POSTS.id_subject = '$value2' ";
-                    }
+                else{
+                    $sql = $sql . "OR POSTS.id_class = '$value' ";
                 }
-                $sql = $sql . " ) ";
             }
-
-            $sql = $sql . "ORDER BY date_post DESC";
-            // die($sql);
-            $result = $this->executeReq($sql);
+            $sql = $sql . " ) ";
         }
 
+        if ($id_subject != '')
+        {
+            $b = explode(",", $id_subject);
+            foreach($b as $id => $value2)
+            {
+                if ($id == 0){
+                    $sql = $sql . "AND ( POSTS.id_subject = '$value2' ";
+                }
+                else{
+                    $sql = $sql . "OR POSTS.id_subject = '$value2' ";
+                }
+            }
+            $sql = $sql . " ) ";
+        }
+        $sql = $sql . "ORDER BY date_post DESC";
+        $result = $this->executeReq($sql);
         return $result;
     }
 

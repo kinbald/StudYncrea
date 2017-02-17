@@ -122,96 +122,81 @@ class TopicModel extends Model
         return $result;
     }
 
-    public function display_topic_filtres($id_class, $id_subject, $id_teach, $id_style, $cas)
+    public function display_topic_filtres($id_class,$id_subject,$id_teach,$id_style)
     {
-        $nul = 0;
-        if ($cas == 'subject') {
-            if ($id_subject == '') {
-                $result = -1;
-                $nul = 1;
-            }
-        }
-        if ($cas == 'class') {
-            if ($id_class == '') {
-                $result = -1;
-                $nul = 1;
-            }
-        }
-        if ($cas == 'teach') {
-            if ($id_teach == '') {
-                $result = -1;
-                $nul = 1;
-            }
-        }
-        if ($cas == 'style') {
-            if ($id_style == '') {
-                $result = -1;
-                $nul = 1;
-            }
-        }
-        if ($nul != 1) {
-            $sql = "SELECT * FROM POSTS 
-				INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
-				INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
-				INNER JOIN USERS on USERS.id_user = POSTS.id_user
-				WHERE type_post = 1 ";
 
-            if ($id_class != '') {
-                $a = explode(",", $id_class);
-                foreach ($a as $id => $value) {
-                    if ($id == 0) {
-                        $sql = $sql . "AND ( POSTS.id_class = '$value' ";
-                    } else {
-                        $sql = $sql . "OR POSTS.id_class = '$value' ";
-                    }
+        $sql = "SELECT * FROM POSTS 
+        	INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
+        	INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
+        	INNER JOIN USERS on USERS.id_user = POSTS.id_user
+        	WHERE type_post = 1 ";
+
+        if ($id_class != '')
+        {
+            $a = explode(",", $id_class);
+            foreach($a as $id => $value)
+            {
+                if ($id == 0){
+                    $sql = $sql . "AND ( POSTS.id_class = '$value' ";
                 }
-                $sql = $sql . " ) ";
-            }
-
-            if ($id_subject != '') {
-                $b = explode(",", $id_subject);
-                foreach ($b as $id => $value2) {
-                    if ($id == 0) {
-                        $sql = $sql . "AND ( POSTS.id_subject = '$value2' ";
-                    } else {
-                        $sql = $sql . "OR POSTS.id_subject = '$value2' ";
-                    }
+                else{
+                    $sql = $sql . "OR POSTS.id_class = '$value' ";
                 }
-                $sql = $sql . " ) ";
             }
-
-            if ($id_teach != '') {
-                $c = explode(",", $id_teach);
-                foreach ($c as $id => $value3) {
-                    if ($id == 0) {
-                        $sql = $sql . "AND ( POSTS.id_user_teacher = '$value3' ";
-                    } else {
-                        $sql = $sql . "OR POSTS.id_user_teacher = '$value3' ";
-                    }
-                }
-                $sql = $sql . " ) ";
-            }
-
-            if ($id_style != '') {
-                $d = explode(",", $id_style);
-                foreach ($d as $id => $value4) {
-                    if ($id == 0) {
-                        $sql = $sql . "AND ( POSTS.style_post = '$value4' ";
-                    } else {
-                        $sql = $sql . "OR POSTS.style_post = '$value4' ";
-                    }
-                }
-                $sql = $sql . " ) ";
-            }
-
-            $sql = $sql . "ORDER BY date_post DESC";
-            // die($sql);
-            $result = $this->executeReq($sql);
+            $sql = $sql . " ) ";
         }
+
+        if ($id_subject != '')
+        {
+            $b = explode(",", $id_subject);
+            foreach($b as $id => $value2)
+            {
+                if ($id == 0){
+                    $sql = $sql . "AND ( POSTS.id_subject = '$value2' ";
+                }
+                else{
+                    $sql = $sql . "OR POSTS.id_subject = '$value2' ";
+                }
+            }
+            $sql = $sql . " ) ";
+        }
+
+        if ($id_teach != '')
+        {
+            $c = explode(",", $id_teach);
+            foreach($c as $id => $value3)
+            {
+                if ($id == 0){
+                    $sql = $sql . "AND ( POSTS.id_user_teacher = '$value3' ";
+                }
+                else{
+                    $sql = $sql . "OR POSTS.id_user_teacher = '$value3' ";
+                }
+            }
+            $sql = $sql . " ) ";
+        }
+
+        if ($id_style != '')
+        {
+            $d = explode(",", $id_style);
+            foreach($d as $id => $value4)
+            {
+                if ($id == 0){
+                    $sql = $sql . "AND ( POSTS.style_post = '$value4' ";
+                }
+                else{
+                    $sql = $sql . "OR POSTS.style_post = '$value4' ";
+                }
+            }
+            $sql = $sql . " ) ";
+        }
+
+        $sql = $sql . "ORDER BY date_post DESC";
+        // die($sql);
+        $result = $this->executeReq($sql);
 
         return $result;
     }
-
     /*Entrée: type: chaine de caractère: Titre du topic*/
     public function display_topic_title($title)
     {

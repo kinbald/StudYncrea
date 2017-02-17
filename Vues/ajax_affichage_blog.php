@@ -3,15 +3,7 @@ include "../App/App.php";
 App::load();
 $Blog = new \App\Model\BlogModel(App::getDb());
 
-//Selon la variable reçu en POST on execute une fonction différente
-if ($_POST['CAS'] == 1)//Select des matières
-{
-    $BlogALL = $Blog->display_blog_filtres($_POST['id_CLASSES'],$_POST['id_MATIERES'],'subject');
-}
-if ($_POST['CAS'] == 2)//Select des promos
-{
-    $BlogALL = $Blog->display_blog_filtres($_POST['id_CLASSES'],$_POST['id_MATIERES'],'class');
-}
+$BlogALL = $Blog->display_blog_filtres($_POST['id_CLASSES'],$_POST['id_MATIERES']);
 
 foreach ($BlogALL as $blog) {
     ?>

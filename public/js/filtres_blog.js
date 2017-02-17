@@ -1,3 +1,7 @@
+//Au chargement de la page on vérifie l'états des filtres (vides ou cochés)
+window.addEventListener("load", function () {
+    ajax();
+}, false);
 /*
     @author : Herrenschmidt Félix
     @description : Permet de placer dans un tableau tout les éléments sélectionnés dans le select
@@ -21,7 +25,7 @@
     @author : Herrenschmidt Félix
     @description : Fonction AJAX qui permet d'afficher les questions selon les filtres séléctionnés
     */
-    function ajax(verif){
+    function ajax(){
 
         var select_matieres = document.getElementById("ajax_select_matiere");
         var values_matieres = getSelectValues(select_matieres);//values_matieres est un tableau en JS 
@@ -47,8 +51,7 @@
     //On protège les variables que l'on transportes, meme en POST
     var tab_promos = encodeURIComponent(values_promos);
     var tab_matieres = encodeURIComponent(values_matieres);
-    document.getElementById("hide").style.display = "none";//Je fais disparaitre les questions de départ
-    xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&CAS=" + verif); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+    xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
 }
 
 

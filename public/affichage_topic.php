@@ -3,7 +3,6 @@ include "../App/App.php";
 App::load();
 App::getAuth()->restrict();
 $Topic = new \App\Model\TopicModel(App::getDb());
-
 include '../Vues/header.php';
 
 $init = 1;
@@ -21,7 +20,7 @@ $init = 1;
                      <div class="row">
                          <div class="col s6 m6 l6">
                              <!-- Select des styles de sujets (affichage dynamique) -->
-                             <select multiple id="ajax_select_style" onchange="ajax(4)">
+                             <select multiple id="ajax_select_style" onchange="ajax()">
                              <option disabled>Type (DS...)</option>
                                 <option value="0">DS</option>
                                 <option value="1">DM</option>
@@ -32,7 +31,7 @@ $init = 1;
                         </div>
                         <div class="col s6 m6 l6">
                             <!-- Select des classes (affichage dynamique) -->
-                            <select multiple id="ajax_select_promo" onchange="ajax(2)">
+                            <select multiple id="ajax_select_promo" onchange="ajax()">
                                 <option disabled>Classes</option>
                                 <?php
                                 $Proms = $Topic->display_proms_all();
@@ -48,7 +47,7 @@ $init = 1;
                     <div class="row">
                         <div class="col s6 m6 l6">
                             <!-- Select des matières (affichage dynamique) -->
-                            <select multiple id="ajax_select_matiere" onchange="ajax(1)">
+                            <select multiple id="ajax_select_matiere" onchange="ajax()">
                                 <option disabled>Matières</option>
                                 <?php
                                 $Sub = $Topic->display_subjects_all();
@@ -62,7 +61,7 @@ $init = 1;
                         </div>
                         <div class="col s6 m6 l6">
                             <!-- Select des professeurs (affichage dynamique) -->
-                            <select multiple id="ajax_select_prof" onchange="ajax(3)">
+                            <select multiple id="ajax_select_prof" onchange="ajax()">
                                 <option disabled>Professeurs</option>
                                 <?php
                                 $Teach = $Topic->display_topic_teachers();
