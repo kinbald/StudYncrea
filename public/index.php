@@ -4,6 +4,8 @@ App::load();
 include '../Vues/header.php';
 
 $init = 1;
+
+include '../Vues/index.php';
 ?>
 
 <!-- MAIN HTML CONTENT -->

@@ -45,7 +45,7 @@ class Form
      */
     private function surroundWith($content)
     {
-        $div = '<div class="input-field">';
+        $div = '<div class="input-field col s12">';
         return $div . $content . '</div>';
     }
 

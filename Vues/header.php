@@ -6,18 +6,18 @@
  * Time: 14:01
  */
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <!--Import Google Icon Font-->
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
 
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-</head>
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
 
 <body>
     <!-- NAVBAR -->
@@ -50,15 +50,23 @@
             <li><a href="affichage_topic.php">Sujets</a></li>
         </ul>
     </div>
+<?php
+if (isset($float)) {
+    ?>
     <!--  -->
     <!-- Bouton Flottant -->
     <div class="fixed-action-btn">
-      <a class="btn-floating btn-large teal">
-        <i class="material-icons">mode_edit</i>
-    </a>
-    <ul>
-      <li><a class="btn-floating red" href="affichage_blog.php#annals"><i class="material-icons">library_add</i></a></li>
-      <li><a class="btn-floating yellow darken-1" href="affichage_blog.php#questions"><i class="material-icons">forum</i></a></li>
-  </ul>
-  <!--  -->
-</div>
+        <a class="btn-floating btn-large teal">
+            <i class="material-icons">mode_edit</i>
+        </a>
+        <ul>
+            <li><a class="btn-floating red" href="affichage_blog.php#annals"><i
+                            class="material-icons">library_add</i></a>
+            </li>
+            <li><a class="btn-floating yellow darken-1" href="affichage_blog.php#questions"><i
+                            class="material-icons">forum</i></a></li>
+        </ul>
+        <!--  -->
+    </div>
+    <?php
+}

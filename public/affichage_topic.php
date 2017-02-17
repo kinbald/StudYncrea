@@ -1,7 +1,9 @@
 <?php
 include "../App/App.php";
 App::load();
+App::getAuth()->restrict();
 $Topic = new \App\Model\TopicModel(App::getDb());
+
 include '../Vues/header.php';
 
 $init = 1;

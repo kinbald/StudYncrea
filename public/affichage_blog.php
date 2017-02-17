@@ -1,6 +1,7 @@
 <?php
 include "../App/App.php";
 App::load();
+App::getAuth()->restrict();
 $Blog = new \App\Model\BlogModel(App::getDb());
 include '../Vues/header.php';
 

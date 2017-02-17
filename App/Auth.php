@@ -102,7 +102,7 @@ class Auth
         if(!$this->getSession()->read('auth'))
         {
             $this->getSession()->setFlash('danger', "Vous n'avez pas le droit d'accéder à cette page");
-            \App::redirect("connect.php");
+            \App::redirect("register.php");
             exit();
         }
     }

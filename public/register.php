@@ -9,70 +9,73 @@
 include '../Vues/header.php';
 ?>
     <div class="container">
-        <h1>S'inscrire :</h1>
+        <div class="section">
+            <h1>S'inscrire :</h1>
 
-        <?php
+            <p class="flow-text">Déjà inscrit ? Accède directement au site <a href="connect.php">ici</a></p>
+            <?php
 
-        /** Classe APP pour lancement */
-        require '../App/App.php';
-        App::load();
-        $db = App::getDb();
-        $auth = App::getAuth();
+            /** Classe APP pour lancement */
+            require '../App/App.php';
+            App::load();
+            $db = App::getDb();
+            $auth = App::getAuth();
 
-        $auth->restrictAlreadyConnected();
+            $auth->restrictAlreadyConnected();
 
-        $user = new \App\Model\UsersModel($db);
-        $promsTable = new \App\Model\PromsModel($db);
-        $form = new \App\Form($_POST);
+            $user = new \App\Model\UsersModel($db);
+            $promsTable = new \App\Model\PromsModel($db);
+            $form = new \App\Form($_POST);
 
-        $options = $promsTable->all();
-        $select = true;
+            $options = $promsTable->all();
+            $select = true;
 
-        if ($_POST) {
-            $datas = [
-                'email' => $_POST['email'],
-                'password' => $_POST['password']
-            ];
+            if ($_POST) {
+                $datas = [
+                    'email' => $_POST['email'],
+                    'password' => $_POST['password']
+                ];
 
-            $valid = new \App\Input($datas);
+                $valid = new \App\Input($datas);
 
-            $infos = $valid->check_email('email', 'email');
-            $password = $valid->text('password');
-            if (!isset($_POST['prom'])) {
-                $errors['classe'] = 'Vous n\'avez pas choisi de classe';
-            }
-            $valid->check_pseudo_password('password', 5, 'password');
-
-            if ($valid->isValid()) {
-                if ($user->checkUserExist($_POST['email'])) {
-                    $errors['user'] = 'L\'utilisateur existe déjà';
+                $infos = $valid->check_email('email', 'email');
+                $password = $valid->text('password');
+                if (!isset($_POST['prom'])) {
+                    $errors['classe'] = 'Vous n\'avez pas choisi de classe';
                 }
-            } else {
-                $errors = $valid->getErrors();
-            }
+                $valid->check_pseudo_password('password', 5, 'password');
 
-            /** Affichage des erreurs */
-            if (!empty($errors)) { ?>
-                <div class="card red">
-                    <div class="card-content white-text">
-                        <?php foreach ($errors as $error) {
-                            echo $error . "<br/>";
-                        } ?>
+                if ($valid->isValid()) {
+                    if ($user->checkUserExist($_POST['email'])) {
+                        $errors['user'] = 'L\'utilisateur existe déjà';
+                    }
+                } else {
+                    $errors = $valid->getErrors();
+                }
+
+                /** Affichage des erreurs */
+                if (!empty($errors)) { ?>
+                    <div class="card red">
+                        <div class="card-content white-text">
+                            <?php foreach ($errors as $error) {
+                                echo $error . "<br/>";
+                            } ?>
+                        </div>
                     </div>
-                </div>
-                <?php
-            } else {
-                $token = $user->registerUser($_POST['email'], $password, $infos['prenom'], $infos['nom'], 1, $_POST['prom']);
-                if ($token !== -1) {
-                    //mail("dev@local.dev", "Inscription", "http://localhost/StudYncreaV1/public/checkmail.php?t=$token" );
+                    <?php
+                } else {
+                    $token = $user->registerUser($_POST['email'], $password, $infos['prenom'], $infos['nom'], 1, $_POST['prom']);
+                    if ($token !== -1) {
+                        //mail("dev@local.dev", "Inscription", "http://localhost/StudYncreaV1/public/checkmail.php?t=$token" );
 
-                    $auth->connect($_POST['email']);
-                    App::redirect('affichage_blog.php');
+                        $auth->connect($_POST['email']);
+                        App::redirect('affichage_blog.php');
+                    }
                 }
             }
-        }
-        ?>
-        <div class="row">
+            ?>
+        </div>
+        <div class="section">
             <form class="col s12" method="post">
                 <div class="row">
                     <?php
