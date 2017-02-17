@@ -47,6 +47,24 @@
                 ";
             return $this->executeReq($sql, $param, $fetch);
         }
+
+        /**
+         * Fonction qui permet de trouver un identifiant à partir d'un champs de la table
+         * @param string $columnid
+         * @param string $column
+         * @param array $param
+         * @param int $fetch
+         * @return PDOStatement
+         */
+        public function getIdBy($columnid, $column, $param, $fetch = 1)
+        {
+            $sql = "
+                SELECT $columnid 
+                FROM " . static::$table . " 
+                WHERE $column=?
+                ";
+            return $this->executeReq($sql, $param, $fetch)[$columnid];
+        }
         
         public function all()
         {

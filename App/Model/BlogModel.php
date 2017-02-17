@@ -401,6 +401,12 @@ class BlogModel extends Model
         return $result;
     }
 
+    public function getAllByUserId($user_id)
+    {
+        $sql = "SELECT * FROM " . static::$table . " WHERE id_user=$user_id";
+        return $this->executeReq($sql, null, 2);
+    }
+
     /**
      * @return string
      */
