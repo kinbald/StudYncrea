@@ -60,12 +60,12 @@ class Auth
     public function connect($user_email)
     {
         $admin = $this->getUsersModel()->getRole($user_email);
-        if($admin === 2)
+        if($admin == 2)
         {
             $this->getSession()->write('prof', true);
             $this->getSession()->write('admin', false);
         }
-        elseif ($admin === 3)
+        elseif ($admin == 3)
         {
             $this->getSession()->write('admin', true);
             $this->getSession()->write('prof', false);

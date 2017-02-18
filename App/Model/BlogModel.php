@@ -403,7 +403,7 @@ class BlogModel extends Model
 
     public function getAllByUserId($user_id)
     {
-        $sql = "SELECT * FROM " . static::$table . " WHERE id_user=$user_id";
+        $sql = "SELECT * FROM " . static::$table . " WHERE id_user=$user_id AND type_post=0";
         return $this->executeReq($sql, null, 2);
     }
 

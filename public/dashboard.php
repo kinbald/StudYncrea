@@ -17,7 +17,7 @@ $user = $auth->getUser();
 ?>
 
     <div class="container">
-        <div class="section">
+        <div class="section center">
             <br>
             <a class="btn" href="logout.php">Déconnexion</a>
         </div>
@@ -30,12 +30,16 @@ $user = $auth->getUser();
             switch ($role) {
                 case USER:
                     $blogAll = $blog->getAllByUserId($user_id);
+                    $annalesAll = $topic->getAllByUserId($user_id);
                     include "../Vues/dashboard/user.php";
                     break;
                 case PROF:
                     include "../Vues/dashboard/prof.php";
                     break;
                 case ADMIN:
+                    $blogAll = $blog->display_blog_all();
+                    $annalesAll = $topic->display_topic_live();
+                    include "../Vues/dashboard/user.php";
                     include "../Vues/dashboard/admin.php";
                     break;
             }

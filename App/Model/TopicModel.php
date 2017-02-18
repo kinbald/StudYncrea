@@ -312,6 +312,12 @@ class TopicModel extends Model
         return $result;
     }
 
+    public function getAllByUserId($user_id)
+    {
+        $sql = "SELECT * FROM " . static::$table . " WHERE id_user=$user_id AND type_post=1";
+        return $this->executeReq($sql, null, 2);
+    }
+
     /**
      * @return string
      */
