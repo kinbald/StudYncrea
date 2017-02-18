@@ -154,11 +154,11 @@ class UsersModel extends Model
      */
     public function getTeacher()
     {
-        $sql = "SELECT * FROM " . static::$table . " INNER JOIN teach ON " . static::$table . "." . $this->getIdName() . " = teach." . $this->getIdName() . " ORDER BY name_user";
+        $sql = "SELECT * FROM " . static::$table . " WHERE role=2 ORDER BY name_user";
         $result = $this->executeReq($sql);
         $options = [];
         foreach ($result as $donnees) {
-            $options[$donnees[$this->getIdName()]] = $donnees["name_user"];
+            $options[$donnees[$this->getIdName()]] = $donnees["name_user"]. " " .$donnees["surname_user"];
         }
         return $options;
     }
@@ -176,6 +176,22 @@ class UsersModel extends Model
         ];
         $result = $this->executeReq($sql, $param, 1);
         $result = $result['name_user'];
+        return $result;
+    }
+
+    /**
+     * Fonction qui renvoie l'email correspondant à l'id
+     * @param $id_user int
+     * @return string
+     */
+    public function findEmail($id_user)
+    {
+        $sql = "SELECT email FROM " . static::$table . " WHERE " . $this->_idName . " = :" . $this->_idName;;
+        $param = [
+            ":".$this->getIdName() => $id_user,
+        ];
+        $result = $this->executeReq($sql, $param, 1);
+        $result = $result['email'];
         return $result;
     }
 
