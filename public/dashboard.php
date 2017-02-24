@@ -11,7 +11,7 @@ $auth = App::getAuth();
 $auth->restrict();
 $db = App::getDb();
 include '../Vues/header.php';
-
+$init = 1;
 $role = $auth->getRole();
 $user = $auth->getUser();
 ?>

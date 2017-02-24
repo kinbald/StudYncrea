@@ -26,7 +26,19 @@
             <div class="nav-wrapper container">
                 <a id="logo-container" href="index.php" class="brand-logo right">Stud'Yncrea</a>
                 <ul class="left hide-on-med-and-down">
-                    <li><a href="index.php">Accueil</a></li>
+                    <?php
+                    if (isset($_SESSION['auth'])) {
+                        ?>
+                        <li><a href="index.php">Mon compte</a></li>
+                        <?php
+                    } else {
+                        ?>
+                        <li><a href="index.php">Accueil</a></li>
+                        <?php
+
+                    }
+                    ?>
+
                     <li><a href="affichage_blog.php">Questions</a></li>
                     <li><a href="affichage_topic.php">Sujets</a></li>
                 </ul>
@@ -56,16 +68,16 @@ if (isset($float)) {
     <!--  -->
     <!-- Bouton Flottant -->
     <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red">
+        <a class="btn-floating btn-large red" href="add.php?type=<?= $type === 0 ? 0 : 1 ?>">
             <i class="material-icons">mode_edit</i>
         </a>
-        <ul>
-            <li><a class="btn-floating red" href="affichage_blog.php#annals"><i
-                            class="material-icons">library_add</i></a>
-            </li>
-            <li><a class="btn-floating yellow darken-1" href="affichage_blog.php#questions"><i
-                            class="material-icons">forum</i></a></li>
-        </ul>
+        <!--        <ul>-->
+        <!--            <li><a class="btn-floating red" href="add.php?type=--><? //= $type === 0 ? 0 : 1 ?><!--"><i-->
+        <!--                            class="material-icons">library_add</i></a>-->
+        <!--            </li>-->
+        <!--            <li><a class="btn-floating yellow darken-1" href="affichage_blog.php#questions"><i-->
+        <!--                            class="material-icons">forum</i></a></li>-->
+        <!--        </ul>-->
         <!--  -->
     </div>
     <?php

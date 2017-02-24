@@ -11,7 +11,7 @@
     <div class="section no-pad-bot" id="index-banner">
         <div class="container">
             <br>
-            <h1 class="header center teal-text">Bienvenue sur Stud'Yncréa</h1>
+            <h1 class="header center flow-text teal-text">Bienvenue sur Stud'Yncréa</h1>
             <div class="row center">
                 <h5 class="header col s12 light">Un moyen facile de retrouver tous les sujets et leurs corrections à
                     l'ISEN-Toulon</h5>
