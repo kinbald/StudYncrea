@@ -35,6 +35,7 @@ class App
     public static function load()
     {
         //TODO Add Session Start
+        date_default_timezone_set('Europe/Paris');
         require 'Autoload.php';
         App\Autoload::register();
         require '../Core/Autoload.php';

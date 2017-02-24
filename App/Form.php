@@ -122,7 +122,7 @@ $text<i class=\"material-icons left\">$icon</i>");
     public function fileInput($name, $label, $required = false, $class = null)
     {
         if ($required === true) {
-            echo "<div class=\"file-field input-field\">
+            echo "<div class=\"file-field input-field col s12\">
                 <div class=\"btn $class\">
                     <span>$label</span>
                     <input name=\"$name\" required id=\"$name\"type=\"file\">
@@ -132,7 +132,7 @@ $text<i class=\"material-icons left\">$icon</i>");
                 </div>
                </div>";
         } else {
-            echo "<div class=\"file-field input-field\">
+            echo "<div class=\"file-field input-field col s12\">
                 <div class=\"btn $class\">
                     <span>$label</span>
                     <input name=\"$name\" id=\"$name\"type=\"file\">

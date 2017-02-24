@@ -115,7 +115,7 @@ class BlogModel extends Model
         $id_post = $this->lastInsertId($this->getIdName());
         $id_post = $id_post === FALSE ? 1 : $id_post + 1;
 
-        $date = date('d.m.y h:i');
+        $date = date('y-m-d H:i:s');
         $sql = "INSERT INTO " . static::$table . "(id_user, id_class, id_chapter, id_subject, id_user_teacher, title, description, id_post, url_file, type_post, date_post) VALUES (:id_user, :id_class, :id_chapter, :id_subject, :id_teacher, :title, :description, :id_post, :url_picture, :type_post, :date_post)";
         $param = [
             ':id_user' => $id_user,
@@ -148,7 +148,7 @@ class BlogModel extends Model
      */
     public function update($id_post, $title, $description, $url_file, $type_post, $id_subject, $id_class, $id_chapter, $id_user_teacher)
     {
-        $date_post = date('Y-m-d G:i:s');
+        $date_post = date('y-m-d H:i:s');
         $param = [
             ':id_post' => $id_post,
             ':title' => $title,
@@ -200,7 +200,6 @@ class BlogModel extends Model
         list($annee, $mois, $jour) = explode("-", $date);
         list($heure, $minute, $seconde) = explode(":", $time);
 
-        date_default_timezone_set('CET'); //Changement du fusiau horaire
         $timestamp = mktime($heure, $minute, $seconde, $mois, $jour, $annee);
         $time = time() - $timestamp;
 

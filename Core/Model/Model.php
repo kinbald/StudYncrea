@@ -54,7 +54,7 @@
          * @param string $column
          * @param array $param
          * @param int $fetch
-         * @return PDOStatement
+         * @return int
          */
         public function getIdBy($columnid, $column, $param, $fetch = 1)
         {

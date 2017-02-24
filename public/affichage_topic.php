@@ -4,6 +4,9 @@ App::load();
 App::getAuth()->restrict();
 $Topic = new \App\Model\TopicModel(App::getDb());
 $float = 1;
+$init = 1;
+// Type du post pour les boutons flottants
+$type = 1;
 include '../Vues/header.php';
 
 $init = 1;
