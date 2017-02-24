@@ -29,7 +29,6 @@ if ($_GET) {
 
     include '../Vues/header.php';
 
-    $input = new \App\Input($_POST);
     $proms = new \App\Model\PromsModel($db);
     $subjects = new \App\Model\SubjectModel($db);
     $chapters = new \App\Model\ChapterModel($db);
@@ -39,35 +38,52 @@ if ($_GET) {
     $form = new \App\Form($post);
     $url_pictrue1 = $post['url_file'];
 
-    if (!empty($_POST['title'])
-        && !empty($_POST['description'])
-        && !empty($_POST['class'])
-        && !empty($_POST['chapter'])
-        && !empty($_POST['subject'])
-        && !empty($_POST['teacher'])
-    ) {
+//    if (!empty($_POST['title'])
+//        && !empty($_POST['description'])
+//        && !empty($_POST['class'])
+//        && !empty($_POST['chapter'])
+//        && !empty($_POST['subject'])
+//        && !empty($_POST['teacher'])
+//    ) {
+    if ($_POST) {
+        $input = new \App\Input($_POST);
         //Input
-        $id_class = $_POST['class'];
-        $id_chapter = $_POST['chapter'];
-        $id_subject = $_POST['subject'];
-        $id_teacher = $_POST['teacher'];
-        $type_post = $_POST['type_post'];
+        $id_class = $input->check_select('class', 'class');
+        $id_chapter = $input->check_select('chapter', 'chapter');
+        $id_subject = $input->check_select('subject', 'subject');
+        $id_teacher = $input->check_select('teacher', 'teacher');
+        $type_post = $post['type_post'];
 
-        $title = $_POST['title'];
-        $description = $_POST['description'];
-
+        $title = $input->text('title');
+        $description = $input->text('description');
         $extension = array('jpg', 'jpeg', 'png', 'pdf');
-        $extension_picture = $input->check_file('url_picture2', 1000000, $extension, 'file');
-        if ($extension_picture != null) {
-            unlink($url_pictrue1);
-            $url_file = 'pictures/post/' . $id_post . '.' . $extension_picture;
-            App::addFile('url_picture2', $url_file);
-            $url_picture = $url_file;
-        } else {
-            $url_picture = $url_pictrue1;
+        if(!isset($_FILES['url_picture2']))
+        {
+            $extension_picture = $input->check_file('url_picture2', 1000000, $extension, 'file');
         }
-        $postModel->update($id_post, $title, $description, $url_picture, $type_post, $id_subject, $id_class, $id_chapter, $id_teacher);
-        App::redirect("post.php?post=$id_post");
+        $errors = $input->getErrors();
+        /** Affichage des erreurs */
+        if (!empty($errors)) { ?>
+            <div class="card red">
+                <div class="card-content white-text">
+                    <?php foreach ($errors as $error) {
+                        echo $error . "<br/>";
+                    } ?>
+                </div>
+            </div>
+            <?php
+        } else {
+            if ($extension_picture != null) {
+                unlink($url_pictrue1);
+                $url_file = 'pictures/post/' . $id_post . '.' . $extension_picture;
+                App::addFile('url_picture2', $url_file);
+                $url_picture = $url_file;
+            } else {
+                $url_picture = $url_pictrue1;
+            }
+            $postModel->update($id_post, $title, $description, $url_picture, $type_post, $id_subject, $id_class, $id_chapter, $id_teacher);
+            App::redirect("post.php?post=$id_post");
+        }
     }
     ?>
 
@@ -82,7 +98,7 @@ if ($_GET) {
             <form id="modification" action="" method="post" class="col s12" enctype="multipart/form-data">
     <?php
     echo "<div class=\"row\">";
-    $form->input('text', 'title', 'Titre');
+    $form->input('text', 'title', 'Titre', true);
     $form->input('text', 'description', 'Description');
     echo "</div>";
 
@@ -114,8 +130,6 @@ if ($_GET) {
     echo "<img src=\"$url_pictrue1\" alt=\"Image\" />";
     $form->fileInput('url_picture2', 'Modifier la photo');
     echo "</div>";
-
-    $form->input('hidden', 'type_post', '', $post['type_post']);
 
     echo "<div class=\"row\">";
     $form->submit('Envoyer');
