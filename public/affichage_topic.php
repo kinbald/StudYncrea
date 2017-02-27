@@ -79,7 +79,7 @@ $init = 1;
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col s6 m6 l6">
+                        <div class="col s12 m6 l6">
                         <!-- Select des chapitres (affichage dynamique) -->
                             <select multiple id="ajax_select_chap" onchange="ajax()">
                                 <option disabled>Chapitres</option>
