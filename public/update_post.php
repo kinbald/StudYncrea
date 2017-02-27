@@ -99,31 +99,25 @@ if ($_GET) {
     <?php
     echo "<div class=\"row\">";
     $form->input('text', 'title', 'Titre', true);
-    $form->input('text', 'description', 'Description');
+    $form->textArea('description', 'Description', true);
     echo "</div>";
 
     echo "<div class=\"row\">";
     $req = $proms->all();
     $name_class = $proms->findClassName($post['id_class']);
-    $form->selectInputInit('class', 'Classe', $req, $post['id_class'], $name_class, true);
-    echo "</div>";
+    $form->selectInputInit('class', 'Classe', $req, $post['id_class'], $name_class, true, "col s6 m6 l6");
 
-    echo "<div class=\"row\">";
     $req = $chapters->getAll();
     $name_chapter = $chapters->findChapterName($post['id_chapter']);
-    $form->selectInputInit('chapter', 'Chapitre', $req, $post['id_chapter'], $name_chapter, true);
-    echo "</div>";
+    $form->selectInputInit('chapter', 'Chapitre', $req, $post['id_chapter'], $name_chapter, true, "col s6 m6 l6");
 
-    echo "<div class=\"row\">";
     $req = $subjects->getAll();
     $name_subject = $subjects->findSubjectName($post['id_subject']);
-    $form->selectInputInit('subject', 'Matière', $req, $post['id_subject'], $name_subject, true);
-    echo "</div>";
+    $form->selectInputInit('subject', 'Matière', $req, $post['id_subject'], $name_subject, true, "col s6 m6 l6");
 
-    echo "<div class=\"row\">";
     $req = $users->getTeacher();
     $name_teacher = $users->findUserName($post['id_user_teacher']);
-    $form->selectInputInit('teacher', 'Professeur', $req, $post['id_user_teacher'], $name_teacher, true);
+    $form->selectInputInit('teacher', 'Professeur', $req, $post['id_user_teacher'], $name_teacher, true, "col s6 m6 l6");
     echo "</div>";
 
     echo "<div class=\"row\">";
@@ -132,7 +126,7 @@ if ($_GET) {
     echo "</div>";
 
     echo "<div class=\"row\">";
-    $form->submit('Envoyer');
+    $form->submit('Publier', 'right');
     echo "</div>";
 
     echo "</form></div></div></div>";
