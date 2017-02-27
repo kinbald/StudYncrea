@@ -66,14 +66,14 @@ class Form
      * @param string $label Label du champ / Texte présenté à côté
      * @param bool $required Choix si nécessaire pour l'envoi
      */
-    public function input($type, $name, $label, $required = false)
+    public function input($type, $name, $label, $required = false, $class = null)
     {
         if ($required === true) {
-            echo $this->surroundWith("<input required name=\"$name\" value=\"" . $this->getValue($name) . "\" id=\"$name\" type=\"$type\" class=\"validate\">
+            echo $this->surroundWith("<input class=\"$class\" required name=\"$name\" value=\"" . $this->getValue($name) . "\" id=\"$name\" type=\"$type\" class=\"validate\">
                 <label for=\"$name\">$label</label>");
 
         } else {
-            echo $this->surroundWith("<input name=\"$name\" value=\"" . $this->getValue($name) . "\" id=\"$name\" class=\"validate\" type=\"$type\">
+            echo $this->surroundWith("<input class=\"$class\" name=\"$name\" value=\"" . $this->getValue($name) . "\" id=\"$name\" class=\"validate\" type=\"$type\">
                 <label for=\"$name\">$label</label>");
 
         }
@@ -151,10 +151,10 @@ $text<i class=\"material-icons left\">$icon</i>");
      * @param array $options Différentes options du select
      * @param bool $required Choix nécessaire ou non à l'envoi du formulaire
      */
-    public function selectInput($name, $label, $options, $required = false)
+    public function selectInput($name, $label, $options, $required = false, $class = "input-field col s12")
     {
         if ($required === true) {
-            echo "<div class=\"input-field col s12\">
+            echo "<div class=\"$class\">
                             <select name=\"$name\" required>
                                     <option value=\"0\" disabled selected>$label</option>";
             foreach ($options as $option => $value) {
@@ -162,7 +162,7 @@ $text<i class=\"material-icons left\">$icon</i>");
             }
             echo "</select><label>$label</label></div>";
         } else {
-            echo "<div class=\"input-field col s12\">
+            echo "<div class=\"$class\">
                             <select name=\"$name\">
                                     <option value=\"\" disabled selected>$label</option>";
             foreach ($options as $option => $value) {
@@ -181,12 +181,12 @@ $text<i class=\"material-icons left\">$icon</i>");
      * @param string $initName
      * @param bool $required Choix nécessaire ou non à l'envoi du formulaire
      */
-    public function selectInputInit($name, $label, $options, $initValue = null, $initName = null, $required = false)
+    public function selectInputInit($name, $label, $options, $initValue = null, $initName = null, $required = false, $class = "input-field col s12")
     {
 
         if ($required === true) {
             if ($initValue != null && $initName != null) {
-                echo "<div class=\"input-field col s12\">
+                echo "<div class=\"$class\">
                             <select name=\"$name\" required>
                                    <option value=\"$initValue\">$initName</option>";
                 foreach ($options as $option => $value) {
@@ -195,7 +195,7 @@ $text<i class=\"material-icons left\">$icon</i>");
                 echo "</select><label>$label</label></div>";
             } else {
 
-                echo "<div class=\"input-field col s12\">
+                echo "<div class=\"$class\">
                             <select name=\"$name\" required>
                                     <option value=\"0\" disabled selected>$label</option>";
                 foreach ($options as $option => $value) {
@@ -204,7 +204,7 @@ $text<i class=\"material-icons left\">$icon</i>");
                 echo "</select><label>$label</label></div>";
             }
         } else {
-            echo "<div class=\"input-field col s12\">
+            echo "<div class=\"$class\">
                             <select name=\"$name\">
                                     <option value=\"\" disabled selected>$label</option>";
             foreach ($options as $option => $value) {

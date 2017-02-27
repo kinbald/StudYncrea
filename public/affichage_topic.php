@@ -26,15 +26,15 @@ $init = 1;
                          <div class="col s6 m6 l6">
                              <!-- Select des styles de sujets (affichage dynamique) -->
                              <select multiple id="ajax_select_style" onchange="ajax()">
-                             <option disabled>Type (DS...)</option>
-                                <option value="0">DS</option>
-                                <option value="1">DM</option>
-                                <option value="2">IE</option>
-                                <option value="3">TD</option>
-                            </select>
-                            <!--  -->
-                        </div>
-                        <div class="col s6 m6 l6">
+                                 <option disabled>Type (DS...)</option>
+                                 <option value="0">DS</option>
+                                 <option value="1">DM</option>
+                                 <option value="2">IE</option>
+                                 <option value="3">TD</option>
+                             </select>
+                             <!--  -->
+                         </div>
+                         <div class="col s6 m6 l6">
                             <!-- Select des classes (affichage dynamique) -->
                             <select multiple id="ajax_select_promo" onchange="ajax()">
                                 <option disabled>Classes</option>
@@ -49,36 +49,56 @@ $init = 1;
                             <!--  -->
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col s6 m6 l6">
-                            <!-- Select des matières (affichage dynamique) -->
-                            <select multiple id="ajax_select_matiere" onchange="ajax()">
-                                <option disabled>Matières</option>
-                                <?php
-                                $Sub = $Topic->display_subjects_all();
-                                foreach ($Sub as $Subjects) {
-                                    ?>
-                                    <option value="<?= $Subjects['id_subject']; ?>"><?= $Subjects['name_subject']; ?></option>
+                    <div id="display_filtres" style="display: none;">
+                        <div class="row">
+                            <div class="col s6 m6 l6">
+                                <!-- Select des matières (affichage dynamique) -->
+                                <select multiple id="ajax_select_matiere" onchange="ajax()">
+                                    <option disabled>Matières</option>
                                     <?php
-                                }?>
-                            </select>
-                            <!--  -->
+                                    $Sub = $Topic->display_subjects_all();
+                                    foreach ($Sub as $Subjects) {
+                                        ?>
+                                        <option value="<?= $Subjects['id_subject']; ?>"><?= $Subjects['name_subject']; ?></option>
+                                        <?php
+                                    }?>
+                                </select>
+                                <!--  -->
+                            </div>
+                            <div class="col s6 m6 l6">
+                                <!-- Select des professeurs (affichage dynamique) -->
+                                <select multiple id="ajax_select_prof" onchange="ajax()">
+                                    <option disabled>Professeurs</option>
+                                    <?php
+                                    $Teach = $Topic->display_topic_teachers();
+                                    foreach ($Teach as $Teachers) {
+                                        ?>
+                                        <option value="<?= $Teachers['id_user']; ?>"><?= $Teachers['name_user']; ?></option>
+                                        <?php
+                                    }?>
+                                </select>
+                                <!--  -->
+                            </div>
                         </div>
-                        <div class="col s6 m6 l6">
-                            <!-- Select des professeurs (affichage dynamique) -->
-                            <select multiple id="ajax_select_prof" onchange="ajax()">
-                                <option disabled>Professeurs</option>
-                                <?php
-                                $Teach = $Topic->display_topic_teachers();
-                                foreach ($Teach as $Teachers) {
-                                    ?>
-                                    <option value="<?= $Teachers['id_user']; ?>"><?= $Teachers['name_user']; ?></option>
+                        <div class="row">
+                            <div class="col s12 m6 l6">
+                                <!-- Select des chapitres (affichage dynamique) -->
+                                <select multiple id="ajax_select_chap" onchange="ajax()">
+                                    <option disabled>Chapitres</option>
                                     <?php
-                                }?>
-                            </select>
-                            <!--  -->
+                                    $Chap = $Topic->display_topic_chapter();
+                                    foreach ($Chap as $Chapter) {
+                                        ?>
+                                        <option value="<?= $Chapter['id_chapter']; ?>"><?= $Chapter['name_chapter']; ?></option>
+                                        <?php
+                                    }?>
+                                </select>
+                                <!--  -->
+                            </div>
                         </div>
                     </div>
+                    <a class="left btn waves-effect waves-light" id="button_plus" onclick="display_filtres()" style="display: inline;">Plus</a>
+                    <a class="left btn waves-effect waves-light" id="button_moins" onclick="hide_filtres()" style="display: none;">Moins</a>
                     <a class="right btn waves-effect waves-light" href="affichage_topic.php" ><i class="material-icons">replay</i></a>
                 </form>
             </div>
