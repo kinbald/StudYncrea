@@ -2,6 +2,23 @@
 window.addEventListener("load", function () {
     ajax();
 }, false);
+
+function display_filtres(){
+    filtres = document.getElementById("display_filtres");
+    filtres.style.display ="inline";
+    button_plus = document.getElementById("button_plus");
+    button_plus.style.display ="none";
+    button_moins = document.getElementById("button_moins");
+    button_moins.style.display ="inline";
+}
+function hide_filtres(){
+    filtres = document.getElementById("display_filtres");
+    filtres.style.display ="none";
+    button_moins = document.getElementById("button_moins");
+    button_moins.style.display ="none";
+    button_plus = document.getElementById("button_plus");
+    button_plus.style.display ="inline";
+}
 /*
     @author : Herrenschmidt Félix
     @description : Permet de placer dans un tableau tout les éléments sélectionnés dans le select
