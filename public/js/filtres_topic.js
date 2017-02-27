@@ -4,19 +4,19 @@ window.addEventListener("load", function () {
 }, false);
 
 function display_filtres(){
-    filtres = document.getElementById("display_filtres");
+    var filtres = document.getElementById("display_filtres");
     filtres.style.display ="inline";
-    button_plus = document.getElementById("button_plus");
+    var button_plus = document.getElementById("button_plus");
     button_plus.style.display ="none";
-    button_moins = document.getElementById("button_moins");
+    var button_moins = document.getElementById("button_moins");
     button_moins.style.display ="inline";
 }
 function hide_filtres(){
-    filtres = document.getElementById("display_filtres");
+    var filtres = document.getElementById("display_filtres");
     filtres.style.display ="none";
-    button_moins = document.getElementById("button_moins");
+    var button_moins = document.getElementById("button_moins");
     button_moins.style.display ="none";
-    button_plus = document.getElementById("button_plus");
+    var button_plus = document.getElementById("button_plus");
     button_plus.style.display ="inline";
 }
 /*
