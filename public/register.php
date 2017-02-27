@@ -95,7 +95,7 @@ $init = 1;
                 </div>
                 <div class="row">
                     <?php
-                    $form->input('password', 'password', 'Votre mot de passe', true);
+                    $form->input('password', 'password', 'Votre mot de passe (min 5 caractères)', true);
                     ?>
                 </div>
                 <div class="row">
@@ -105,7 +105,7 @@ $init = 1;
                 </div>
                 <div class="row">
                     <?php
-                    $form->submit('Envoyer', null, 'perm_identity');
+                    $form->submit("S'inscrire", null, 'perm_identity');
                     ?>
                 </div>
             </form>

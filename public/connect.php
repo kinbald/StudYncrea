@@ -80,7 +80,7 @@ $init = 1;
                 </div>
                 <div class="row">
                     <?php
-                    $form->submit('Envoyer', null, 'perm_identity');
+                    $form->submit('Se connecter', null, 'perm_identity');
                     ?>
                 </div>
             </form>
