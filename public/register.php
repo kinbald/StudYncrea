@@ -6,7 +6,9 @@
  * Time: 18:06
  */
 
+$title = "Inscription - Stud'Yncréa - Le site de partage de sujets et de corrections";
 include '../Vues/header.php';
+$init = 1;
 ?>
     <div class="container">
         <div class="section">
@@ -64,7 +66,16 @@ include '../Vues/header.php';
                     </div>
                     <?php
                 } else {
-                    $token = $user->registerUser($_POST['email'], $password, $infos['prenom'], $infos['nom'], 1, $_POST['prom']);
+                    $regex1 = "#^[a-z0-9._-]+@yncrea.fr#";
+                    if (preg_match($regex1, $datas['email']))
+                    {
+                        $role = 2;
+                    }
+                    else
+                    {
+                        $role = 1;
+                    }
+                    $token = $user->registerUser($_POST['email'], $password, $infos['prenom'], $infos['nom'], $role, $_POST['prom']);
                     if ($token !== -1) {
                         //mail("dev@local.dev", "Inscription", "http://localhost/StudYncreaV1/public/checkmail.php?t=$token" );
 

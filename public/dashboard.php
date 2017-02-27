@@ -10,6 +10,7 @@ App::load();
 $auth = App::getAuth();
 $auth->restrict();
 $db = App::getDb();
+$title = "Mon compte - Stud'Yncréa - Le site de partage de sujets et de corrections";
 include '../Vues/header.php';
 $init = 1;
 $role = $auth->getRole();
