@@ -68,7 +68,7 @@ class Input
     {
         $field = $this->getField($fieldName, $type);
         if(!empty($field)){
-            return true;
+            return $field;
         }
         else{
             return false;
@@ -123,11 +123,11 @@ class Input
     {
         $field = $this->getField($fieldName, $type);
         $field = $this->pseudo_password($field);
-        if($this->check_text($field,$type)) {
+        if(is_string($field)) {
             if (strlen($field) >= $length_pseudo_password) {
                 return true;
             } else {
-                $this->errors[$type] = "Taille du mot de passe trop courte (min = 5 charactères).";
+                $this->errors[$type] = "Taille du mot de passe trop courte (min = $length_pseudo_password charactères).";
                 return false;
             }
         }else{

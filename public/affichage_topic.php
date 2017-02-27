@@ -7,6 +7,7 @@ $float = 1;
 $init = 1;
 // Type du post pour les boutons flottants
 $type = 1;
+$title = "Annales - Stud'Yncréa - Le site de partage de sujets et de corrections";
 include '../Vues/header.php';
 
 $init = 1;
