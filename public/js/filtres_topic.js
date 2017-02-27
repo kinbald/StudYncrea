@@ -1,7 +1,7 @@
 //Au chargement de la page on vérifie l'états des filtres (vides ou cochés)
 window.addEventListener("load", function () {
-        ajax();
-    }, false);
+    ajax();
+}, false);
 /*
     @author : Herrenschmidt Félix
     @description : Permet de placer dans un tableau tout les éléments sélectionnés dans le select
@@ -39,6 +39,9 @@ window.addEventListener("load", function () {
         var select_style = document.getElementById("ajax_select_style");
         var values_style = getSelectValues(select_style);
 
+        var select_chap = document.getElementById("ajax_select_chap");
+        var values_chap = getSelectValues(select_chap);
+
         var xhr = getXMLHttpRequest();
         
         xhr.onreadystatechange = function(){ 
@@ -59,8 +62,9 @@ window.addEventListener("load", function () {
     var tab_matieres = encodeURIComponent(values_matieres);
     var tab_prof = encodeURIComponent(values_prof);
     var tab_style = encodeURIComponent(values_style);
+    var tab_chap = encodeURIComponent(values_chap);
     //document.getElementById("hide").style.display = "none";//Je fais disparaitre les questions de départ
-    xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&id_PROF="+ tab_prof + "&id_STYLE="+ tab_style); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+    xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&id_PROF="+ tab_prof + "&id_STYLE="+ tab_style + "&id_CHAP=" + tab_chap); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
 }
 
 

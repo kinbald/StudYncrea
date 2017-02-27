@@ -18,22 +18,22 @@ $init = 1;
         <div class="card horizontal">
             <div class="card-stacked">
                 <div class="card-content">
-                 <img style="display: none;" id="loader" class="right materialboxed" width="30" src="../pictures/Flip_Flop.gif">
-                 <h5>Filtres :</h5>
-                 <form class="col s12">
-                     <div class="row">
-                         <div class="col s6 m6 l6">
-                             <!-- Select des styles de sujets (affichage dynamique) -->
-                             <select multiple id="ajax_select_style" onchange="ajax()">
-                             <option disabled>Type (DS...)</option>
-                                <option value="0">DS</option>
-                                <option value="1">DM</option>
-                                <option value="2">IE</option>
-                                <option value="3">TD</option>
-                            </select>
-                            <!--  -->
-                        </div>
-                        <div class="col s6 m6 l6">
+                   <img style="display: none;" id="loader" class="right materialboxed" width="30" src="../pictures/Flip_Flop.gif">
+                   <h5>Filtres :</h5>
+                   <form class="col s12">
+                       <div class="row">
+                           <div class="col s6 m6 l6">
+                               <!-- Select des styles de sujets (affichage dynamique) -->
+                               <select multiple id="ajax_select_style" onchange="ajax()">
+                                   <option disabled>Type (DS...)</option>
+                                   <option value="0">DS</option>
+                                   <option value="1">DM</option>
+                                   <option value="2">IE</option>
+                                   <option value="3">TD</option>
+                               </select>
+                               <!--  -->
+                           </div>
+                           <div class="col s6 m6 l6">
                             <!-- Select des classes (affichage dynamique) -->
                             <select multiple id="ajax_select_promo" onchange="ajax()">
                                 <option disabled>Classes</option>
@@ -72,6 +72,22 @@ $init = 1;
                                 foreach ($Teach as $Teachers) {
                                     ?>
                                     <option value="<?= $Teachers['id_user']; ?>"><?= $Teachers['name_user']; ?></option>
+                                    <?php
+                                }?>
+                            </select>
+                            <!--  -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6 m6 l6">
+                        <!-- Select des chapitres (affichage dynamique) -->
+                            <select multiple id="ajax_select_chap" onchange="ajax()">
+                                <option disabled>Chapitres</option>
+                                <?php
+                                $Chap = $Topic->display_topic_chapter();
+                                foreach ($Chap as $Chapter) {
+                                    ?>
+                                    <option value="<?= $Chapter['id_chapter']; ?>"><?= $Chapter['name_chapter']; ?></option>
                                     <?php
                                 }?>
                             </select>
