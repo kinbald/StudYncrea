@@ -116,7 +116,7 @@ class BlogModel extends Model
         $id_post = $id_post === FALSE ? 1 : $id_post + 1;
 
         $date = date('y-m-d H:i:s');
-        $sql = "INSERT INTO " . static::$table . "(id_user, id_class, id_chapter, id_subject, id_user_teacher, title, description, id_post, url_file, type_post, date_post) VALUES (:id_user, :id_class, :id_chapter, :id_subject, :id_teacher, :title, :description, :id_post, :url_picture, :type_post, :date_post)";
+        $sql = "INSERT INTO " . static::$table . "(id_user, id_class, id_chapter, id_subject, id_user_teacher, title, description, id_post, url_file, type_post, date_post, is_online) VALUES (:id_user, :id_class, :id_chapter, :id_subject, :id_teacher, :title, :description, :id_post, :url_picture, :type_post, :date_post, 1)";
         $param = [
             ':id_user' => $id_user,
             ':id_class' => $id_class,
@@ -254,7 +254,7 @@ class BlogModel extends Model
           INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
           INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
           INNER JOIN USERS on USERS.id_user = POSTS.id_user
-          WHERE type_post = 0 ";
+          WHERE type_post = 0 AND is_online=1 ";
 
         if ($id_class != '')
         {
@@ -285,7 +285,7 @@ class BlogModel extends Model
             }
             $sql = $sql . " ) ";
         }
-        $sql = $sql . "ORDER BY date_post DESC";
+        $sql = $sql . " ORDER BY date_post DESC";
         $result = $this->executeReq($sql);
         return $result;
     }

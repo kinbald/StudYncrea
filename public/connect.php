@@ -60,6 +60,8 @@ $init = 1;
                 <?php
             } else {
                 $auth->connect($_POST['email']);
+                $token = $userModel->generateToken(100);
+                $auth->getSession()->write('token', $token);
                 App::redirect("dashboard.php");
             }
         }
