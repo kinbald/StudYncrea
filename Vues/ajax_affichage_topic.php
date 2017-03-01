@@ -15,8 +15,14 @@ foreach ($TopicALL as $topic) {
                 <a class="right black-text"><?= $topic['name_subject'] ?></a><br>
                 <a class="flow-text truncate black-text" style="" href="post.php?post=<?= $topic['id_post']; ?>"><?= $topic['title'] ?></a>
                 <br>
-                <a class="left grey-text"><?= $topic['name_class'] ?></a>
-                <a class="right grey-text"><?= $Topic::display_date($topic['date_post']); ?></a>
+                <?php 
+                $comment = new \App\Model\CommentModel(App::getDb()); 
+                $response_number = $comment->number_comment_post($topic['id_post']);
+                if ($response_number['response_number'] > 1) { $text = " commentaires"; }
+                else { $text = " commentaire"; }
+                ?>
+                <div class="left grey-text"><?= $topic['name_class'] ?></div>
+                <div class="right grey-text"><?= $response_number['response_number']; echo $text."&emsp;"; ?><?= $Topic::display_date($topic['date_post']); ?></div>    
             </div>
         </div>
     </div>

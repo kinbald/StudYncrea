@@ -248,7 +248,7 @@ class BlogModel extends Model
         return $result;
     }
 
-    public function display_blog_filtres($id_class,$id_subject)
+    public function display_blog_filtres($id_class,$id_subject,$limit = 20)
     {
         $sql = "SELECT * FROM POSTS 
           INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
@@ -285,7 +285,8 @@ class BlogModel extends Model
             }
             $sql = $sql . " ) ";
         }
-        $sql = $sql . " ORDER BY date_post DESC";
+        $sql = $sql . "ORDER BY date_post DESC
+                       LIMIT $limit";
         $result = $this->executeReq($sql);
         return $result;
     }

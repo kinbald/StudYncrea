@@ -130,7 +130,7 @@ class TopicModel extends Model
         return $result;
     }
 
-    public function display_topic_filtres($id_class, $id_subject, $id_teach, $id_style, $id_chapter)
+    public function display_topic_filtres($id_class,$id_subject,$id_teach,$id_style,$id_chapter,$limit = 20)
     {
 
         $sql = "SELECT * FROM POSTS 
@@ -199,7 +199,8 @@ class TopicModel extends Model
             $sql = $sql . " ) ";
         }
 
-        $sql = $sql . "ORDER BY date_post DESC";
+        $sql = $sql . "ORDER BY date_post DESC
+                       LIMIT $limit ";
         // die($sql);
         $result = $this->executeReq($sql);
 
