@@ -4,13 +4,12 @@ App::load();
 App::getAuth()->restrict();
 $Blog = new \App\Model\BlogModel(App::getDb());
 $float = 1;
-$init = 1;
 // Type du post pour les boutons flottants
 $type = 0;
 $title = "Questions - Stud'Yncréa - Le site de partage de sujets et de corrections";
 include '../Vues/header.php';
 
-$init = 1;
+$select = 1;
 ?>
 <h4 class='center-align'>Questions :</h4>
 <!-- FILTRES -->

@@ -8,7 +8,6 @@
 
 $title = "Inscription - Stud'Yncréa - Le site de partage de sujets et de corrections";
 include '../Vues/header.php';
-$init = 1;
 ?>
     <div class="container">
         <div class="section">
@@ -30,6 +29,7 @@ $init = 1;
             $form = new \App\Form($_POST);
 
             $options = $promsTable->all();
+            // Variable lancement initialisation script pour les select (cf footer.php)
             $select = true;
 
             if ($_POST) {

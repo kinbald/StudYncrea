@@ -7,7 +7,6 @@
  */
 $title = "Connexion - Stud'Yncréa - Le site de partage de sujets et de corrections";
 include '../Vues/header.php';
-$init = 1;
 ?>
     <div class="container">
         <h1>Se connecter :</h1>

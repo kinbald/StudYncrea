@@ -33,6 +33,7 @@ if ($_GET) {
     $subjects = new \App\Model\SubjectModel($db);
     $chapters = new \App\Model\ChapterModel($db);
 
+    // Variable lancement initialisation script pour les select (cf footer.php)
     $select = true;
 
     $form = new \App\Form($post);

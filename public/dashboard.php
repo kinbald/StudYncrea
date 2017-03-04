@@ -92,7 +92,6 @@ $user = $auth->getUser()['email'];
                 td.style.display = "none";
             }
         }
-
     </script>
 <?php
 include "../Vues/footer.php";
