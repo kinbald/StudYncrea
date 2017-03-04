@@ -35,26 +35,21 @@
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <!-- Compiled and minified JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/js/materialize.min.js"></script>
-<?php
-if (isset($init)) {
-    ?>
-    <script type="text/javascript">
-        $(".button-collapse").sideNav();
-        $(document).ready(function () {
-            $('select').material_select();
-        });
-        //     $('input.autocomplete').autocomplete({
-        //         data: {
-        //           "Apple": null,
-        //           "Microsoft": null,
-        //           "Google": 'http://placehold.it/250x250'
-        //       },
-        //     limit: 20, // The max amount of results that can be shown at once. Default: Infinity.
-        // });
-    </script>
-    <?php
-}
+<script type="text/javascript">
+    function setActive() {
+        var aObj = document.getElementById('nav').getElementsByTagName('a');
+        for (var i = 0; i < aObj.length; i++) {
+            console.dir(aObj[i]);
+            if (document.baseURI.indexOf(aObj[i].href) >= 0) {
+                aObj[i].parentNode.className = 'active';
+            }
+        }
+    }
+    window.onload = setActive;
 
+    $(".button-collapse").sideNav();
+</script>
+<?php
 if (isset($select)) {
     ?>
     <script type="text/javascript">

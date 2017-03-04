@@ -27,20 +27,18 @@
         <nav class="teal" role="navigation">
             <div class="nav-wrapper container">
                 <a id="logo-container" href="index.php" class="brand-logo right">Stud'Yncrea</a>
-                <ul class="left hide-on-med-and-down">
+                <ul id="nav" class="left hide-on-med-and-down">
                     <?php
                     if (isset($_SESSION['auth'])) {
                         ?>
-                        <li><a href="index.php">Mon compte</a></li>
+                        <li><a href="dashboard.php">Mon compte</a></li>
                         <?php
                     } else {
                         ?>
                         <li><a href="index.php">Accueil</a></li>
                         <?php
-
                     }
                     ?>
-
                     <li><a href="affichage_blog.php">Questions</a></li>
                     <li><a href="affichage_topic.php">Sujets</a></li>
                 </ul>
@@ -59,7 +57,17 @@
                     <input id="search" type="search" placeholder="Cherchez un sujet">
                 </a>
             </li>
-            <li><a href="index.php">Accueil</a></li>
+            <?php
+            if (isset($_SESSION['auth'])) {
+                ?>
+                <li><a href="dashboard.php">Mon compte</a></li>
+                <?php
+            } else {
+                ?>
+                <li><a href="index.php">Accueil</a></li>
+                <?php
+            }
+            ?>
             <li><a href="affichage_blog.php">Questions</a></li>
             <li><a href="affichage_topic.php">Sujets</a></li>
         </ul>
