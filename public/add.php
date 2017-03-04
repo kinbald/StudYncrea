@@ -24,7 +24,7 @@ if ($_GET) {
         $Subject = new \App\Model\SubjectModel($db);
         $Users = new \App\Model\UsersModel($db);
 
-        $user_id = $Users->getIdBy($Users->getIdName(), 'email', [$auth->getUser()], 1);
+        $user_id = $auth->getUser()['id_user'];
 
         $form = new \App\Form($_POST);
         $input = new \App\Input($_POST);
