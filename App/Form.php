@@ -104,10 +104,10 @@ $text<i class=\"material-icons left\">$icon</i>");
     public function textArea($name, $label, $required = false)
     {
         if ($required === true) {
-            echo $this->surroundWith("<textarea id=\"$name\" required class=\"validate materialize-textarea\">" . $this->getValue($name) . "</textarea>
+            echo $this->surroundWith("<textarea id=\"$name\" name=\"$name\" required class=\"validate materialize-textarea\">" . $this->getValue($name) . "</textarea>
           <label for=\"$name\">$label</label>");
         } else {
-            echo $this->surroundWith("<textarea id=\"$name\" class=\"validate materialize-textarea\">" . $this->getValue($name) . "</textarea>
+            echo $this->surroundWith("<textarea id=\"$name\" name=\"$name\"class=\"validate materialize-textarea\">" . $this->getValue($name) . "</textarea>
           <label for=\"$name\">$label</label>");
         }
     }
