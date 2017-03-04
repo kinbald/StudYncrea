@@ -16,7 +16,6 @@ $init = 1;
 $role = $auth->getRole();
 $user = $auth->getUser();
 ?>
-
     <div class="container">
         <div class="section center">
             <br>
@@ -47,6 +46,54 @@ $user = $auth->getUser();
             ?>
         </div>
     </div>
+    <script src="js/oXHR.js"></script>
+    <script type="text/javascript">
 
+        window.onload = function (){
+            var elements = document.getElementsByClassName('delete');
+            for (var i = 0; i < elements.length; ++i) {
+                elements[i].addEventListener('click', function (event) {
+                    var toElement = event.toElement;
+                    if(event.toElement.localName == "i")
+                    {
+                        toElement = event.toElement.parentElement;
+                    }
+                    id = toElement.id;
+                    delete_post(id, toElement);
+                }, false);
+            }};
+
+        function delete_post(id, element){
+            var value_id = id.split("-").pop();
+
+            var xhr = getXMLHttpRequest();
+
+            xhr.onreadystatechange = function(){
+                if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+                    //"xhr.responseText" Permet de récupérer en text la page ou on à fait le post
+                    deleteData(xhr.responseText, element);
+                }
+            };
+
+            xhr.open("POST", "../Vues/ajax_delete_post.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            //On protège les variables que l'on transportes, meme en POST
+            var id_post = encodeURIComponent(value_id);
+            var token = encodeURIComponent('<?= App::getAuth()->getSession()->read('token'); ?>');
+            xhr.send("id_post=" + id_post + "&token=" + token); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+        }
+
+        function deleteData(data, element)
+        {
+            if(data == '1')
+            {
+                var td = element.parentElement.parentElement;
+                console.log(td);
+                td.style.display = "none";
+            }
+        }
+
+    </script>
 <?php
 include "../Vues/footer.php";
+?>

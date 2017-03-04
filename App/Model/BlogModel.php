@@ -31,7 +31,7 @@ class BlogModel extends Model
           INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
           INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
           INNER JOIN USERS on USERS.id_user = POSTS.id_user
-          WHERE type_post = 0";
+          WHERE type_post = 0 AND is_online=1";
         $result = $this->executeReq($sql);
         return $result;
     }
@@ -402,7 +402,7 @@ class BlogModel extends Model
 
     public function getAllByUserId($user_id)
     {
-        $sql = "SELECT * FROM " . static::$table . " WHERE id_user=$user_id AND type_post=0";
+        $sql = "SELECT * FROM " . static::$table . " WHERE id_user=$user_id AND type_post=0 AND is_online=1";
         return $this->executeReq($sql, null, 2);
     }
 

@@ -31,7 +31,7 @@
                     <td>
                         <a href="post.php?post=<?= $blog['id_post'] ?>" class="btn">VOIR</a>
                         <a href="update_post.php?post=<?= $blog['id_post'] ?>" class="btn orange"><i class="material-icons">mode_edit</i></a>
-                        <a href="delete_post.php?post=<?= $blog['id_post'] ?>" class="btn red"><i class="material-icons">not_interested</i></a>
+                        <a id="post-<?= $blog['id_post'] ?>" class="btn red delete"><i class="material-icons">not_interested</i></a>
                     </td>
                 </tr>
                 <?php
@@ -64,7 +64,7 @@
                     <td>
                         <a href="post.php?post=<?= $annale['id_post'] ?>" class="btn">VOIR</a>
                         <a href="update_post.php?post=<?= $annale['id_post'] ?>" class="btn orange"><i class="material-icons">mode_edit</i></a>
-                        <a href="delete_post.php?post=<?= $annale['id_post'] ?>" class="btn red"><i class="material-icons">not_interested</i></a>
+                        <a id="topic-<?= $annale['id_post'] ?>" class="btn red delete"><i class="material-icons">not_interested</i></a>
                     </td>
                 </tr>
                 <?php
