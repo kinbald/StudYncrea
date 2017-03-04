@@ -67,19 +67,20 @@ $init = 1;
                     <?php
                 } else {
                     $regex1 = "#^[a-z0-9._-]+@yncrea.fr#";
-                    if (preg_match($regex1, $datas['email']))
-                    {
+                    if (preg_match($regex1, $datas['email'])) {
                         $role = 2;
-                    }
-                    else
-                    {
+                    } else {
                         $role = 1;
                     }
                     $token = $user->registerUser($_POST['email'], $password, $infos['prenom'], $infos['nom'], $role, $_POST['prom']);
                     if ($token !== -1) {
                         //mail("dev@local.dev", "Inscription", "http://localhost/StudYncreaV1/public/checkmail.php?t=$token" );
-
-                        $auth->connect($_POST['email']);
+                        $id = $user->getIdBy('id_user', 'email', [$_POST['email']]);
+                        $SessionUser = [
+                            'email' => $_POST['email'],
+                            'id_user' => $id
+                        ];
+                        $auth->connect($SessionUser);
                         App::redirect('affichage_blog.php');
                     }
                 }

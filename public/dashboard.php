@@ -14,7 +14,7 @@ $title = "Mon compte - Stud'Yncréa - Le site de partage de sujets et de correct
 include '../Vues/header.php';
 $init = 1;
 $role = $auth->getRole();
-$user = $auth->getUser();
+$user = $auth->getUser()['email'];
 ?>
     <div class="container">
         <div class="section center">

@@ -23,7 +23,7 @@ if ($_GET) {
     $post = $postModel->findBy($postModel->getIdName(), [$id_post], 1);
 
     // Vérification que le post appartient bien à l'utilisateur
-    if ($auth->getUser() != $users->findEmail($post['id_user'])) {
+    if ($auth->getUser()['email'] != $users->findEmail($post['id_user'])) {
         App::redirect('affichage_blog.php');
     }
 
@@ -38,13 +38,6 @@ if ($_GET) {
     $form = new \App\Form($post);
     $url_pictrue1 = $post['url_file'];
 
-//    if (!empty($_POST['title'])
-//        && !empty($_POST['description'])
-//        && !empty($_POST['class'])
-//        && !empty($_POST['chapter'])
-//        && !empty($_POST['subject'])
-//        && !empty($_POST['teacher'])
-//    ) {
     if ($_POST) {
         $input = new \App\Input($_POST);
         //Input

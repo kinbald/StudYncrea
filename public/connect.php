@@ -59,7 +59,12 @@ $init = 1;
 
                 <?php
             } else {
-                $auth->connect($_POST['email']);
+                $id = $user->getIdBy('id_user', 'email', [$_POST['email']]);
+                $SessionUser = [
+                    'email' => $_POST['email'],
+                    'id_user' => $id
+                ];
+                $auth->connect($SessionUser);
                 $token = $user->generateToken(100);
                 $auth->getSession()->write('token', $token);
                 App::redirect("dashboard.php");
