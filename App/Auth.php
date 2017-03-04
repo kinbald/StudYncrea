@@ -57,9 +57,9 @@ class Auth
      * Fonction qui connecte un utilisateur dans la session
      * @param $user_email
      */
-    public function connect($user_email)
+    public function connect($user)
     {
-        $admin = $this->getUsersModel()->getRole($user_email);
+        $admin = $this->getUsersModel()->getRole($user['email']);
         if($admin == 2)
         {
             $this->getSession()->write('prof', true);
@@ -75,7 +75,8 @@ class Auth
             $this->getSession()->write('prof', false);
             $this->getSession()->write('admin', false);
         }
-        $this->session->write('auth', $user_email);
+        $this->session->write('auth', $user['email']);
+        $this->session->write('id_user', $user['id_user']);
     }
 
     /**
@@ -92,6 +93,7 @@ class Auth
             $this->getSession()->delete('prof');
         }
         $this->getSession()->delete('auth');
+        $this->getSession()->delete('id_user');
     }
 
     /**
@@ -120,7 +122,7 @@ class Auth
 
     /**
      * Retourne l'utilisateur connecte
-     * @return bool|null
+     * @return array|bool
      */
     public function getUser()
     {
@@ -128,7 +130,11 @@ class Auth
         {
             return false;
         }
-        return $this->getSession()->read('auth');
+        $session = [
+            'email' => $this->getSession()->read('auth'),
+            'id_user' => $this->getSession()->read('id_user')
+        ];
+        return $session;
     }
 
     public function getRole()
