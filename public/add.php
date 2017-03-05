@@ -69,14 +69,14 @@ if ($_GET) {
                 if ($extension_picture != false) {
                     $url_picture = 'pictures/post/' . $id_post . '.' . $extension_picture;
                     App::addFile('url_picture', $url_picture);
-
                     if ($type_post == 1) {
+                        $url_correction = null;
                         if ($extension_correction != false) {
                             $url_file = 'pictures/topic/' . $id_post . '-correction.' . $extension_correction;
                             App::addFile('url_correction', $url_file);
                             $url_correction = $url_file;
-                            $Add->add_post($user_id, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $url_picture, $type_post, $url_correction);
                         }
+                        $Add->add_post($user_id, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $url_picture, $type_post, $url_correction);
                     } else {
                         $Add->add_post($user_id, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $url_picture, $type_post);
                     }

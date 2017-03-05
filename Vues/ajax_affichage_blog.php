@@ -10,8 +10,7 @@ if(isset($_POST['data'])){
 }else{
     $data = '';
 }
-$BlogALL = $Blog->display_blog_filtres($_POST['id_CLASSES'],$_POST['id_MATIERES'],$_POST['LIMIT']);
-$BlogALL = $Blog->display_blog_filtres($_POST['id_CLASSES'],$_POST['id_MATIERES'],$data);
+$BlogALL = $Blog->display_blog_filtres($_POST['id_CLASSES'],$_POST['id_MATIERES'],$_POST['LIMIT'], $data);
 
 
 foreach ($BlogALL as $blog) {

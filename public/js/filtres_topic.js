@@ -39,10 +39,10 @@ function getSelectValues(select) {
 };
 
 /*
-    @author : Herrenschmidt Félix
-    @description : Fonction AJAX qui permet d'afficher les questions selon les filtres séléctionnés
-    */
-    function ajax(cas = 0){
+ @author : Herrenschmidt Félix
+ @description : Fonction AJAX qui permet d'afficher les questions selon les filtres séléctionnés
+ */
+function ajax(cas = 0) {
 
     var select_matieres = document.getElementById("ajax_select_matiere");
     var values_matieres = getSelectValues(select_matieres);//values_matieres est un tableau en JS
@@ -59,22 +59,17 @@ function getSelectValues(select) {
     var select_chap = document.getElementById("ajax_select_chap");
     var values_chap = getSelectValues(select_chap);
 
-        //Bouton Voir Plus : 
-        var j = 0;
-        var limit = 20; // On limite le nombre d'affichage à 20 au 1er affichage de la page
-        if (cas === 1) 
-        {
-            var i = f();          
-            for (j = 0 ; j < i ; j++)
-            {
-                limit += 10; //On ajoute à chaque fois 10 posts 
-            } 
+    //Bouton Voir Plus :
+    var j = 0;
+    var limit = 20; // On limite le nombre d'affichage à 20 au 1er affichage de la page
+    if (cas === 1) {
+        var i = f();
+        for (j = 0; j < i; j++) {
+            limit += 10; //On ajoute à chaque fois 10 posts
         }
-        ///
+    }
 
     var data1 = document.getElementById("autocomplete-input").value;
-    console.log(data1);
-    console.log(data2);
     var data2 = document.getElementById("search").value;
 
     if (data1.length >= 3 || data2.length >= 3) {
@@ -100,7 +95,7 @@ function getSelectValues(select) {
             var tab_style = encodeURIComponent(values_style);
             var tab_chap = encodeURIComponent(values_chap);
             //document.getElementById("hide").style.display = "none";//Je fais disparaitre les questions de départ
-            xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&id_PROF=" + tab_prof + "&id_STYLE=" + tab_style + "&id_CHAP=" + tab_chap + "&data=" + data1); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+            xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&id_PROF=" + tab_prof + "&id_STYLE=" + tab_style + "&id_CHAP=" + tab_chap + "&LIMIT=" + limit + "&data=" + data1); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
 
 
         } else {
@@ -125,7 +120,7 @@ function getSelectValues(select) {
             var tab_style = encodeURIComponent(values_style);
             var tab_chap = encodeURIComponent(values_chap);
             //document.getElementById("hide").style.display = "none";//Je fais disparaitre les questions de départ
-            xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&id_PROF=" + tab_prof + "&id_STYLE=" + tab_style + "&id_CHAP=" + tab_chap + "&data=" + data2); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+            xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&id_PROF=" + tab_prof + "&id_STYLE=" + tab_style + "&id_CHAP=" + tab_chap + "&LIMIT=" + limit + "&data=" + data2); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
 
         }
     } else {
@@ -151,12 +146,14 @@ function getSelectValues(select) {
         var tab_style = encodeURIComponent(values_style);
         var tab_chap = encodeURIComponent(values_chap);
         //document.getElementById("hide").style.display = "none";//Je fais disparaitre les questions de départ
-        xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&id_PROF=" + tab_prof + "&id_STYLE=" + tab_style + "&id_CHAP=" + tab_chap); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+        xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&id_PROF=" + tab_prof + "&id_STYLE=" + tab_style + "&id_CHAP=" + tab_chap + "&LIMIT=" + limit); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
 
     }
 
-    xhr.open("POST", "../Vues/ajax_affichage_topic.php", true); 
-    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); 
+    /*
+
+    xhr.open("POST", "../Vues/ajax_affichage_topic.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     //On protège les variables que l'on transportes, meme en POST
     var tab_promos = encodeURIComponent(values_promos);
     var tab_matieres = encodeURIComponent(values_matieres);
@@ -164,7 +161,8 @@ function getSelectValues(select) {
     var tab_style = encodeURIComponent(values_style);
     var tab_chap = encodeURIComponent(values_chap);
     //document.getElementById("hide").style.display = "none";//Je fais disparaitre les questions de départ
-    xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&id_PROF="+ tab_prof + "&id_STYLE="+ tab_style + "&id_CHAP=" + tab_chap +"&LIMIT=" + limit); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+    xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&id_PROF=" + tab_prof + "&id_STYLE=" + tab_style + "&id_CHAP=" + tab_chap + "&LIMIT=" + limit); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+*/
 }
 
 
@@ -174,8 +172,8 @@ function insertData(sData) {
 };
 
 function f() {
-  f.count = ++f.count || 1 ;
-  return f.count;
+    f.count = ++f.count || 1;
+    return f.count;
 }
 
 

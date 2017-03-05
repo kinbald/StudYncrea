@@ -141,13 +141,13 @@ class CommentModel extends Model
         return $ids;
     }
 
-                                <div class=\"input-field\">
-                                    <input class=\"btn waves-effect waves-light\" type=\"submit\" value=\"Envoyer\" >
-                                </div>
-                            </form>
-                        </p>        
-                        ";
-                    }
+    public function number_comment_post($id_post)
+    {
+        $sql = "SELECT count(*) as response_number FROM COMMENTS WHERE id_post = ?";
+        $result = $this->executeReq($sql, [$id_post], 1);
+        return $result;
+    }
+
 
     /**
      * Get all chidren ids of a comment

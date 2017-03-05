@@ -252,8 +252,7 @@ class BlogModel extends Model
         return $result;
     }
 
-    public function display_blog_filtres($id_class,$id_subject, $data = '')
-    public function display_blog_filtres($id_class,$id_subject,$limit = 20)
+    public function display_blog_filtres($id_class,$id_subject,$limit = 20, $data = '')
     {
         $sql = "SELECT * FROM POSTS 
           INNER JOIN PROMS on PROMS.id_class = POSTS.id_class

@@ -130,8 +130,7 @@ class TopicModel extends Model
         return $result;
     }
 
-    public function display_topic_filtres($id_class,$id_subject,$id_teach,$id_style,$id_chapter,$limit = 20)
-    public function display_topic_filtres($id_class, $id_subject, $id_teach, $id_style, $id_chapter, $data ='')
+    public function display_topic_filtres($id_class, $id_subject, $id_teach, $id_style, $id_chapter, $limit = 20,$data ='')
     {
 
         $sql = "SELECT * FROM POSTS 
