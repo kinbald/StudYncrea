@@ -42,9 +42,16 @@ if ($_GET) {
             $id_post = $Add->lastInsertId('id_post');
             $id_post = $id_post === FALSE ? 1 : $id_post + 1;
 
-            if (!isset($_FILES['url_picture2'])) {
+            $extension_picture =false;
+            $extension_correction =false;
+
+            if (is_uploaded_file($_FILES['url_picture']['tmp_name'])) {
                 $extension = array('jpg', 'jpeg', 'png', 'pdf');
                 $extension_picture = $input->check_file('url_picture', 1000000, $extension, 'file');
+            }
+            if (is_uploaded_file($_FILES['url_correction']['tmp_name'])) {
+                $extension = array('jpg', 'jpeg', 'png', 'pdf');
+                $extension_correction = $input->check_file('url_correction', 1000000, $extension, 'file');
             }
 
             $errors = $input->getErrors();
@@ -59,12 +66,22 @@ if ($_GET) {
                 </div>
                 <?php
             } else {
-                if ($extension_picture != null) {
+                if ($extension_picture != false) {
                     $url_picture = 'pictures/post/' . $id_post . '.' . $extension_picture;
                     App::addFile('url_picture', $url_picture);
-                    $Add->add_post($user_id, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $url_picture, $type_post);
-                    App::redirect("post.php?post=$id_post");
+
+                    if ($type_post == 1) {
+                        if ($extension_correction != false) {
+                            $url_file = 'pictures/topic/' . $id_post . '-correction.' . $extension_correction;
+                            App::addFile('url_correction', $url_file);
+                            $url_correction = $url_file;
+                            $Add->add_post($user_id, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $url_picture, $type_post, $url_correction);
+                        }
+                    } else {
+                        $Add->add_post($user_id, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $url_picture, $type_post);
+                    }
                 }
+                App::redirect("post.php?post=$id_post");
             }
         }
         ?>
@@ -104,6 +121,12 @@ if ($_GET) {
         echo "<div class=\"row\">";
         $form->fileInput('url_picture', 'Ajouter la photo', true);
         echo "</div>";
+
+        if ($type_post == 1) {
+            echo "<div class=\"row\">";
+            $form->fileInput('url_correction', 'Ajouter la correction');
+            echo "</div>";
+        }
 
         echo "<div class=\"row\">";
         $form->submit('Publier', 'right');

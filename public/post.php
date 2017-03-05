@@ -30,7 +30,17 @@ if (empty($get_id_post)) {
                             <div class="col s2 push-s8">
                                 <a class="right black-text"><?= $post['name_subject'] ?></a><br>
                                 <?php
-                                if ($auth->getUser()['id_user'] == $post['id_user']) {
+                                if ($post['type_post'] == 1 && $post['url_correction'] == null) {
+                                    ?>
+                                    <a class="btn pink right"
+                                       href="add_correction.php?post=<?= $post['id_post'] ?>&type=1"><i
+                                                class="material-icons">add</i></a>
+                                    <?php
+                                }
+                                ?>
+
+                                <?php
+                                if ($auth->getUser()['id_user'] == $post['id_user'] || $auth->getRole() == ADMIN || $auth->getRole() == PROF) {
                                     ?>
                                     <a class="btn orange right"
                                        href="update_post.php?post=<?= $post['id_post'] ?>"><i
@@ -122,6 +132,14 @@ if (empty($get_id_post)) {
                                             <?php
                                         }
                                     }
+                                    if (!empty($post['url_correction'])) {
+                                        ?>
+                                        <div class="col s6 m3 l2">
+                                            <a class="waves-effect white-text waves-teal btn" target="_blank"
+                                               href="<?= $post['url_correction'] ?>">Correction</a>
+                                        </div>
+                                        <?php
+                                    }
                                     ?>
                                 </div>
                                 <?php
@@ -148,7 +166,7 @@ if (empty($get_id_post)) {
                                 ?>
                                 <div class="red white-text card-panel"><?= $message ?></div>
                                 <?php
-                            } else {
+                            } else if($flashMessage == 'success') {
                                 ?>
                                 <div class="green white-text card-panel"><?= $message ?></div>
                                 <?php
@@ -163,7 +181,8 @@ if (empty($get_id_post)) {
 
                         $id_comment = $comments->lastInsertId('id_comment');
                         $id_comment = $id_comment === FALSE ? 1 : $id_comment + 1;
-                        if (!isset($_FILES['url_picture'])) {
+                        $extension_picture = false;
+                        if (is_uploaded_file($_FILES['url_picture']['tmp_name'])) {
                             $extension = array('jpg', 'jpeg', 'png', 'pdf');
                             $extension_picture = $input->check_file('url_picture', 1000000, $extension, 'file');
                         }
@@ -180,8 +199,12 @@ if (empty($get_id_post)) {
                             </div>
                             <?php
                         } else {
-                            if (isset($extension_picture)) {
-                                $url_picture = 'pictures/comments/' . $post['id_post'] . '/' . $id_comment . '.' . $extension_picture;
+                            if ($extension_picture != false) {
+                                $path = 'pictures/comments/' . $post['id_post'] . '/';
+                                $url_picture = $path . $id_comment . '.' . $extension_picture;
+                                if (!file_exists($path)) {
+                                    mkdir($path, 0777, true);
+                                }
                                 App::addFile('url_picture', $url_picture);
                             } else {
                                 $url_picture = null;

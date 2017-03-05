@@ -31,7 +31,7 @@ class BlogModel extends Model
           INNER JOIN PROMS on PROMS.id_class = POSTS.id_class
           INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
           INNER JOIN USERS on USERS.id_user = POSTS.id_user
-          WHERE type_post = 0 AND is_online=1";
+          WHERE type_post = 0 AND is_online=1 ORDER BY date_post DESC";
         $result = $this->executeReq($sql);
         return $result;
     }
@@ -110,13 +110,13 @@ class BlogModel extends Model
      * @param $url_picture string
      * @param $type_post int
      */
-    public function add_post($id_user, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $url_picture, $type_post)
+    public function add_post($id_user, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $url_picture, $type_post, $url_correction = null)
     {
         $id_post = $this->lastInsertId($this->getIdName());
         $id_post = $id_post === FALSE ? 1 : $id_post + 1;
 
         $date = date('y-m-d H:i:s');
-        $sql = "INSERT INTO " . static::$table . "(id_user, id_class, id_chapter, id_subject, id_user_teacher, title, description, id_post, url_file, type_post, date_post, is_online) VALUES (:id_user, :id_class, :id_chapter, :id_subject, :id_teacher, :title, :description, :id_post, :url_picture, :type_post, :date_post, 1)";
+        $sql = "INSERT INTO " . static::$table . "(id_user, id_class, id_chapter, id_subject, id_user_teacher, title, description, id_post, url_file, type_post, date_post, is_online, url_correction, date_correction) VALUES (:id_user, :id_class, :id_chapter, :id_subject, :id_teacher, :title, :description, :id_post, :url_picture, :type_post, :date_post, 1, :url_correction, :date_correction)";
         $param = [
             ':id_user' => $id_user,
             ':id_class' => $id_class,
@@ -128,7 +128,9 @@ class BlogModel extends Model
             ':title' => $title,
             ':description' => $data,
             ':id_post' => $id_post,
-            ':type_post' => $type_post
+            ':type_post' => $type_post,
+            ':url_correction' => $url_correction,
+            ':date_correction' => $date
         ];
         $this->executeReq($sql, $param, 0);
     }
