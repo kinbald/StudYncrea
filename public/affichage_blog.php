@@ -18,13 +18,13 @@ $select = 1;
         <div class="card horizontal">
             <div class="card-stacked">
                 <div class="card-content">
-                 <img style="display: none;" id="loader" class="right materialboxed" width="30" src="../pictures/Flip_Flop.gif">
+                 <img style="display: none;" id="loader" class="right materialboxed" width="30" src="../pictur-es/Flip_Flop.gif">
                  <h5>Filtres :</h5>
                  <form class="col s12">
                      <div class="row">
                          <div class="col s6 m6 l6">
                              <!-- Select des matières (affichage dynamique) -->
-                             <select multiple id="ajax_select_matiere" onchange="ajax()">
+                             <select multiple id="ajax_select_matiere" onchange="ajax();">
                                 <option disabled>Matières</option>
                                 <?php
                                 $Sub = $Blog->display_subjects_all();
@@ -38,7 +38,7 @@ $select = 1;
                         </div>
                         <div class="col s6 m6 l6">
                             <!-- Select des classes (affichage dynamique) -->
-                            <select multiple id="ajax_select_promo" onchange="ajax()">
+                            <select multiple id="ajax_select_promo" onchange="ajax();">
                                 <option disabled>Classes</option>
                                 <?php
                                 $Proms = $Blog->display_proms_all();
@@ -62,6 +62,7 @@ $select = 1;
 <!-- INNER AJAX-->
 <div class="row" id="ajax_inner"></div>
 <!--  -->
+<a class="btn waves-effect waves-light" onclick="ajax(1);" >Voir Plus</a>
 </div>
 <script src="js/oXHR.js"></script>
 <script src="js/filtres_blog.js"></script>

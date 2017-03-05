@@ -141,6 +141,14 @@ class CommentModel extends Model
         return $ids;
     }
 
+                                <div class=\"input-field\">
+                                    <input class=\"btn waves-effect waves-light\" type=\"submit\" value=\"Envoyer\" >
+                                </div>
+                            </form>
+                        </p>        
+                        ";
+                    }
+
     /**
      * Get all chidren ids of a comment
      * @param $comment

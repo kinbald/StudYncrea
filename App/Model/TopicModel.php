@@ -130,6 +130,7 @@ class TopicModel extends Model
         return $result;
     }
 
+    public function display_topic_filtres($id_class,$id_subject,$id_teach,$id_style,$id_chapter,$limit = 20)
     public function display_topic_filtres($id_class, $id_subject, $id_teach, $id_style, $id_chapter, $data ='')
     {
 
@@ -202,7 +203,9 @@ class TopicModel extends Model
             $sql = $sql . " ) ";
         }
 
-        $sql = $sql . "ORDER BY date_post DESC";
+        $sql = $sql . "ORDER BY date_post DESC
+                       LIMIT $limit ";
+        // die($sql);
         $result = $this->executeReq($sql);
 
         return $result;
