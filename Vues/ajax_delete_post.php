@@ -9,7 +9,8 @@
 if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] == "http://localhost/StudYncreaV1/public/dashboard.php") {
     include "../App/App.php";
     App::load();
-    if($_POST) {
+    App::getAuth()->restrict();
+    if ($_POST) {
         if ($_POST['token'] === App::getAuth()->getSession()->read('token')) {
             $Topic = new \App\Model\TopicModel(App::getDb());
             $users = new \App\Model\UsersModel(App::getDb());
@@ -18,15 +19,11 @@ if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] == "http://local
             if (App::getAuth()->getUser() == $users->findEmail($post['id_user'])) {
                 $Topic->change_view($_POST['id_post'], 0);
                 echo true;
-            }
-            else
-            {
+            } else {
                 echo 'error';
             }
         }
     }
-}
-else
-{
+} else {
     echo false;
 }

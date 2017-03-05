@@ -88,10 +88,8 @@ class UsersModel extends Model
             ";
         //TODO Add form validation and encrypt password
         $utilisateur = $this->executeReq($sql, array($email, password_hash($password, PASSWORD_DEFAULT), 2));
-        if (count($utilisateur) == 1)
-            /// Accès à la première ligne de résultat
-            return $utilisateur[0];
-        else
+        if (count($utilisateur) == 1) /// Accès à la première ligne de résultat
+            return $utilisateur[0]; else
             throw new Exception("Aucun utilisateur ne correspond aux identifiants fournis");
     }
 
@@ -121,8 +119,7 @@ class UsersModel extends Model
 
     public function registerUser($email, $password, $name, $surname, $role, $class)
     {
-        if ($this->checkUserExist($email) === FALSE)
-        {
+        if ($this->checkUserExist($email) === FALSE) {
             $id = $this->lastInsertId($this->getIdName());
             $id = $id === FALSE ? 1 : $id + 1;
             $sql = "
@@ -131,17 +128,7 @@ class UsersModel extends Model
                 ";
             $password = password_hash($password, PASSWORD_DEFAULT);
             $token = $this->generateToken(255);
-            $param =
-                [
-                    ':id' => $id,
-                    ':email' => $email,
-                    ':password_user' => $password,
-                    ':name_user' => $name,
-                    ':surname_user' => $surname,
-                    ':role' => $role,
-                    ':token' => $token,
-                    ':class' => $class,
-                ];
+            $param = [':id' => $id, ':email' => $email, ':password_user' => $password, ':name_user' => $name, ':surname_user' => $surname, ':role' => $role, ':token' => $token, ':class' => $class,];
             $add = $this->executeReq($sql, $param, 0);
             return $token;
         }
@@ -158,7 +145,7 @@ class UsersModel extends Model
         $result = $this->executeReq($sql);
         $options = [];
         foreach ($result as $donnees) {
-            $options[$donnees[$this->getIdName()]] = $donnees["name_user"]. " " .$donnees["surname_user"];
+            $options[$donnees[$this->getIdName()]] = $donnees["name_user"] . " " . $donnees["surname_user"];
         }
         return $options;
     }
@@ -171,9 +158,7 @@ class UsersModel extends Model
     public function findUserName($id_user)
     {
         $sql = "SELECT name_user FROM " . static::$table . " WHERE " . $this->_idName . " = :" . $this->_idName;;
-        $param = [
-            ":".$this->getIdName() => $id_user,
-        ];
+        $param = [":" . $this->getIdName() => $id_user,];
         $result = $this->executeReq($sql, $param, 1);
         $result = $result['name_user'];
         return $result;
@@ -187,9 +172,7 @@ class UsersModel extends Model
     public function findEmail($id_user)
     {
         $sql = "SELECT email FROM " . static::$table . " WHERE " . $this->_idName . " = :" . $this->_idName;;
-        $param = [
-            ":".$this->getIdName() => $id_user,
-        ];
+        $param = [":" . $this->getIdName() => $id_user,];
         $result = $this->executeReq($sql, $param, 1);
         $result = $result['email'];
         return $result;
