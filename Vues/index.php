@@ -12,6 +12,8 @@
         <div class="container">
             <br>
             <h1 class="header center flow-text teal-text">Bienvenue sur Stud'Yncréa</h1>
+            <div class="center"><img src="http://yncrea.fr/wp-content/uploads/2016/11/logo-yncrea-favicon.png"
+                                      class="responsive-img" width="70px" alt="Yncrea"></div>
             <div class="row center">
                 <h5 class="header col s12 light">Un moyen facile de retrouver tous les sujets et leurs corrections à
                     l'ISEN-Toulon</h5>

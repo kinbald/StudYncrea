@@ -16,8 +16,8 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Liens</h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="#!">Annales</a></li>
-                    <li><a class="grey-text text-lighten-3" href="#!">Demandes</a></li>
+                    <li><a class="grey-text text-lighten-3" href="affichage_blog.php">Questions</a></li>
+                    <li><a class="grey-text text-lighten-3" href="affichage_topic.php">Sujets</a></li>
                     <li><a class="grey-text text-lighten-3" href="http://yncrea.fr/">Yncréa</a></li>
                     <li><a class="grey-text text-lighten-3" href="http://isen-toulon.fr/">ISEN-Toulon</a></li>
                 </ul>
@@ -26,7 +26,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            © 2017 - All rights reserved - Desrumaux Guillaume - Herrenschmidt Félix - Chamayou Guilhem - Dorian Picard
+            © 2017 - Tous droits réservés - Desrumaux Guillaume - Herrenschmidt Félix - Chamayou Guilhem - Dorian Picard
         </div>
     </div>
 </footer>
@@ -44,7 +44,7 @@
             }
         }
     }
-    window.onload = setActive;
+    jQuery(document).ready(setActive);
 
     $(".button-collapse").sideNav();
     <?php
@@ -88,7 +88,7 @@ if (isset($dashboardScript)) {
     <script src="js/oXHR.js"></script>
     <script type="text/javascript">
 
-        window.onload = function () {
+        $(document).ready(function () {
             var elements = document.getElementsByClassName('delete');
             for (var i = 0; i < elements.length; ++i) {
                 elements[i].addEventListener('click', function (event) {
@@ -100,7 +100,7 @@ if (isset($dashboardScript)) {
                     delete_post(id, toElement);
                 }, false);
             }
-        };
+        });
 
         function delete_post(id, element) {
             var value_id = id.split("-").pop();

@@ -34,6 +34,8 @@ $user = $auth->getUser()['email'];
                     include "../Vues/dashboard/user.php";
                     break;
                 case PROF:
+                    $blogAll = $blog->getAllByUserId($user_id);
+                    $annalesAll = $topic->getAllByUserId($user_id);
                     include "../Vues/dashboard/prof.php";
                     break;
                 case ADMIN:
