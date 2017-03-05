@@ -1,9 +1,12 @@
 <?php
 include "../App/App.php";
 App::load();
-App::getAuth()->restrict();
+$auth = App::getAuth();
+$auth->restrict();
+ob_start();
+$ScriptPost = 1;
+$Scriptcomment = 1;
 include '../Vues/header.php';
-$init = 1;
 
 $get_id_post = filter_input(INPUT_GET, 'post');
 if (empty($get_id_post)) {
@@ -15,13 +18,28 @@ if (empty($get_id_post)) {
     if (!empty($post)) {
         ?>
         <div class="container">
-        <div class="row">
+        <div class="section">
             <div class="col s12 m12 l12">
                 <div class='card'>
                     <div class="card-content">
-                        <img src="<?= $post['url_avatar'] ?>" width="59" height="59">
-                        <a class="black-text"><?= $post['name_user'] ?></a>
-                        <a class="right black-text"><?= $post['name_subject'] ?></a><br>
+                        <div class="row">
+                            <div class="col s2">
+                                <img src="<?= $post['url_avatar'] ?>" width="59" height="59">
+                                <a class="black-text"><?= $post['name_user'] ?></a>
+                            </div>
+                            <div class="col s2 push-s8">
+                                <a class="right black-text"><?= $post['name_subject'] ?></a><br>
+                                <?php
+                                if ($auth->getUser()['id_user'] == $post['id_user']) {
+                                    ?>
+                                    <a class="btn orange right"
+                                       href="update_post.php?post=<?= $post['id_post'] ?>"><i
+                                                class="material-icons">mode_edit</i></a>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
                         <div class="divider"></div>
                         <a class="flow-text black-text"><?= $post['title'] ?> : </a>
                         <br>
@@ -117,6 +135,100 @@ if (empty($get_id_post)) {
             </div>
         </div>
         <?php
+        if ($post['type_post'] == 0) {
+            $users = new \App\Model\UsersModel(App::getDb());
+            ?>
+            <div class="section">
+                <div class="card-panel" id="allcomments">
+                    <?php
+                    if ($auth->getSession()->hasFlashes()) {
+                        $flash = $auth->getSession()->getFlashes();
+                        foreach ($flash as $flashMessage => $message) {
+                            if ($flashMessage == 'error') {
+                                ?>
+                                <div class="red white-text card-panel"><?= $message ?></div>
+                                <?php
+                            } else {
+                                ?>
+                                <div class="green white-text card-panel"><?= $message ?></div>
+                                <?php
+
+                            }
+                        }
+                    }
+                    $comments = new \App\Model\CommentModel(App::getDb());
+                    if ($_POST) {
+                        $input = new \App\Input($_POST);
+                        $comment = $input->text('comment');
+
+                        $id_comment = $comments->lastInsertId('id_comment');
+                        $id_comment = $id_comment === FALSE ? 1 : $id_comment + 1;
+                        if (!isset($_FILES['url_picture'])) {
+                            $extension = array('jpg', 'jpeg', 'png', 'pdf');
+                            $extension_picture = $input->check_file('url_picture', 1000000, $extension, 'file');
+                        }
+
+                        $errors = $input->getErrors();
+                        /** Affichage des erreurs */
+                        if (!empty($errors)) { ?>
+                            <div class="card red">
+                                <div class="card-content white-text">
+                                    <?php foreach ($errors as $error) {
+                                        echo $error . "<br/>";
+                                    } ?>
+                                </div>
+                            </div>
+                            <?php
+                        } else {
+                            if (isset($extension_picture)) {
+                                $url_picture = 'pictures/comments/' . $post['id_post'] . '/' . $id_comment . '.' . $extension_picture;
+                                App::addFile('url_picture', $url_picture);
+                            } else {
+                                $url_picture = null;
+                            }
+                            $id_user = $auth->getUser()['id_user'];
+                            if (!empty($_POST['id_comment_father'])) {
+                                $id_comment_father = $_POST['id_comment_father'];
+                            } else {
+                                $id_comment_father = null;
+                            }
+                            $control = $comments->add_comment_bdd($post['id_post'], 0, $id_user, $url_picture, $comment, $id_comment, $id_comment_father);
+                            if ($control == 0) {
+                                $auth->getSession()->setFlash('success', 'Votre commentaire a bien été envoyé');
+                            } else {
+                                $auth->getSession()->setFlash('error', 'Vous ne pouvez pas répondre à ce commentaire');
+                            }
+                        }
+                        App::redirect('post.php?post=' . $post['id_post']);
+                    }
+
+                    foreach ($comments->findAllWithChildren($post['id_post']) as $comment) {
+                        require('../Vues/comment.php');
+
+                        ?>
+                        <?php
+                    }
+                    $form = new \App\Form();
+                    ?>
+                    <div id="comments" class="card-panel grey lighten-4">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <h5>Répondre à la question :</h5>
+                            <input type="hidden" id="id_comment_father" name="id_comment_father" value="">
+                            <?php
+                            $form->textArea('comment', 'Votre commentaire', true);
+
+                            $form->fileInput('url_picture', 'Un document pour votre réponse');
+
+                            $form->submit('Répondre', 'green');
+                            ?>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+        ?>
+        <?php
     } else {
         App::redirect('affichage_blog.php');
     }
@@ -124,6 +236,4 @@ if (empty($get_id_post)) {
     </div>
     <?php
 }
-
-
 include '../Vues/footer.php';

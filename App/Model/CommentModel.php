@@ -16,15 +16,33 @@ class CommentModel extends Model
     public static $table = 'COMMENTS';
     private $_idName = 'id_comment';
 
+    public function checkParentExist($idParent)
+    {
+        $sql = 'SELECT id_comment, depth FROM ' . static::$table . ' WHERE id_comment = ?';
+        return $this->executeReq($sql, [$idParent], 1);
+    }
+
     public function add_comment_bdd($id_post, $id_type, $id_user, $url_picture, $data, $id_comment, $id_comment_father)
     {
+        $depth = 0;
         $date = date('Y-m-d G:i:s');
 
-        if ($url_picture != null) {
-            if ($id_comment_father != 'null') {
+        if ($id_comment_father != 0) {
+            $comment = $this->checkParentExist($id_comment_father);
+            if ($comment == false) {
+                throw new Exception('Ce parent n\'existe pas');
+            }
+            $depth = $comment['depth'] + 1;
+        }
+
+        if ($depth >= 2) {
+            return -1;
+        } else {
+            if ($url_picture != null) {
+
                 $sql = "
-                    INSERT INTO comments(content, date_comment, url_photo_comment, id_user, id_type, id_post, id_comment, id_comment_father) 
-                    VALUES(:content, :date_comment, :url_picture, :id_user, :id_type, :id_post, :id_comment, :id_comment_father)
+                    INSERT INTO " . static::$table . "(content, date_comment, url_photo_comment, id_user, id_type, id_post, id_comment, id_comment_father, depth) 
+                    VALUES(:content, :date_comment, :url_picture, :id_user, :id_type, :id_post, :id_comment, :id_comment_father, :depth)
                     ";
                 $param = [
                     'content' => $data,
@@ -34,30 +52,14 @@ class CommentModel extends Model
                     'url_picture' => $url_picture,
                     'id_post' => $id_post,
                     'id_comment' => $id_comment,
-                    'id_comment_father' => $id_comment_father
+                    'id_comment_father' => $id_comment_father,
+                    'depth' => $depth
                 ];
                 $res = $this->executeReq($sql, $param, 0);
             } else {
                 $sql = "
-                INSERT INTO comments(content, date_comment, url_photo_comment, id_user, id_type, id_post, id_comment) 
-                VALUES(:content, :date_comment, :url_picture, :id_user, :id_type, :id_post, :id_comment)
-                ";
-                $param = [
-                    'content' => $data,
-                    'id_type' => $id_type,
-                    'date_comment' => $date,
-                    'id_user' => $id_user,
-                    'url_picture' => $url_picture,
-                    'id_post' => $id_post,
-                    'id_comment' => $id_comment
-                ];
-                $res = $this->executeReq($sql, $param, 0);
-            }
-        } else {
-            if ($id_comment_father != 'null') {
-                $sql = "
-                  INSERT INTO comments(content, date_comment, id_user, id_type, id_post, id_comment, id_comment_father) 
-                  VALUES(:content, :date_comment, :id_user, :id_type, :id_post, :id_comment, :id_comment_father)
+                  INSERT INTO " . static::$table . "(content, date_comment, id_user, id_type, id_post, id_comment, id_comment_father, depth) 
+                  VALUES(:content, :date_comment, :id_user, :id_type, :id_post, :id_comment, :id_comment_father, :depth)
                   ";
                 $param = [
                     'content' => $data,
@@ -66,21 +68,8 @@ class CommentModel extends Model
                     'id_user' => $id_user,
                     'id_post' => $id_post,
                     'id_comment' => $id_comment,
-                    'id_comment_father' => $id_comment_father
-                ];
-                $res = $this->executeReq($sql, $param, 0);
-            } else {
-                $sql = "
-INSERT INTO comments(content, date_comment, id_user, id_type, id_post, id_comment) 
-VALUES(:content, :date_comment, :id_user, :id_type, :id_post, :id_comment)
-";
-                $param = [
-                    'content' => $data,
-                    'id_type' => $id_type,
-                    'date_comment' => $date,
-                    'id_user' => $id_user,
-                    'id_post' => $id_post,
-                    'id_comment' => $id_comment
+                    'id_comment_father' => $id_comment_father,
+                    'depth' => $depth
                 ];
                 $res = $this->executeReq($sql, $param, 0);
             }
@@ -88,90 +77,85 @@ VALUES(:content, :date_comment, :id_user, :id_type, :id_post, :id_comment)
         return 0;
     }
 
-
-    public function display_comment($id_post, $type)
+    /**
+     * Récupère tous les commentaire organisé par ID
+     * @param $post_id
+     * @return array
+     */
+    public function findAllById($post_id)
     {
-        $param1 = [
-            'id_post' => $id_post
-        ];
-        $req1 = $this->executeReq('SELECT * FROM COMMENTS WHERE id_post = :id_post AND id_comment_father IS NULL ORDER BY id_comment', $param1, 2);
-
-        foreach ($req1 as $data1) {
-            ?>
-
-            <div class="row">
-            <div class="col s12 card-panel">
-                        <p> <?php echo $data1['content']; ?>
-            <?php if ($data1['url_photo_comment'] != null) {
-                ?> <img <img class="materialboxed"  width="200" src="<?php echo $data1['url_photo_comment']; ?>"></p>
-                <?php
-            }
-            $param2 = [
-                'id_post' => $id_post,
-                'id_comment_father' => $data1['id_comment']
-            ];
-            $req2 = $this->executeReq('SELECT * FROM COMMENTS WHERE id_post = :id_post AND id_comment_father = :id_comment_father ORDER BY id_comment', $param2, 2);
-
-            $count = count($req2);
-            if ($count) {
-                foreach ($req2 as $data2) {
-                    ?>
-                    </div>
-                    <div class="col s11 offset-s1 card-panel">
-                    <p><?php echo $data2['content']; ?>
-                    <?php if ($data2['url_photo_comment'] != null) {
-                        ?> <img class="materialboxed" width="200" src="<?php echo $data2['url_photo_comment']; ?>"></p>
-                        <?php
-                    }
-                }
-                $this->display_form_comment($data1, $type);
-                echo "</div></div>";
-            }
-            if(!$count)
-            {
-                $this->display_form_comment($data1, $type);
-                echo "</div></div>";
-            }
+        $sql = "SELECT * FROM " . static::$table . " WHERE id_post = ? AND is_online=1";
+        $comments = $this->executeReq($sql, [$post_id], 4);
+        $comments_by_id = [];
+        foreach ($comments as $comment) {
+            $comments_by_id[$comment->id_comment] = $comment;
         }
+        return $comments_by_id;
     }
 
-    public function display_form_comment($data1, $type)
+    /**
+     * Permet de récupérer les commentaires avec les enfants
+     * @param $post_id
+     * @param bool $unset_children Doit-t-on supprimer les commentaires qui sont des enfants des résultats ?
+     * @return array
+     */
+    public function findAllWithChildren($post_id, $unset_children = true)
     {
-        if(!empty($data1['id_comment']))
+        // On a besoin de 2 variables
+        // comments_by_id ne sera jamais modifié alors que comments
+        $comments = $commentsById = $this->findAllById($post_id);
+        foreach ($comments as $id => $comment) {
+            if ($comment->id_comment_father != NULL) {
+                $commentsById[$comment->id_comment_father]->children[] = $comment;
+                if ($unset_children) {
+                    unset($comments[$id]);
+                }
+            }
+        }
+        return $comments;
+    }
+
+    /**
+     * Permet de supprimer un commentaire et ces enfants
+     * @param $id_comment
+     * @return int
+     */
+    public function deleteWithChildren($id_comment)
+    {
+        // On récupère le commentaire à supprimer
+        $comment = $this->findBy('id_comment', [$id_comment], 3);
+        $comments = $this->findAllWithChildren($comment->id_post, false);
+        if(isset($comments[$comment->id_comment]->children))
         {
-            $value = $data1['id_comment'];
+            $ids = $this->getChildrenIds($comments[$comment->id_comment]);
+            $ids[] = $comment->id_comment;
         }
         else
         {
-            $value = null;
+            $ids[] = $id_comment;
         }
 
-        echo "
-        <p>
-        <form id=\"comments\" action=\"\" method=\"post\" enctype=\"multipart/form-data\">
-            <div class=\"input-field\">
-                <input type=\"text\" id=\"comment\" name=\"comment\" class=\"validate\"/>
-                <label for=\"comment\">Votre commentaire</label>
-            </div>
-            <div class=\"file-field  input-field\">
-                <div class=\"btn\">
-                    <span>Une photo</span>
-                    <input type=\"file\" name=\"url_picture\">
-                </div>
-                <div class=\"file-path-wrapper\">
-                    <input class=\"file-path validate\" type=\"text\">
-                </div>
-            </div>            
-            <input type=\"hidden\" name=\"id_type\" value=\"$type\"/>
-            <input type=\"hidden\" name=\"id_post\" value=\"". $data1['id_post'] ."\"/>
-            <input type=\"hidden\" name=\"id_comment_father\" value=\"$value\"/>
-            
-            <div class=\"input-field\">
-            <input class=\"btn waves-effect waves-light\" type=\"submit\" value=\"Envoyer\" >
-            </div>
-</form>
-</p>        
-        ";
+        // On supprime le commentaire et ses enfants
+        $sql = 'UPDATE '. static::$table .' SET is_online=0 WHERE ' . $this->getIdName() . ' IN (' . implode(',', $ids) . ')';
+        $this->executeReq($sql, null, -1);
+        return $ids;
+    }
+
+    /**
+     * Get all chidren ids of a comment
+     * @param $comment
+     * @return array
+     */
+    private function getChildrenIds($comment)
+    {
+        $ids = [];
+        foreach ($comment->children as $child) {
+            $ids[] = $child->id_comment;
+            if (isset($child->children)) {
+                $ids = array_merge($ids, $this->getChildrenIds($child));
+            }
+        }
+        return $ids;
     }
 
     /**
