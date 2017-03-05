@@ -26,7 +26,7 @@
     <div class="nav">
         <nav class="teal" role="navigation">
             <div class="nav-wrapper container">
-                <a id="logo-container" href="index.php" class="brand-logo right">Stud'Yncrea</a>
+                <a id="logo-container" href="index.php" class="brand-logo right">Stud'<img src="http://yncrea.fr/wp-content/uploads/2016/11/logo-yncrea-favicon.png" class="inline responsive-img" width="30px" alt="Yncrea">ncrea</a>
                 <ul id="nav" class="left hide-on-med-and-down">
                     <?php
                     if (isset($_SESSION['auth'])) {
@@ -43,7 +43,7 @@
                     <li><a href="affichage_topic.php">Sujets</a></li>
                 </ul>
                 <ul class="left input-field">
-                    <input id="autocomplete-input" type="search" placeholder="Cherchez un sujet" required>
+                    <input id="autocomplete-input" type="search" placeholder="Cherchez un sujet" onkeyup="ajax()" required>
                     <label for="autocomplete-input"><i class="material-icons">search</i></label>
                     <i class="material-icons">close</i>
                 </ul>
@@ -54,7 +54,7 @@
         <ul class="side-nav" id="nav-mobile">
             <li>
                 <a href="#">
-                    <input id="search" type="search" placeholder="Cherchez un sujet">
+                    <input id="search" type="text" onkeyup="ajax()" laceholder="Cherchez un sujet">
                 </a>
             </li>
             <?php

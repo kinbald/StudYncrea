@@ -130,7 +130,7 @@ class TopicModel extends Model
         return $result;
     }
 
-    public function display_topic_filtres($id_class, $id_subject, $id_teach, $id_style, $id_chapter)
+    public function display_topic_filtres($id_class, $id_subject, $id_teach, $id_style, $id_chapter, $data ='')
     {
 
         $sql = "SELECT * FROM POSTS 
@@ -138,7 +138,10 @@ class TopicModel extends Model
         INNER JOIN SUBJECTS on SUBJECTS.id_subject = POSTS.id_subject
         INNER JOIN USERS on USERS.id_user = POSTS.id_user
         WHERE type_post = 1 and is_online=1 ";
-
+        if($data != '')
+        {
+            $sql = $sql . 'AND ( title LIKE \'%' . $data.'%\' OR \'%' . strtolower ($data).'%\') ';
+        }
         if ($id_class != '') {
             $a = explode(",", $id_class);
             foreach ($a as $id => $value) {
@@ -200,7 +203,6 @@ class TopicModel extends Model
         }
 
         $sql = $sql . "ORDER BY date_post DESC";
-        // die($sql);
         $result = $this->executeReq($sql);
 
         return $result;
@@ -323,7 +325,7 @@ class TopicModel extends Model
 
     public function getAllByUserId($user_id)
     {
-        $sql = "SELECT * FROM " . static::$table . " WHERE id_user=$user_id AND type_post=1";
+        $sql = "SELECT * FROM " . static::$table . " WHERE id_user=$user_id AND type_post=1 ORDER BY date_post DESC";
         return $this->executeReq($sql, null, 2);
     }
 

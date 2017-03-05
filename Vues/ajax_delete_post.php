@@ -16,7 +16,7 @@ if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] == "http://local
             $users = new \App\Model\UsersModel(App::getDb());
             $post = $Topic->findBy($Topic->getIdName(), [$_POST['id_post']], 1);
             // Vérification que le post appartient bien à l'utilisateur
-            if (App::getAuth()->getUser() == $users->findEmail($post['id_user'])) {
+            if (App::getAuth()->getUser()['email'] == $users->findEmail($post['id_user'])) {
                 $Topic->change_view($_POST['id_post'], 0);
                 echo true;
             } else {

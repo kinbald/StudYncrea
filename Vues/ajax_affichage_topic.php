@@ -3,8 +3,15 @@ include "../App/App.php";
 App::load();
 App::getAuth()->restrict();
 $Topic = new \App\Model\TopicModel(App::getDb());
+$input = new \App\Input($_POST);
 
-$TopicALL = $Topic->display_topic_filtres($_POST['id_CLASSES'], $_POST['id_MATIERES'], $_POST['id_PROF'], $_POST['id_STYLE'], $_POST['id_CHAP']);
+if (isset($_POST['data'])) {
+    $data = $input->text('data');
+} else {
+    $data = '';
+}
+
+$TopicALL = $Topic->display_topic_filtres($_POST['id_CLASSES'], $_POST['id_MATIERES'], $_POST['id_PROF'], $_POST['id_STYLE'], $_POST['id_CHAP'], $data);
 
 foreach ($TopicALL as $topic) {
     ?>

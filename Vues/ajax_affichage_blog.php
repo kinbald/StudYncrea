@@ -3,8 +3,15 @@ include "../App/App.php";
 App::load();
 App::getAuth()->restrict();
 $Blog = new \App\Model\BlogModel(App::getDb());
+$input = new \App\Input($_POST);
 
-$BlogALL = $Blog->display_blog_filtres($_POST['id_CLASSES'], $_POST['id_MATIERES']);
+if(isset($_POST['data'])){
+    $data = $input->text('data');
+}else{
+    $data = '';
+}
+$BlogALL = $Blog->display_blog_filtres($_POST['id_CLASSES'],$_POST['id_MATIERES'],$data);
+
 
 foreach ($BlogALL as $blog) {
     ?>
