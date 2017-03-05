@@ -25,7 +25,7 @@ class Input
     private function getField($field,$type)
     {
         if (!isset($this->data[$field])) {
-            $this->errors[$type] = "Le champ n'est pas rempli.";
+            $this->errors[$type] = "Le champ $type n'est pas rempli.";
             return null;
         }
         return $this->data[$field];
@@ -53,6 +53,7 @@ class Input
     }
 
     public function check_text($field,$type){
+        $field = $this->getField($field, $type);
         if(is_string($field)){
             return true;
         }
@@ -63,7 +64,19 @@ class Input
 
     }
 
+    public function check_select($fieldName, $type)
+    {
+        $field = $this->getField($fieldName, $type);
+        if(!empty($field)){
+            return $field;
+        }
+        else{
+            return false;
+        }
+    }
+
     public function check_int($field,$type){
+        $field = $this->getField($field, $type);
         if(is_int($field)){
             return true;
         }
@@ -90,7 +103,7 @@ class Input
             if($_FILES[$field]['size']<=$max_size){
                 $extension_upload = strtolower(  substr(  strrchr($_FILES[$field]['name'], '.')  ,1)  );
                 if ( in_array($extension_upload,$extension) ){
-                    return true;
+                    return $extension_upload;
                 }else{
                     $this->errors[$type] = "Extension incorrect.";
                     return false;
@@ -110,11 +123,11 @@ class Input
     {
         $field = $this->getField($fieldName, $type);
         $field = $this->pseudo_password($field);
-        if($this->check_text($field,$type)) {
+        if(is_string($field)) {
             if (strlen($field) >= $length_pseudo_password) {
                 return true;
             } else {
-                $this->errors[$type] = "Taille du mot de passe trop courte (min = 5 charactères).";
+                $this->errors[$type] = "Taille du mot de passe trop courte (min = $length_pseudo_password charactères).";
                 return false;
             }
         }else{
@@ -147,7 +160,15 @@ class Input
     public function text($fieldName)
     {
         $field = $this->getField($fieldName, 'text');
-        return filter_var($field,FILTER_SANITIZE_SPECIAL_CHARS);
+        if(!empty($field))
+        {
+            return filter_var($field,FILTER_SANITIZE_SPECIAL_CHARS);
+        }
+        else
+        {
+            $this->errors['text'] = "Le champ $fieldName est requis.";
+            return false;
+        }
     }
 
     public function pseudo_password($field){

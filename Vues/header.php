@@ -6,49 +6,89 @@
  * Time: 14:01
  */
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-    <!--Import Google Icon Font-->
-    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <!--Import Google Icon Font-->
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
 
+        <title><?= isset($title) ? $title : "Stud'Yncréa - Mise en commun d'annales et de corrections" ?></title>
 
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-</head>
+        <!--Let browser know website is optimized for mobile-->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
 
 <body>
+    <!-- NAVBAR -->
+    <div class="nav">
+        <nav class="teal" role="navigation">
+            <div class="nav-wrapper container">
+                <a id="logo-container" href="index.php" class="brand-logo right">Stud'<img src="http://yncrea.fr/wp-content/uploads/2016/11/logo-yncrea-favicon.png" class="inline responsive-img" width="30px" alt="Yncrea">ncrea</a>
+                <ul id="nav" class="left hide-on-med-and-down">
+                    <?php
+                    if (isset($_SESSION['auth'])) {
+                        ?>
+                        <li><a href="dashboard.php">Mon compte</a></li>
+                        <?php
+                    } else {
+                        ?>
+                        <li><a href="index.php">Accueil</a></li>
+                        <?php
+                    }
+                    ?>
+                    <li><a href="affichage_blog.php">Questions</a></li>
+                    <li><a href="affichage_topic.php">Sujets</a></li>
+                </ul>
+                <ul class="left input-field">
+                    <input id="autocomplete-input" type="search" placeholder="Cherchez un sujet" onkeyup="ajax()" required>
+                    <label for="autocomplete-input"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </ul>
 
-<!-- NAVBAR -->
-<div class="nav">
-    <nav class="teal" role="navigation">
-        <div class="nav-wrapper container">
-            <a id="logo-container" href="index.php" class="brand-logo right">Stud'Yncrea</a>
-            <ul class="left hide-on-med-and-down">
+                <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+            </div>
+        </nav>
+        <ul class="side-nav" id="nav-mobile">
+            <li>
+                <a href="#">
+                    <input id="search" type="text" onkeyup="ajax()" laceholder="Cherchez un sujet">
+                </a>
+            </li>
+            <?php
+            if (isset($_SESSION['auth'])) {
+                ?>
+                <li><a href="dashboard.php">Mon compte</a></li>
+                <?php
+            } else {
+                ?>
                 <li><a href="index.php">Accueil</a></li>
-                <li><a href="affichage_blog.php">Questions</a></li>
-                <li><a href="#!">Sujets</a></li>
-            </ul>
-            <ul class="left input-field">
-                <input id="search" type="search" placeholder="Cherchez un sujet" required>
-                <label for="search"><i class="material-icons">search</i></label>
-                <i class="material-icons">close</i>
-            </ul>
-
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-        </div>
-    </nav>
-    <ul class="side-nav" id="nav-mobile">
-        <li>
-            <a href="#">
-                <input id="search" type="search" placeholder="Cherchez un sujet">
-            </a>
-        </li>
-        <li><a href="index.php">Accueil</a></li>
-        <li><a href="affichage_blog.php">Questions</a></li>
-        <li><a href="#!">Sujets</a></li>
-    </ul>
-</div>
-<!--  -->
+                <?php
+            }
+            ?>
+            <li><a href="affichage_blog.php">Questions</a></li>
+            <li><a href="affichage_topic.php">Sujets</a></li>
+        </ul>
+    </div>
+<?php
+if (isset($float)) {
+    ?>
+    <!--  -->
+    <!-- Bouton Flottant -->
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red" href="add.php?type=<?= $type === 0 ? 0 : 1 ?>">
+            <i class="material-icons">mode_edit</i>
+        </a>
+        <!--        <ul>-->
+        <!--            <li><a class="btn-floating red" href="add.php?type=--><? //= $type === 0 ? 0 : 1 ?><!--"><i-->
+        <!--                            class="material-icons">library_add</i></a>-->
+        <!--            </li>-->
+        <!--            <li><a class="btn-floating yellow darken-1" href="affichage_blog.php#questions"><i-->
+        <!--                            class="material-icons">forum</i></a></li>-->
+        <!--        </ul>-->
+        <!--  -->
+    </div>
+    <?php
+}
