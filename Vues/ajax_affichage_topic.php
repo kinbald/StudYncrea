@@ -3,7 +3,7 @@ include "../App/App.php";
 App::load();
 $Topic = new \App\Model\TopicModel(App::getDb());
 
-$TopicALL = $Topic->display_topic_filtres($_POST['id_CLASSES'],$_POST['id_MATIERES'],$_POST['id_PROF'],$_POST['id_STYLE'], $_POST['id_CHAP']);
+$TopicALL = $Topic->display_topic_filtres($_POST['id_CLASSES'],$_POST['id_MATIERES'],$_POST['id_PROF'],$_POST['id_STYLE'], $_POST['id_CHAP'],$_POST['LIMIT']);
 
 foreach ($TopicALL as $topic) { 
     ?>

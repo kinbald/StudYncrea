@@ -25,13 +25,26 @@ window.addEventListener("load", function () {
     @author : Herrenschmidt Félix
     @description : Fonction AJAX qui permet d'afficher les questions selon les filtres séléctionnés
     */
-    function ajax(){
-
+    function ajax(cas = 0){
+        
         var select_matieres = document.getElementById("ajax_select_matiere");
         var values_matieres = getSelectValues(select_matieres);//values_matieres est un tableau en JS 
 
         var select_promos = document.getElementById("ajax_select_promo");
         var values_promos = getSelectValues(select_promos); 
+
+        //Bouton Voir Plus : 
+        var j = 0;
+        var limit = 20; // On limite le nombre d'affichage à 20 au 1er affichage de la page
+        if (cas === 1) 
+        {
+            var i = f();          
+            for (j = 0 ; j < i ; j++)
+            {
+                limit += 10; //On ajoute à chaque fois 10 posts 
+            } 
+        }
+        ///
 
         var xhr = getXMLHttpRequest();
         
@@ -51,7 +64,7 @@ window.addEventListener("load", function () {
     //On protège les variables que l'on transportes, meme en POST
     var tab_promos = encodeURIComponent(values_promos);
     var tab_matieres = encodeURIComponent(values_matieres);
-    xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+    xhr.send("id_CLASSES=" + tab_promos + "&id_MATIERES=" + tab_matieres + "&LIMIT=" + limit); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
 }
 
 
@@ -60,5 +73,9 @@ function insertData(sData) {
     oSelect.innerHTML = sData;
 };
 
+function f() {
+  f.count = ++f.count || 1 ;
+  return f.count;
+}
 
 

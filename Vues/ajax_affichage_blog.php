@@ -3,7 +3,7 @@ include "../App/App.php";
 App::load();
 $Blog = new \App\Model\BlogModel(App::getDb());
 
-$BlogALL = $Blog->display_blog_filtres($_POST['id_CLASSES'],$_POST['id_MATIERES']);
+$BlogALL = $Blog->display_blog_filtres($_POST['id_CLASSES'],$_POST['id_MATIERES'],$_POST['LIMIT']);
 
 foreach ($BlogALL as $blog) {
     ?>

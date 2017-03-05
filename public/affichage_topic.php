@@ -110,6 +110,7 @@ $init = 1;
 <!-- INNER AJAX-->
 <div class="row" id="ajax_inner"></div>
 <!--  -->
+<a class="btn waves-effect waves-light" onclick="ajax(1);" >Voir Plus</a>
 </div>
 <script src="js/oXHR.js"></script>
 <script src="js/filtres_topic.js"></script>
