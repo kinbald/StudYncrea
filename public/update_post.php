@@ -23,8 +23,10 @@ if ($_GET) {
     $post = $postModel->findBy($postModel->getIdName(), [$id_post], 1);
 
     // Vérification que le post appartient bien à l'utilisateur
-    if ($auth->getUser()['email'] != $users->findEmail($post['id_user'])) {
-        App::redirect('affichage_blog.php');
+    if ($auth->getRole() != ADMIN && $auth->getRole() != PROF) {
+        if ($auth->getUser()['email'] != $users->findEmail($post['id_user'])) {
+            App::redirect('affichage_blog.php');
+        }
     }
 
     include '../Vues/header.php';
@@ -51,9 +53,15 @@ if ($_GET) {
         $title = $input->text('title');
         $description = $input->text('description');
         $extension = array('jpg', 'jpeg', 'png', 'pdf');
-        if(!isset($_FILES['url_picture2']))
-        {
+
+        $extension_correction = false;
+        $extension_picture = false;
+
+        if (is_uploaded_file($_FILES['url_picture2']['tmp_name'])) {
             $extension_picture = $input->check_file('url_picture2', 1000000, $extension, 'file');
+        }
+        if (is_uploaded_file($_FILES['url_correction']['tmp_name'])) {
+            $extension_correction = $input->check_file('url_correction', 1000000, $extension, 'file');
         }
         $errors = $input->getErrors();
         /** Affichage des erreurs */
@@ -67,7 +75,7 @@ if ($_GET) {
             </div>
             <?php
         } else {
-            if ($extension_picture != null) {
+            if ($extension_picture != false) {
                 unlink($url_pictrue1);
                 $url_file = 'pictures/post/' . $id_post . '.' . $extension_picture;
                 App::addFile('url_picture2', $url_file);
@@ -75,7 +83,20 @@ if ($_GET) {
             } else {
                 $url_picture = $url_pictrue1;
             }
-            $postModel->update($id_post, $title, $description, $url_picture, $type_post, $id_subject, $id_class, $id_chapter, $id_teacher);
+            if ($post['type_post'] == 1) {
+                if ($extension_correction != false) {
+                    unlink($post['url_correction']);
+                    $url_file = 'pictures/topic/' . $id_post . '-correction.' . $extension_correction;
+                    App::addFile('url_correction', $url_file);
+                    $url_correction = $url_file;
+                } else {
+                    $url_correction = $post['url_correction'];
+                }
+                $postModel->update($id_post, $title, $description, $url_picture, $type_post, $id_subject, $id_class, $id_chapter, $id_teacher, $url_correction);
+            } else {
+                $postModel->update($id_post, $title, $description, $url_picture, $type_post, $id_subject, $id_class, $id_chapter, $id_teacher);
+            }
+
             App::redirect("post.php?post=$id_post");
         }
     }
@@ -115,9 +136,16 @@ if ($_GET) {
     echo "</div>";
 
     echo "<div class=\"row\">";
-    echo "<img src=\"$url_pictrue1\" alt=\"Image\" />";
+    echo "<img class=\"col s2 responsive-img materialboxed\" width=\"150\" src=\"$url_pictrue1\" alt=\"Image\" />";
     $form->fileInput('url_picture2', 'Modifier la photo');
     echo "</div>";
+
+    if ($post['url_correction'] && $post['type_post'] == 1) {
+        echo "<div class=\"row\">";
+        echo "<img class=\"col s2 responsive-img materialboxed\" width=\"150\" src=\"" . $post['url_correction'] . "\" alt=\"Image\" />";
+        $form->fileInput('url_correction', 'Modifier la correction');
+        echo "</div>";
+    }
 
     echo "<div class=\"row\">";
     $form->submit('Publier', 'right');

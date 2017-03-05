@@ -146,7 +146,7 @@ class BlogModel extends Model
      * @param $id_user_teacher int
      * @return \PDOStatement
      */
-    public function update($id_post, $title, $description, $url_file, $type_post, $id_subject, $id_class, $id_chapter, $id_user_teacher)
+    public function update($id_post, $title, $description, $url_file, $type_post, $id_subject, $id_class, $id_chapter, $id_user_teacher, $url_correction = null)
     {
         $date_post = date('y-m-d H:i:s');
         $param = [
@@ -160,10 +160,12 @@ class BlogModel extends Model
             ':id_class' => $id_class,
             ':id_chapter' => $id_chapter,
             ':id_user_teacher' => $id_user_teacher,
+            ':url_correction' => $url_correction,
+            ':date_correction' => $date_post
         ];
-        $sql = "UPDATE " . static::$table . " SET title = :title, description = :description, date_post = :date_post, url_file = :url_file,
+        $sql = "UPDATE " . static::$table . " SET title = :title, description = :description, date_modif = :date_post, url_file = :url_file,
         type_post = :type_post, id_subject = :id_subject, id_class =:id_class, id_chapter = :id_chapter,
-        id_user_teacher = :id_user_teacher
+        id_user_teacher = :id_user_teacher, url_correction = :url_correction, date_correction = :date_correction
         WHERE id_post = :id_post";
         $result = $this->executeReq($sql, $param, 0);
         return $result;
