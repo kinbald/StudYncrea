@@ -360,6 +360,20 @@ class TopicModel extends Model
         $this->executeReq($sql, $param, 0);
     }
 
+    public function addCorrection($id_topic, $correction)
+    {
+        $date = date('y-m-d H:i:s');
+
+        $a = [
+            'date_correction' => $date,
+            'id_post' => $id_topic,
+            'url_correction' => $correction
+        ];
+        $sql = "UPDATE " . static::$table . " SET date_correction=:date_correction, url_correction=:url_correction WHERE id_post = :id_post";
+        $result = $this->executeReq($sql, $a, 0);
+        return $result;
+    }
+
     /**
      * @return string
      */
