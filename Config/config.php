@@ -7,7 +7,7 @@
     /**
      * @const Mysql Host
      */
-    define('DB_HOST', 'db_mysql');
+    define('DB_HOST', 'localhost');
     /**
      * @const Mysql user
      */
@@ -15,7 +15,7 @@
     /**
      * @const Mysql password
      */
-    define('DB_PASSWORD', 'root');
+    define('DB_PASSWORD', '');
     /**
      * @const Mysql port
      */

@@ -16,6 +16,8 @@
             <p class="flow-text">Déjà inscrit ? Accède directement au site <a href="connect.php">ici</a></p>
             <?php
 
+                die('Ce die() est normal ! Pensez à insérer les informations SMTP de votre wamp dans /public/register.php:86');
+
                 /** Classe APP pour lancement */
                 require '../App/App.php';
                 App::load();
@@ -39,17 +41,17 @@
                             'password' => $_POST['password']
                     ];
 
-                    $valid = new \App\Input($datas);
+                    $input = new \App\Input($datas);
 
-                    $infos = $valid->check_email('email', 'email');
-                    $password = $valid->text('password');
+                    $infos = $input->check_email('email', 'email');
+                    $password = $input->text('password');
                     if (!isset($_POST['prom']))
                     {
                         $errors['classe'] = 'Vous n\'avez pas choisi de classe';
                     }
-                    $valid->check_pseudo_password('password', 5, 'password');
+                    $input->check_pseudo_password('password', 5, 'password');
 
-                    if ($valid->isValid())
+                    if ($input->isValid())
                     {
                         if ($user->checkUserExist($_POST['email']))
                         {
@@ -58,7 +60,7 @@
                     }
                     else
                     {
-                        $errors = $valid->getErrors();
+                        $errors = $input->getErrors();
                     }
 
                     /** Affichage des erreurs */
@@ -84,20 +86,21 @@
                             $mail = new PHPMailer();
 
                             $mail->isSMTP();                                      // Set mailer to use SMTP
-                            $mail->Host = 'SSL0.OVH.NET';  // Specify main and backup SMTP servers
-                            $mail->SMTPAuth = true;                               // Enable SMTP authentication
-                            $mail->Username = 'admin@soditech.fr';                 // SMTP username
-                            $mail->Password = 'adminsoditech';                           // SMTP password
+                            $mail->Host = '';       ///-----> ICI                                            // Specify main and backup SMTP servers
+                            $mail->SMTPAuth = true;      ///-----> ICI                         // Enable SMTP authentication
+                            $mail->Username = '';    ///-----> ICI             // SMTP username
+                            $mail->Password = ''; ///-----> ICI                          // SMTP password
                             $mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
                             $mail->Port = 465;                                    // TCP port to connect to
 
-                            $mail->setFrom('admin@soditech.fr', 'StudYncrea No-reply');
-                            $mail->addAddress('guillaume.desrumaux@isen.yncrea.fr');     // Add a recipient
+                            $mail->setFrom('', 'StudYncrea No-reply'); ///-----> ICI
+                            $mail->addAddress($_POST['email']);
+                            //$mail->addAddress($_POST['email']);     // Add a recipient
                             $mail->isHTML(true);                                  // Set email format to HTML
 
                             $mail->Subject = 'Valider son compte sur StudYncrea';
                             $id = $user->getIdBy('id_user', 'email', [$_POST['email']]);
-                            $mail->Body = "Bienvenue sur StudYncrea <br> Validez votre email en cliquant <a href=\"http://localhost/Devlab/StudYncreaV1/public/check_email.php?u=" . $id . "&t=". $token . ">ici</a>";
+                            $mail->Body = "Bienvenue sur StudYncrea <br> Validez votre email en cliquant <a href=\"http://localhost/Devlab/StudYncreaV1/public/check_email.php?u=$id&t=$token\">ici</a>";
 
                             if (!$mail->send())
                             {
@@ -108,13 +111,6 @@
                             {
                                 echo 'Message has been sent';
                             }
-                            
-                            $SessionUser = [
-                                    'email'   => $_POST['email'],
-                                    'id_user' => $id
-                            ];
-                            //$auth->connect($SessionUser);
-                            //App::redirect('affichage_blog.php');
                             App::redirect('connect.php');
                         }
                     }

@@ -8,41 +8,13 @@
 ?>
 <section class="section">
     <div class="card-panel">
-        <h3>Commentaires :</h3>
+        <h3>Signalements :</h3>
         <table class="highlight">
             <thead>
             <tr>
-                <th data-field="title">Titre</th>
-                <th data-field="description">Description</th>
-                <th data-field="date">Date</th>
-                <th data-field="button">Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            foreach ($comments as $blog) {
-                ?>
-                <tr>
-
-                    <td><?= $blog['title'] ?></td>
-                    <td><?= $blog['description'] ?></td>
-                    <td><?= $blog['date_post'] ?></td>
-                </tr>
-                <?php
-            }
-            ?>
-</tbody>
-</table>
-</div>
-</section>
-<section class="section">
-    <div class="card-panel">
-        <h3>Singalements :</h3>
-        <table class="highlight">
-            <thead>
-            <tr>
-                <th data-field="title">Titre</th>
-                <th data-field="description">Description</th>
+                <th data-field="description">Raison</th>
+                <th data-field="type">Type</th>
+                <th data-field="about">A propos d'un(e)</th>
                 <th data-field="date">Date</th>
                 <th data-field="button"></th>
             </tr>
@@ -52,9 +24,13 @@
             foreach ($reportAll as $report) {
                 ?>
                 <tr>
-                    <td><?= $report['title'] ?></td>
-                    <td><?= $report['description'] ?></td>
-                    <td><?= $report['date_post'] ?></td>
+                    <td><?= $report['reason'] ?></td>
+                    <td><?= $report['type_report'] ?></td>
+                    <td><?= empty($report['id_post']) ? 'commentaire' : 'publication' ?></td>
+                    <td><?= $report['date_report'] ?></td>
+                    <td>
+                        <a href="report.php?r=<?= $report['id_report'] ?>" class="btn">Voir</a>
+                    </td>
                 </tr>
                 <?php
             }

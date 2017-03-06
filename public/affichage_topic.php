@@ -18,8 +18,7 @@
             <div class="card horizontal">
                 <div class="card-stacked">
                     <div class="card-content">
-                        <img style="display: none;" id="loader" class="right materialboxed" width="30"
-                             src="pictures/Flip_Flop.gif">
+                 <img style="display: none;" id="loader" class="right materialboxed" width="30" src="pictures/Flip_Flop.gif">
                         <h5>Filtres :</h5>
                         <form class="col s12">
                             <div class="row">
