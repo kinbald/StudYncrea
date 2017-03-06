@@ -1,10 +1,10 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: kinbald
- * Date: 08/01/17
- * Time: 14:01
- */
+    /**
+     * Created by IntelliJ IDEA.
+     * User: kinbald
+     * Date: 08/01/17
+     * Time: 14:01
+     */
 ?>
     <!DOCTYPE html>
     <html>
@@ -14,7 +14,7 @@
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
-        <link rel="icon" href="http://yncrea.fr/wp-content/uploads/2016/11/logo-yncrea-favicon.png" sizes="32x32" />
+        <link rel="icon" href="http://yncrea.fr/wp-content/uploads/2016/11/logo-yncrea-favicon.png" sizes="32x32"/>
 
         <title><?= isset($title) ? $title : "Stud'Yncréa - Mise en commun d'annales et de corrections" ?></title>
 
@@ -22,12 +22,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
 
-<body>
+    <body>
     <!-- NAVBAR -->
     <div class="nav">
         <nav class="teal" role="navigation">
             <div class="nav-wrapper container">
-                <a id="logo-container" href="index.php" class="brand-logo right">Stud'<img src="http://yncrea.fr/wp-content/uploads/2016/11/logo-yncrea-favicon.png" class="inline responsive-img" width="22px" alt="Yncrea">ncrea</a>
+                <a id="logo-container" href="index.php" class="brand-logo right">Stud'<img
+                            src="http://yncrea.fr/wp-content/uploads/2016/11/logo-yncrea-favicon.png"
+                            class="inline responsive-img" width="22px" alt="Yncrea">ncrea</a>
                 <ul id="nav" class="left hide-on-med-and-down">
                     <!-- Dropdown Structure -->
                     <ul id="dropdown1" class="dropdown-content">
@@ -36,69 +38,95 @@
                         <li><a href="logout.php">Déconnexion</a></li>
                     </ul>
                     <?php
-                    if (isset($_SESSION['auth'])) {
-                        ?>
-                        <!-- Dropdown Trigger -->
-                        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Espace Perso<i class="material-icons right">arrow_drop_down</i></a></li>
-                        <?php
-                    } else {
-                        ?>
-                        <li><a href="index.php">Accueil</a></li>
-                        <?php
-                    }
+                        if (isset($_SESSION['auth']))
+                        {
+                            ?>
+                            <!-- Dropdown Trigger -->
+                            <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Espace Perso<i
+                                            class="material-icons right">arrow_drop_down</i></a></li>
+                            <?php
+                        }
+                        else
+                        {
+                            ?>
+                            <li><a href="index.php">Accueil</a></li>
+                            <?php
+                        }
                     ?>
                     <li><a href="affichage_blog.php">Questions</a></li>
                     <li><a href="affichage_topic.php">Sujets</a></li>
                 </ul>
-                <ul class="left input-field">
-                    <input id="autocomplete-input" type="search" placeholder="Cherchez un sujet" onkeyup="ajax()" required>
-                    <label for="autocomplete-input"><i class="material-icons">search</i></label>
-                    <i class="material-icons">close</i>
-                </ul>
+                <?php
+                    if (in_array(basename($_SERVER['PHP_SELF']), ['affichage_blog.php', 'affichage_topic.php']))
+                    {
+                        ?>
+                        <ul class="left input-field">
+                            <input id="autocomplete-input" type="search" placeholder="Cherchez un sujet"
+                                   onkeyup="ajax()"
+                                   required>
+                            <label for="autocomplete-input"><i class="material-icons">search</i></label>
+                            <i class="material-icons">close</i>
+                        </ul>
+                        <?php
+                    }
+                ?>
 
                 <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
             </div>
         </nav>
         <ul class="side-nav" id="nav-mobile">
-            <li>
-                <a href="#">
-                    <input id="search" type="text" onkeyup="ajax()" laceholder="Cherchez un sujet">
-                </a>
-            </li>
+            <?php
+                if (in_array(basename($_SERVER['PHP_SELF']), ['affichage_blog.php', 'affichage_topic.php']))
+                {
+                    ?>
+                    <li>
+                        <a href="#">
+                            <input id="search" type="text" onkeyup="ajax()" laceholder="Cherchez un sujet">
+                        </a>
+                    </li>
+                    <?php
+                }
+            ?>
             <li><a href="affichage_blog.php">Questions</a></li>
             <li><a href="affichage_topic.php">Sujets</a></li>
             <?php
-            if (isset($_SESSION['auth'])) {
-                ?>
-                <li class="divider"></li>
-                <li><a href="dashboard.php">Mon compte</a></li>
-                <li><a href="logout.php">Déconnexion</a></li>
-                <?php
-            } else {
-                ?>
-                <li><a href="index.php">Accueil</a></li>
-                <?php
-            }
+                if (isset($_SESSION['auth']))
+                {
+                    ?>
+                    <li class="divider"></li>
+                    <li><a href="dashboard.php">Mon compte</a></li>
+                    <li><a href="logout.php">Déconnexion</a></li>
+                    <?php
+                }
+                else
+                {
+                    ?>
+                    <li><a href="index.php">Accueil</a></li>
+                    <?php
+                }
             ?>
         </ul>
     </div>
 <?php
-if (isset($float)) {
-    ?>
-    <!--  -->
-    <!-- Bouton Flottant -->
-    <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red" href="add.php?type=<?= $type === 0 ? 0 : 1 ?>">
-            <i class="material-icons">mode_edit</i>
-        </a>
-        <!--        <ul>-->
-        <!--            <li><a class="btn-floating red" href="add.php?type=--><? //= $type === 0 ? 0 : 1 ?><!--"><i-->
-        <!--                            class="material-icons">library_add</i></a>-->
-        <!--            </li>-->
-        <!--            <li><a class="btn-floating yellow darken-1" href="affichage_blog.php#questions"><i-->
-        <!--                            class="material-icons">forum</i></a></li>-->
-        <!--        </ul>-->
+    if (isset($float))
+    {
+        ?>
         <!--  -->
-    </div>
-    <?php
-}
+        <!-- Bouton Flottant -->
+        <div class="fixed-action-btn">
+            <a class="btn-floating btn-large red" href="add.php?type=<?= $type === 0 ? 0 : 1 ?>">
+                <i class="material-icons">mode_edit</i>
+            </a>
+            <!--        <ul>-->
+            <!--            <li><a class="btn-floating red" href="add.php?type=-->
+            <? //= $type === 0 ? 0 : 1
+            ?><!--"><i-->
+            <!--                            class="material-icons">library_add</i></a>-->
+            <!--            </li>-->
+            <!--            <li><a class="btn-floating yellow darken-1" href="affichage_blog.php#questions"><i-->
+            <!--                            class="material-icons">forum</i></a></li>-->
+            <!--        </ul>-->
+            <!--  -->
+        </div>
+        <?php
+    }

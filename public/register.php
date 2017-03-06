@@ -16,6 +16,8 @@
             <p class="flow-text">Déjà inscrit ? Accède directement au site <a href="connect.php">ici</a></p>
             <?php
 
+                //die('Ce die() est normal ! Pensez à insérer les informations SMTP de votre wamp dans /public/register.php:86');
+
                 /** Classe APP pour lancement */
                 require '../App/App.php';
                 App::load();
@@ -92,7 +94,7 @@
                             $mail->Port = 465;                                    // TCP port to connect to
 
                             $mail->setFrom('admin@soditech.fr', 'StudYncrea No-reply');
-                            $mail->addAddress('guillaume.desrumaux@isen.yncrea.fr');     // Add a recipient
+                            $mail->addAddress($_POST['email']);     // Add a recipient
                             $mail->isHTML(true);                                  // Set email format to HTML
 
                             $mail->Subject = 'Valider son compte sur StudYncrea';
