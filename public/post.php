@@ -30,39 +30,39 @@
                             <div class="card-content">
                                 <div class="row">
                                     <div class="col s2">
-                                        <img src="<?= $post['url_avatar'] ?>" width="59" height="59">
+                                        <img class="circle" src="<?= $post['url_avatar'] ?>" width="59" height="59">
                                         <a class="black-text"><?= $post['name_user'] ?></a>
                                     </div>
                                     <div class="col s2 push-s8">
                                         <div class="right">
-                                        <a class="black-text"><?= $post['name_subject'] ?></a><br>
-                                        <a class="btn purple"
-                                           href="add_report.php?post=<?= $post['id_post'] ?>&type=<?= $post['type_post'] ?>"><i
-                                                    class="material-icons">thumb_down</i></a>
-                                        <?php
-                                            if ($post['type_post'] == 1 && $post['url_correction'] == null)
-                                            {
-                                                ?>
-                                                <a class="btn pink"
-                                                   href="add_correction.php?post=<?= $post['id_post'] ?>&type=1"><i
-                                                            class="material-icons">add</i></a>
-                                                <?php
-                                            }
-                                        ?>
+                                            <a class="black-text"><?= $post['name_subject'] ?></a><br>
+                                            <a class="btn purple"
+                                               href="add_report.php?post=<?= $post['id_post'] ?>&type=<?= $post['type_post'] ?>"><i
+                                                        class="material-icons">thumb_down</i></a>
+                                            <?php
+                                                if ($post['type_post'] == 1 && $post['url_correction'] == null)
+                                                {
+                                                    ?>
+                                                    <a class="btn pink"
+                                                       href="add_correction.php?post=<?= $post['id_post'] ?>&type=1"><i
+                                                                class="material-icons">add</i></a>
+                                                    <?php
+                                                }
+                                            ?>
 
-                                        <?php
-                                            if ($auth->getUser()['id_user'] == $post['id_user'] || $auth->getRole() == ADMIN || $auth->getRole() == PROF)
-                                            {
-                                                ?>
-                                                <a class="btn orange"
-                                                   href="update_post.php?post=<?= $post['id_post'] ?>"><i
-                                                            class="material-icons">mode_edit</i></a>
-                                                <?php
-                                            }
-                                            
-                                        ?>
+                                            <?php
+                                                if ($auth->getUser()['id_user'] == $post['id_user'] || $auth->getRole() == ADMIN || $auth->getRole() == PROF)
+                                                {
+                                                    ?>
+                                                    <a class="btn orange"
+                                                       href="update_post.php?post=<?= $post['id_post'] ?>"><i
+                                                                class="material-icons">mode_edit</i></a>
+                                                    <?php
+                                                }
+
+                                            ?>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="divider"></div>
@@ -287,19 +287,19 @@
                                 {
                                     require('../Vues/comment.php');
 
-                        ?>
-                        <?php
-                    }
-                    $form = new \App\Form();
-                    ?>
-                    <div id="comments" class="card-panel grey lighten-4">
-                        <form action="" method="post" enctype="multipart/form-data">
-                            <div class="flow-text">Répondre à la question :</div>
-                            <input type="hidden" id="id_comment_father" name="id_comment_father" value="">
-                            <?php
-                            $form->textArea('comment', 'Votre commentaire', true);
+                                    ?>
+                                    <?php
+                                }
+                                $form = new \App\Form();
+                            ?>
+                            <div id="comments" class="card-panel grey lighten-4">
+                                <form action="" method="post" enctype="multipart/form-data">
+                                    <div class="flow-text">Répondre à la question :</div>
+                                    <input type="hidden" id="id_comment_father" name="id_comment_father" value="">
+                                    <?php
+                                        $form->textArea('comment', 'Votre commentaire', true);
 
-                            $form->fileInput('url_picture', 'Pièce jointe');
+                                        $form->fileInput('url_picture', 'Pièce jointe');
 
                                         $form->submit('Répondre', 'green');
                                     ?>

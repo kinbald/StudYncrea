@@ -60,6 +60,7 @@
                         $extension = array('jpg', 'jpeg', 'png', 'pdf');
                         $extension_correction = $input->check_file('url_correction', 1000000, $extension, 'file');
                     }
+                    $style_post = $input->check_select('style_post', 'type d\'annale');
                 }
 
                 $errors = $input->getErrors();
@@ -91,7 +92,7 @@
                                 App::addFile('url_correction', $url_file);
                                 $url_correction = $url_file;
                             }
-                            $Add->add_post($user_id, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $url_picture, $type_post, $url_correction);
+                            $Add->add_post($user_id, $id_class, $id_chapter, $id_subject, $id_teacher, $title, $data, $url_picture, $type_post, $style_post, $url_correction);
                         }
                         else
                         {
@@ -133,6 +134,21 @@
 
             $teacher = $Users->getTeacher();
             $form->selectInput('teacher', 'Professeur', $teacher, true, "col s6 m6 l6");
+            if ($type_post == 1)
+            {
+            ?>
+            <div class="col s6 m6 l6">
+                <select name="style_post" required id="style_post">
+                    <option disabled selected value="0">Type (DS...)</option>
+                    <option value="1">DS</option>
+                    <option value="2">DM</option>
+                    <option value="3">IE</option>
+                    <option value="4">TD</option>
+                </select>
+                <label>Type (DS...)</label>
+            </div>
+            <?php
+            }
             echo "</div>";
 
             echo "<div class=\"row\">";

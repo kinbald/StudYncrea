@@ -13,8 +13,9 @@
         </div>
         <p>
         <div class="right thin"><?= App::display_date($reportConcern['date_report']) ?></div>
+        <h5>Raison :</h5>
         <div class="medium"><?= $reportConcern['reason']; ?></div>
-        <div>Signalement de type <?= $reportConcern['type_report'] ?></div>
+        <div class="mtop50">Signalement de type <?= $reportConcern['type_report'] ?></div>
         </p>
     </div>
 </div>
@@ -32,7 +33,8 @@
         </p>
 
         <div class="card-action right-align">
-            <a id="<?= 'comment-' . $comment['id_comment'] . '-' . $reportConcern['id_report'] ?>" class="btn orange valid">Valider le signalement</a>
+            <a id="<?= 'comment-' . $comment['id_comment'] . '-' . $reportConcern['id_report'] ?>"
+               class="btn orange valid">Valider le signalement</a>
             <a id="<?= $reportConcern['id_report'] ?>" class="btn red delete">Supprimer le signalement</a>
         </div>
     </div>

@@ -13,8 +13,9 @@
         </div>
         <p>
         <div class="right thin"><?= App::display_date($reportConcern['date_report']) ?></div>
+        <h5>Raison :</h5>
         <div class="medium"><?= $reportConcern['reason']; ?></div>
-        <div>Signalement de type <?= $reportConcern['type_report'] ?></div>
+        <div class="mtop50">Signalement de type <?= $reportConcern['type_report'] ?></div>
         </p>
     </div>
 </div>
@@ -37,7 +38,7 @@
         <?php endif; ?>
         <?php if ($post['url_correction']): ?>
             <div class="divider"></div>
-            <div class="flow-text">Correction : </div>
+            <div class="flow-text">Correction :</div>
             <img class="materialboxed" width="200" src="<?php echo $post['url_correction']; ?>">
         <?php endif; ?>
         </p>

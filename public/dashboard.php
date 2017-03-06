@@ -20,6 +20,7 @@
         <div class="section center">
             <br>
             <a class="btn" href="logout.php">Déconnexion</a>
+            <a class="btn" href="change_avatar.php">Changer son avatar</a>
         </div>
         <div class="section">
             <?php
@@ -43,7 +44,7 @@
                     case ADMIN:
                         $blogAll = $blog->display_blog_all();
                         $annalesAll = $topic->display_topic_live();
-                        
+
                         $reportAll = $ReportModel->getAllReports();
                         include "../Vues/dashboard/user.php";
                         include "../Vues/dashboard/admin.php";
