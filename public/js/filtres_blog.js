@@ -56,8 +56,10 @@ function ajax(cas = 0) {
                     insertData(xhr.responseText);
                     //Pour afficher le loader
                     document.getElementById("loader").style.display = "none";
+                    document.getElementById("loader2").style.display = "none";
                 } else if (xhr.readyState < 4) {
                     document.getElementById("loader").style.display = "inline";
+                    document.getElementById("loader2").style.display = "inline";
                 }
             };
             xhr.open("POST", "../Vues/ajax_affichage_blog.php", true);
@@ -75,8 +77,10 @@ function ajax(cas = 0) {
                     insertData(xhr.responseText);
                     //Pour afficher le loader
                     document.getElementById("loader").style.display = "none";
+                    document.getElementById("loader2").style.display = "none";
                 } else if (xhr.readyState < 4) {
                     document.getElementById("loader").style.display = "inline";
+                    document.getElementById("loader2").style.display = "inline";
                 }
             };
             xhr.open("POST", "../Vues/ajax_affichage_blog.php", true);

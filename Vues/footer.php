@@ -26,7 +26,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            © 2017 - Tous droits réservés - Desrumaux Guillaume - Herrenschmidt Félix - Chamayou Guilhem - Dorian Picard
+            © 2017 - Tous droits réservés - Desrumaux Guillaume - Herrenschmidt Félix - Chamayou Guilhem - Picard Dorian
         </div>
     </div>
 </footer>

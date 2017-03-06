@@ -14,6 +14,7 @@
         <!-- Compiled and minified CSS -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.8/css/materialize.min.css">
         <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="icon" href="http://yncrea.fr/wp-content/uploads/2016/11/logo-yncrea-favicon.png" sizes="32x32" />
 
         <title><?= isset($title) ? $title : "Stud'Yncréa - Mise en commun d'annales et de corrections" ?></title>
 
@@ -26,12 +27,19 @@
     <div class="nav">
         <nav class="teal" role="navigation">
             <div class="nav-wrapper container">
-                <a id="logo-container" href="index.php" class="brand-logo right">Stud'<img src="http://yncrea.fr/wp-content/uploads/2016/11/logo-yncrea-favicon.png" class="inline responsive-img" width="30px" alt="Yncrea">ncrea</a>
+                <a id="logo-container" href="index.php" class="brand-logo right">Stud'<img src="http://yncrea.fr/wp-content/uploads/2016/11/logo-yncrea-favicon.png" class="inline responsive-img" width="22px" alt="Yncrea">ncrea</a>
                 <ul id="nav" class="left hide-on-med-and-down">
+                    <!-- Dropdown Structure -->
+                    <ul id="dropdown1" class="dropdown-content">
+                        <li><a href="dashboard.php">Mon compte</a></li>
+                        <li class="divider"></li>
+                        <li><a href="logout.php">Déconnexion</a></li>
+                    </ul>
                     <?php
                     if (isset($_SESSION['auth'])) {
                         ?>
-                        <li><a href="dashboard.php">Mon compte</a></li>
+                        <!-- Dropdown Trigger -->
+                        <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Espace Perso<i class="material-icons right">arrow_drop_down</i></a></li>
                         <?php
                     } else {
                         ?>
@@ -57,10 +65,14 @@
                     <input id="search" type="text" onkeyup="ajax()" laceholder="Cherchez un sujet">
                 </a>
             </li>
+            <li><a href="affichage_blog.php">Questions</a></li>
+            <li><a href="affichage_topic.php">Sujets</a></li>
             <?php
             if (isset($_SESSION['auth'])) {
                 ?>
+                <li class="divider"></li>
                 <li><a href="dashboard.php">Mon compte</a></li>
+                <li><a href="logout.php">Déconnexion</a></li>
                 <?php
             } else {
                 ?>
@@ -68,8 +80,6 @@
                 <?php
             }
             ?>
-            <li><a href="affichage_blog.php">Questions</a></li>
-            <li><a href="affichage_topic.php">Sujets</a></li>
         </ul>
     </div>
 <?php
