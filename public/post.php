@@ -287,19 +287,19 @@
                                 {
                                     require('../Vues/comment.php');
 
-                                    ?>
-                                    <?php
-                                }
-                                $form = new \App\Form();
-                            ?>
-                            <div id="comments" class="card-panel grey lighten-4">
-                                <form action="" method="post" enctype="multipart/form-data">
-                                    <h5>Répondre à la question :</h5>
-                                    <input type="hidden" id="id_comment_father" name="id_comment_father" value="">
-                                    <?php
-                                        $form->textArea('comment', 'Votre commentaire', true);
+                        ?>
+                        <?php
+                    }
+                    $form = new \App\Form();
+                    ?>
+                    <div id="comments" class="card-panel grey lighten-4">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            <div class="flow-text">Répondre à la question :</div>
+                            <input type="hidden" id="id_comment_father" name="id_comment_father" value="">
+                            <?php
+                            $form->textArea('comment', 'Votre commentaire', true);
 
-                                        $form->fileInput('url_picture', 'Un document pour votre réponse');
+                            $form->fileInput('url_picture', 'Pièce jointe');
 
                                         $form->submit('Répondre', 'green');
                                     ?>

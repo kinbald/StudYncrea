@@ -76,17 +76,26 @@
         </nav>
         <ul class="side-nav" id="nav-mobile">
             <?php
-                if (in_array(basename($_SERVER['PHP_SELF']), ['affichage_blog.php', 'affichage_topic.php']))
-                {
-                    ?>
-                    <li>
-                        <a href="#">
-                            <input id="search" type="text" onkeyup="ajax()" laceholder="Cherchez un sujet">
-                        </a>
-                    </li>
-                    <?php
-                }
-            ?>
+            if (isset($_SESSION['auth'])) {
+                $User = new \App\Model\BlogModel(App::getDb());
+                $user = $User->find_user($_SESSION['auth'])[0];
+                ?>
+                <li>
+                    <div class="userView">
+                      <div class="background">
+                          <img src="../public/pictures/back2.jpg">
+                      </div>
+                      <a href="dashboard.php"><img class="circle" src="<?= $user['url_avatar']; ?>"></a>
+                      <a href="dashboard.php"><span class="white-text name"><?= $user['name_user']; ?></span></a>
+                      <span class="white-text email"><?= $user['email']; ?></span></a>
+                  </div>
+              </li>
+              <?php } ?>
+            <li>
+                <a href="#">
+                    <input id="search" type="search" onkeyup="ajax(0)" placeholder="Recherchez">
+                </a>
+            </li>
             <li><a href="affichage_blog.php">Questions</a></li>
             <li><a href="affichage_topic.php">Sujets</a></li>
             <?php

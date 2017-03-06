@@ -24,6 +24,12 @@ foreach ($BlogALL as $blog) {
                 <a class="flow-text truncate black-text" style=""
                    href="post.php?post=<?= $blog['id_post']; ?>"><?= $blog['title'] ?></a>
                 <br>
+                <div class="row">
+                    <div class="col s12">
+                        <a class="left btn waves-effect waves-light" href="post.php?post=<?= $blog['id_post']; ?>">Répondre</a>
+                        <a class="right btn waves-effect waves-light" href="post.php?post=<?= $blog['id_post']; ?>">Voir</a>
+                    </div>
+                </div>
                 <?php 
                 $comment = new \App\Model\CommentModel(App::getDb()); 
                 $response_number = $comment->number_comment_post($blog['id_post']);
@@ -31,10 +37,7 @@ foreach ($BlogALL as $blog) {
                 else { $text = " commentaire"; }
                 ?>
                 <div class="left grey-text"><?= $blog['name_class'] ?></div>
-                <div class="right grey-text"><?= $response_number['response_number']; echo $text."&emsp;"; ?><?= $Blog::display_date($blog['date_post']); ?></div>  
-            </div>
-            <div class="card-action grey-text text-darken-4">
-                <a class="blue-text" href="post.php?post=<?= $blog['id_post']; ?>">Répondre</a>
+                <a class="right grey-text" href="post.php?post=<?= $blog['id_post']; ?>" ><?= $response_number['response_number']; echo $text."&emsp;"; ?><?= $Blog::display_date($blog['date_post']); ?></a>  
             </div>
         </div>
     </div>

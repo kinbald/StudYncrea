@@ -22,7 +22,12 @@ foreach ($TopicALL as $topic) {
                 <a class="right black-text"><?= $topic['name_subject'] ?></a><br>
                 <a class="flow-text truncate black-text" style=""
                    href="post.php?post=<?= $topic['id_post']; ?>"><?= $topic['title'] ?></a>
-                <br>
+
+                <div class="row">
+                    <div class="col s12">
+                        <a class="right btn waves-effect waves-light" href="post.php?post=<?= $topic['id_post']; ?>">Voir</a>
+                    </div>
+                </div>
                 <div class="left grey-text"><?= $topic['name_class'] ?></div>
                 <div class="right grey-text"><?= $Topic::display_date($topic['date_post']); ?></div>
             </div>
