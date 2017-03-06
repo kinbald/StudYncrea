@@ -42,7 +42,7 @@ function getSelectValues(select) {
  @author : Herrenschmidt Félix
  @description : Fonction AJAX qui permet d'afficher les questions selon les filtres séléctionnés
  */
-function ajax(cas = 0) {
+function ajax(cas) {
 
     var select_matieres = document.getElementById("ajax_select_matiere");
     var values_matieres = getSelectValues(select_matieres);//values_matieres est un tableau en JS

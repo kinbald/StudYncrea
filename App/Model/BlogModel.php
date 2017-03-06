@@ -12,6 +12,20 @@ class BlogModel extends Model
     public static $table = 'POSTS';
     private $_idName = 'id_post';
 
+        /**
+     * Fonction qui permet de retourner les éléments d'un utilisateur
+     * @param $email
+     */
+        public function find_user($email)
+        {
+            $param = [
+            'email' => $email,
+            ];
+            $sql = "SELECT * FROM USERS
+            WHERE email = :email ";
+            $result = $this->executeReq($sql, $param);
+            return $result;
+        }
     /*Affiche en premier le plus récent*/
     public function display_blog_live()
     {

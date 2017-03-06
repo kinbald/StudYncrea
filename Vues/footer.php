@@ -16,8 +16,6 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Liens</h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="affichage_blog.php">Questions</a></li>
-                    <li><a class="grey-text text-lighten-3" href="affichage_topic.php">Sujets</a></li>
                     <li><a class="grey-text text-lighten-3" href="http://yncrea.fr/">Yncréa</a></li>
                     <li><a class="grey-text text-lighten-3" href="http://isen-toulon.fr/">ISEN-Toulon</a></li>
                 </ul>
@@ -26,7 +24,7 @@
     </div>
     <div class="footer-copyright">
         <div class="container">
-            © 2017 - Tous droits réservés - Desrumaux Guillaume - Herrenschmidt Félix - Chamayou Guilhem - Picard Dorian
+            © 2017 - Tous droits réservés - Desrumaux Guillaume - Herrenschmidt Félix - Chamayou Guilhem - Picard Dorian 
         </div>
     </div>
 </footer>

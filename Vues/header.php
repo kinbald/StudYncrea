@@ -51,7 +51,7 @@
                     <li><a href="affichage_topic.php">Sujets</a></li>
                 </ul>
                 <ul class="left input-field">
-                    <input id="autocomplete-input" type="search" placeholder="Cherchez un sujet" onkeyup="ajax()" required>
+                    <input id="autocomplete-input" type="search" placeholder="Recherchez" onkeyup="ajax(0)" required>
                     <label for="autocomplete-input"><i class="material-icons">search</i></label>
                     <i class="material-icons">close</i>
                 </ul>
@@ -60,9 +60,25 @@
             </div>
         </nav>
         <ul class="side-nav" id="nav-mobile">
+            <?php
+            if (isset($_SESSION['auth'])) {
+                $User = new \App\Model\BlogModel(App::getDb());
+                $user = $User->find_user($_SESSION['auth'])[0];
+                ?>
+                <li>
+                    <div class="userView">
+                      <div class="background">
+                          <img src="../public/pictures/back2.jpg">
+                      </div>
+                      <a href="dashboard.php"><img class="circle" src="<?= $user['url_avatar']; ?>"></a>
+                      <a href="dashboard.php"><span class="white-text name"><?= $user['name_user']; ?></span></a>
+                      <span class="white-text email"><?= $user['email']; ?></span></a>
+                  </div>
+              </li>
+              <?php } ?>
             <li>
                 <a href="#">
-                    <input id="search" type="text" onkeyup="ajax()" laceholder="Cherchez un sujet">
+                    <input id="search" type="search" onkeyup="ajax(0)" placeholder="Recherchez">
                 </a>
             </li>
             <li><a href="affichage_blog.php">Questions</a></li>
