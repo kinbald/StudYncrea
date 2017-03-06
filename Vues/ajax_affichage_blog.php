@@ -39,9 +39,6 @@ foreach ($BlogALL as $blog) {
                 <div class="left grey-text"><?= $blog['name_class'] ?></div>
                 <a class="right grey-text" href="post.php?post=<?= $blog['id_post']; ?>" ><?= $response_number['response_number']; echo $text."&emsp;"; ?><?= $Blog::display_date($blog['date_post']); ?></a>  
             </div>
-            <div class="card-action grey-text text-darken-4">
-                <a class="blue-text" href="post.php?post=<?= $blog['id_post']; ?>">Répondre</a>
-            </div>
         </div>
     </div>
     <?php
