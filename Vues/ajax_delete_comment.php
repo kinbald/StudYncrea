@@ -16,7 +16,7 @@ if (isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_HOST'] == "localhost") {
             $com = $Comment->findBy($Comment->getIdName(), [$_POST['id_comment']], 1);
             // Vérification que le post appartient bien à l'utilisateur
             $user = App::getAuth()->getUser()['id_user'];
-            if ($user == $com['id_user']) {
+            if ($user == $com['id_user'] || App::getAuth()->getRole() == ADMIN) {
                 $ids = $Comment->deleteWithChildren($_POST['id_comment']);
                 echo json_encode($ids);
             } else {
