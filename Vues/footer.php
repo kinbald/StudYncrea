@@ -1,10 +1,10 @@
 <?php
-/**
- * Created by IntelliJ IDEA.
- * User: kinbald
- * Date: 08/01/17
- * Time: 14:02
- */
+    /**
+     * Created by IntelliJ IDEA.
+     * User: kinbald
+     * Date: 08/01/17
+     * Time: 14:02
+     */
 ?>
 <footer class="page-footer teal">
     <div class="container">
@@ -71,112 +71,175 @@
 
 </script>
 <?php
-if (isset($select)) {
-    ?>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('select').material_select();
-        });
-        $(document).ready(function () {
-            $('.materialboxed').materialbox();
-        });
-    </script>
-    <?php
-}
-if (isset($dashboardScript)) {
-    ?>
-    <script src="js/oXHR.js"></script>
-    <script type="text/javascript">
-
-        $(document).ready(function () {
-            var elements = document.getElementsByClassName('delete');
-            for (var i = 0; i < elements.length; ++i) {
-                elements[i].addEventListener('click', function (event) {
-                    var toElement = event.toElement;
-                    if (event.toElement.localName == "i") {
-                        toElement = event.toElement.parentElement;
-                    }
-                    id = toElement.id;
-                    delete_post(id, toElement);
-                }, false);
-            }
-        });
-
-        function delete_post(id, element) {
-            var value_id = id.split("-").pop();
-
-            var xhr = getXMLHttpRequest();
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-                    //"xhr.responseText" Permet de récupérer en text la page ou on à fait le post
-                    deleteData(xhr.responseText, element);
-                }
-            };
-
-            xhr.open("POST", "../Vues/ajax_delete_post.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            //On protège les variables que l'on transportes, meme en POST
-            var id_post = encodeURIComponent(value_id);
-            var token = encodeURIComponent('<?= App::getAuth()->getSession()->read('token'); ?>');
-            xhr.send("id_post=" + id_post + "&token=" + token); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
-        }
-
-        function deleteData(data, element) {
-            if (data == '1') {
-                var td = element.parentElement.parentElement;
-                td.style.display = "none";
-            }
-        }
-    </script>
-    <?php
-}
-if (isset($Scriptcomment)) {
-    ?>
-    <script src="js/oXHR.js"></script>
-    <script type="text/javascript">
-
-        jQuery(document).ready(function ($) {
-            $('.delete').click(function (e) {
-                e.preventDefault();
-                var id = this.id;
-                var $element = $('#comment-' + id);
-                delete_comment(id, $element);
+    if (isset($select))
+    {
+        ?>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('select').material_select();
             });
-        });
+            $(document).ready(function () {
+                $('.materialboxed').materialbox();
+            });
+        </script>
+        <?php
+    }
+    if (isset($dashboardScript))
+    {
+        ?>
+        <script src="js/oXHR.js"></script>
+        <script type="text/javascript">
 
-        function delete_comment(id, element) {
-            var xhr = getXMLHttpRequest();
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
-                    //"xhr.responseText" Permet de récupérer en text la page ou on à fait le post
-                    deleteData(xhr.responseText, element);
+            $(document).ready(function () {
+                var elements = document.getElementsByClassName('delete');
+                for (var i = 0; i < elements.length; ++i) {
+                    elements[i].addEventListener('click', function (event) {
+                        var toElement = event.toElement;
+                        if (event.toElement.localName == "i") {
+                            toElement = event.toElement.parentElement;
+                        }
+                        id = toElement.id;
+                        delete_post(id, toElement);
+                    }, false);
                 }
-            };
+            });
 
-            xhr.open("POST", "../Vues/ajax_delete_comment.php", true);
-            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            //On protège les variables que l'on transportes, meme en POST
-            var id_comment = encodeURIComponent(id);
-            var token = encodeURIComponent('<?= App::getAuth()->getSession()->read('token'); ?>');
-            xhr.send("id_comment=" + id_comment + "&token=" + token); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
-        }
+            function delete_post(id, element) {
+                var value_id = id.split("-").pop();
 
-        function deleteData(data, element) {
-            if (data != 'error' || date != 'false') {
-                $ids = JSON.parse(data);
-                for (var i = 0; i < $ids.length; ++i) {
-                    $('#comment-' + $ids[i]).hide();
-                }
-                $("#allcomments").prepend("<div id=\"message\" class=\"green white-text card-panel\">Votre commentaire a bien été supprimé</div>");
-                setTimeout(function () {
-                    $("#message").remove();
-                }, 5000);
+                var xhr = getXMLHttpRequest();
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+                        //"xhr.responseText" Permet de récupérer en text la page ou on à fait le post
+                        deleteData(xhr.responseText, element);
+                    }
+                };
+
+                xhr.open("POST", "../Vues/ajax_delete_post.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                //On protège les variables que l'on transportes, meme en POST
+                var id_post = encodeURIComponent(value_id);
+                var token = encodeURIComponent('<?= App::getAuth()->getSession()->read('token'); ?>');
+                xhr.send("id_post=" + id_post + "&token=" + token); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
             }
-        }
-    </script>
-    <?php
-} ?>
+
+            function deleteData(data, element) {
+                if (data == '1') {
+                    var td = element.parentElement.parentElement;
+                    td.style.display = "none";
+                }
+            }
+        </script>
+        <?php
+    }
+    if (isset($Scriptcomment))
+    {
+        ?>
+        <script src="js/oXHR.js"></script>
+        <script type="text/javascript">
+
+            jQuery(document).ready(function ($) {
+                $('.delete').click(function (e) {
+                    e.preventDefault();
+                    var id = this.id;
+                    var $element = $('#comment-' + id);
+                    delete_comment(id, $element);
+                });
+            });
+
+            function delete_comment(id, element) {
+                var xhr = getXMLHttpRequest();
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+                        //"xhr.responseText" Permet de récupérer en text la page ou on à fait le post
+                        deleteData(xhr.responseText, element);
+                    }
+                };
+
+                xhr.open("POST", "../Vues/ajax_delete_comment.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                //On protège les variables que l'on transportes, meme en POST
+                var id_comment = encodeURIComponent(id);
+                var token = encodeURIComponent('<?= App::getAuth()->getSession()->read('token'); ?>');
+                xhr.send("id_comment=" + id_comment + "&token=" + token); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+            }
+
+            function deleteData(data, element) {
+                if (data != 'error' || date != 'false') {
+                    $ids = JSON.parse(data);
+                    for (var i = 0; i < $ids.length; ++i) {
+                        $('#comment-' + $ids[i]).hide();
+                    }
+                    $("#allcomments").prepend("<div id=\"message\" class=\"green white-text card-panel\">Votre commentaire a bien été supprimé</div>");
+                    setTimeout(function () {
+                        $("#message").remove();
+                    }, 5000);
+                }
+            }
+        </script>
+        <?php
+    }
+    if (isset($ReportScript))
+    {
+        ?>
+        <script src="js/oXHR.js"></script>
+        <script type="text/javascript">
+
+            jQuery(document).ready(function ($) {
+                $('.delete').click(function (e) {
+                    e.preventDefault();
+                    var id = this.id;
+                    delete_report(id);
+                });
+                $('.valid').click(function (e) {
+                    e.preventDefault();
+                    var type = this.id;
+                    var element = type.split('-');
+                    delete_report_child(element);
+                });
+            });
+
+            function delete_report_child(elements) {
+                var xhr = getXMLHttpRequest();
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+                        //"xhr.responseText" Permet de récupérer en text la page ou on à fait le post
+                        window.location.replace("dashboard.php");
+                    }
+                };
+
+                xhr.open("POST", "../Vues/ajax_delete_reportElement.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                //On protège les variables que l'on transportes, meme en POST
+                var id_report = encodeURIComponent(elements[2]);
+                var type = encodeURIComponent(elements[0]);
+                var id_type = encodeURIComponent(elements[1]);
+                var token = encodeURIComponent('<?= App::getAuth()->getSession()->read('token'); ?>');
+                xhr.send("id_report=" + id_report + "&type=" + type + "&id_type=" + id_type + "&token=" + token); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+            }
+
+            function delete_report(id) {
+                var xhr = getXMLHttpRequest();
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState == 4 && (xhr.status == 200 || xhr.status == 0)) {
+                        //"xhr.responseText" Permet de récupérer en text la page ou on à fait le post
+                        window.location.replace("dashboard.php");
+                    }
+                };
+
+                xhr.open("POST", "../Vues/ajax_delete_report.php", true);
+                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                //On protège les variables que l'on transportes, meme en POST
+                var id_report = encodeURIComponent(id);
+                var token = encodeURIComponent('<?= App::getAuth()->getSession()->read('token'); ?>');
+                xhr.send("id_report=" + id_report + "&token=" + token); //J'envoie mon tableau d'éléments en POST à ../Vues/ajax_affichage_blog.php
+            }
+        </script>
+        <?php
+    } ?>
 </body>
 </html>

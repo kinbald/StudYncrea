@@ -108,6 +108,26 @@ class Auth
             exit();
         }
     }
+    
+    /**
+     * Fonction qui vérifie si l'admin est connecté
+     */
+    public function restrictAdmin()
+    {
+        if($this->getSession()->read('auth'))
+        {
+            if($this->getRole() == ADMIN)
+            {
+                
+            }
+            else
+            {
+                $this->getSession()->setFlash('danger', "Vous n'avez pas le droit d'accéder à cette page");
+                \App::redirect("index.php");
+                exit();
+            }
+        }
+    }
 
     /**
      * Fonction qui vérifie si l'utilisateur est déjà connecté

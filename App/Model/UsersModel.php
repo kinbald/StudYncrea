@@ -184,6 +184,18 @@ class UsersModel extends Model
         $sql = "UPDATE " . static::$table . " SET role=" . $role . ", confirmed_at='" . $date ."' WHERE " . $this->getIdName() . "=?";
         return $this->executeReq($sql, [$id_user], 0);
     }
+    
+    public function setWarning($id_user, $warning)
+    {
+        $sql = "UPDATE " . static::$table . " SET warnings_user=" . $warning . " WHERE " . $this->getIdName() . "=?";
+        return $this->executeReq($sql, [$id_user], 0);
+    }
+    
+    public function getWarning($id_user)
+    {
+        $sql = "SELECT warnings_user FROM " . static::$table . " WHERE " . $this->getIdName() . "=?";
+        return $this->executeReq($sql, [$id_user], 1);
+    }
 
     /**
      * @return string

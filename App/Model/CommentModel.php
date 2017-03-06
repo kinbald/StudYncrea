@@ -143,12 +143,11 @@ class CommentModel extends Model
 
     public function number_comment_post($id_post)
     {
-        $sql = "SELECT count(*) as response_number FROM COMMENTS WHERE id_post = ?";
+        $sql = "SELECT count(*) as response_number FROM " . static::$table . " WHERE id_post=? AND is_online=1";
         $result = $this->executeReq($sql, [$id_post], 1);
         return $result;
     }
-
-
+    
     /**
      * Get all chidren ids of a comment
      * @param $comment
