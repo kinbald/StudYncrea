@@ -127,7 +127,7 @@ class UsersModel extends Model
                     VALUES (:id, :email, :password_user, :name_user, :surname_user, :role, :token, :class)
                 ";
             $password = password_hash($password, PASSWORD_DEFAULT);
-            $token = $this->generateToken(255);
+            $token = $this->generateToken(35);
             $param = [':id' => $id, ':email' => $email, ':password_user' => $password, ':name_user' => $name, ':surname_user' => $surname, ':role' => $role, ':token' => $token, ':class' => $class,];
             $add = $this->executeReq($sql, $param, 0);
             return $token;
@@ -176,6 +176,13 @@ class UsersModel extends Model
         $result = $this->executeReq($sql, $param, 1);
         $result = $result['email'];
         return $result;
+    }
+    
+    public function setRole($role, $id_user)
+    {
+        $date = date('y-m-d H:i:s');
+        $sql = "UPDATE " . static::$table . " SET role=" . $role . ", confirmed_at='" . $date ."' WHERE " . $this->getIdName() . "=?";
+        return $this->executeReq($sql, [$id_user], 0);
     }
 
     /**

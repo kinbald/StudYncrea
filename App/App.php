@@ -40,6 +40,7 @@ class App
         App\Autoload::register();
         require '../Core/Autoload.php';
         \Core\Autoload::register();
+        require '../vendor/PHPMailer-5.2.22/PHPMailerAutoload.php';
     }
 
     /**
